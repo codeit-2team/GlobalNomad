@@ -8,13 +8,13 @@ import ModalTitle from './ModalTitle';
 import ModalTrigger from './ModalTrigger';
 
 const Modal = Object.assign(ModalWrapper, {
-  Close: ModalClose,
   Content: ModalContent,
   Footer: ModalFooter,
   Header: ModalHeader,
   Item: ModalItem,
   Title: ModalTitle,
   Trigger: ModalTrigger,
+  Close: ModalClose,
 });
 
 export default Modal;

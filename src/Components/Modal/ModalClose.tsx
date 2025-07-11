@@ -3,15 +3,30 @@
 import cn from '@/lib/cn';
 import { useModalContext } from './ModalContext';
 import { ModalProps } from './types';
+import IconClose from '@/app/assets/icons/close';
 
+/**
+ * @description Modal을 닫는 버튼입니다. `Modal.Header` 내부에 위치하거나, 단독으로 사용할 수 있습니다.
+ * @param {ModalProps} props - ModalClose 컴포넌트의 props입니다.
+ * @param {React.ReactNode} [props.children] - 버튼 내부에 표시될 요소입니다. 기본값은 X 아이콘입니다.
+ * @param {string} [props.className] - 버튼에 추가할 className입니다.
+ * @example
+ * // 기본 사용법
+ * <Modal.Close />
+ *
+ * // 커스텀 버튼 사용
+ * <Modal.Close>
+ *   <MyCustomCloseButton />
+ * </Modal.Close>
+ */
 export default function ModalClose({ children, className }: ModalProps) {
-  const { close } = useModalContext();
+  const { onOpenChange } = useModalContext();
   return (
     <button
-      className={cn('absolute top-6 right-6 cursor-pointer', className)}
-      onClick={close}
+      className={cn('absolute top-8 right-8 cursor-pointer', className)}
+      onClick={() => onOpenChange(false)}
     >
-      X
+      {children || <IconClose />}
     </button>
   );
 }
