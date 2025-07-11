@@ -12,12 +12,10 @@ import IconClose from '@/app/assets/icons/close';
  * @param {string} [props.className] - 버튼에 추가할 className입니다.
  * @example
  * // 기본 사용법
- * <Modal.Close />
- *
- * // 커스텀 버튼 사용
- * <Modal.Close>
- *   <MyCustomCloseButton />
- * </Modal.Close>
+ *     <Modal.Header>
+ *       <Modal.Title>제목</Modal.Title>
+ *       <Modal.Close />
+ *     </Modal.Header>
  */
 export default function ModalClose({ children, className }: ModalProps) {
   const { onOpenChange } = useModalContext();

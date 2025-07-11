@@ -9,6 +9,7 @@ export interface ModalRootProps {
 export interface ModalProps {
   children?: ReactNode;
   className?: string;
+  variant?: 'default' | 'fullScreen';
 }
 
 export interface ModalContextType {

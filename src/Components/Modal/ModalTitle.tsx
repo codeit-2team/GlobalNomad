@@ -8,12 +8,12 @@ import { ModalProps } from './types';
  * @param {string} [props.className] - 제목에 추가할 className입니다.
  * @example
  * <Modal.Title>
- *   This is the title
+ *  제목임
  * </Modal.Title>
  */
 export default function ModalTitle({ children, className }: ModalProps) {
   return (
-    <h2 className={cn('text-xl font-bold text-black md:text-2xl')}>
+    <h2 className={cn('text-xl font-bold text-black md:text-2xl', className)}>
       {children}
     </h2>
   );

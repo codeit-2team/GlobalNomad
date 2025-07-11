@@ -10,7 +10,7 @@ import { ModalProps } from './types';
  * @param {string} [props.className] - 헤더에 추가할 className입니다.
  * @example
  * <Modal.Header>
- *   <Modal.Title>Modal Title</Modal.Title>
+ *   <Modal.Title>제목</Modal.Title>
  *   <Modal.Close />
  * </Modal.Header>
  */

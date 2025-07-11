@@ -9,7 +9,7 @@ import { ModalProps } from './types';
  * @param {React.ReactNode} props.children - 트리거로 사용될 요소입니다.
  * @example
  * <Modal.Trigger>
- *   <Button>Open Modal</Button>
+ *   <Button>열기</Button>
  * </Modal.Trigger>
  */
 export default function ModalTrigger({ children }: ModalProps) {

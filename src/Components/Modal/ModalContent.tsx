@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
  * @param {string} [props.className] - Modal 콘텐츠에 추가할 className입니다.
  * @example
  * <Modal.Content>
- *   <p>This is the modal content.</p>
+ *  <다른 요소들/>
  * </Modal.Content>
  */
 export default function ModalContent({ children, className }: ModalProps) {
