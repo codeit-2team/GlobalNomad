@@ -1,10 +1,10 @@
 'use client';
 
 import { InputHTMLAttributes, useId, useState } from 'react';
-import On from '@/assets/visibility-on.svg';
-import Off from '@/assets/visibility-off.svg';
+import OpenEyeIcon from '@/assets/icon/openEye';
+import CloseEyeIcon from '@/assets/icon/closeEye';
 import Image from 'next/image';
-import clsx from 'clsx';
+import cn from '@/lib/utils';
 
 /**
  * InputProps는 HTML 기본 input 속성에 label, error, 스타일 커스터마이징을 위한 props를 확장한 타입입니다.
@@ -15,12 +15,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   /** 에러 메시지 (있으면 하단에 표시됨) */
   error?: string;
-
-  /** 라벨의 마진 관련 Tailwind 클래스 */
-  labelMargin?: string;
-
-  /** 라벨의 텍스트 스타일 클래스 */
-  labelText?: string;
 }
 
 /**
@@ -34,8 +28,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function Input({
   label,
   error,
-  labelMargin,
-  labelText,
+  className,
   ...props
 }: InputProps) {
   const [visibility, setVisibility] = useState(false);
@@ -53,7 +46,7 @@ export default function Input({
 
   return (
     <div className='font-regular flex flex-col text-lg text-black'>
-      <label className={clsx(labelText, labelMargin)} htmlFor={id}>
+      <label className={cn(className)} htmlFor={id}>
         {label}
       </label>
 
@@ -62,18 +55,18 @@ export default function Input({
           {...props}
           id={id}
           type={inputType}
-          className={clsx(
+          className={cn(
             'w-full rounded-md border bg-white px-20 py-15 placeholder-gray-600',
             error ? 'border-red-300' : 'border-gray-800',
           )}
         />
         {props.type === 'password' && (
-          <Image
-            src={visibility ? On : Off}
-            alt='eye'
+          <div
             onClick={handleVisibility}
             className='absolute top-1/2 right-20 -translate-y-1/2 cursor-pointer'
-          />
+          >
+            {visibility ? <OpenEyeIcon /> : <CloseEyeIcon />}
+          </div>
         )}
       </div>
       {error && <p className='mt-8 pl-8 text-xs text-red-300'>{error}</p>}
