@@ -1,5 +1,3 @@
-// components/Footer.tsx
-
 import IconFacebook from '@/app/assets/icons/facebook';
 import IconInstagram from '@/app/assets/icons/instagram';
 import IconYouTube from '@/app/assets/icons/youtube';

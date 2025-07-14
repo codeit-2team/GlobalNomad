@@ -1,6 +1,6 @@
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
-import './globals.css'; // Tailwind CSS가 포함된 경우
+import Header from '@/components/header/Header';
+import Footer from '@/components/footer/Footer';
+import './globals.css';
 
 export default function RootLayout({
   children,

@@ -11,7 +11,7 @@ const IconBell = ({ size = 20, color = '#A1A1A1', ...props }: IconBellProps) => 
     width={size}
     height={size}
     viewBox="0 0 20 20"
-    fill="none"
+    fill={color}
     {...props}
   >
     <path
