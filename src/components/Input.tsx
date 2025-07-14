@@ -3,7 +3,6 @@
 import { InputHTMLAttributes, useId, useState } from 'react';
 import OpenEyeIcon from '@/assets/icon/openEye';
 import CloseEyeIcon from '@/assets/icon/closeEye';
-import Image from 'next/image';
 import cn from '@/lib/utils';
 
 /**
