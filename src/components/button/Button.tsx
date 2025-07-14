@@ -19,7 +19,7 @@ export default function Button({
   type = 'button',
   className = '',
   children,
-  variant = 'primary',
+  variant,
   selected,
   ...props
 }: ButtonProps) {
