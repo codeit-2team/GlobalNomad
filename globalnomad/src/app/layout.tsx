@@ -14,7 +14,7 @@ export default function RootLayout({
         <Header />
 
         {/* 메인 콘텐츠 */}
-        <main className="pt-20 min-h-screen">
+        <main className="pt-70 min-h-screen">
           {children}
         </main>
 
