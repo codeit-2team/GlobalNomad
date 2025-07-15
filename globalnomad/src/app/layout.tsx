@@ -1,0 +1,26 @@
+import Header from '@/components/header/Header';
+import Footer from '@/components/footer/Footer';
+import './globals.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="ko">
+      <body className="bg-white text-gray-900">
+        {/* 공통 헤더 */}
+        <Header />
+
+        {/* 메인 콘텐츠 */}
+        <main className="pt-70 min-h-screen">
+          {children}
+        </main>
+
+        {/* 공통 푸터 */}
+        <Footer />
+      </body>
+    </html>
+  );
+}
