@@ -12,7 +12,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <header className="fixed w-full border-b border-gray-300 bg-white">
+    <header className="fixed z-10 w-full border-b border-gray-300 bg-white">
       <div className="flex items-center justify-between max-w-1200 mx-auto min-h-70 px-20 py-20">      
         {/* 로고 */}
         <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-800">
