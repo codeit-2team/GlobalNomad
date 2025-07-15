@@ -1,6 +1,6 @@
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import Modal from '@/components/modal';
-import Calendar from '@/components/floating-box/Calender';
+import Calendar from '@/components/floating-box/Calendar';
 import TimeSelector from '@/components/floating-box/TimeSelector';
 
 export default function TabletModal() {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import Modal from '@/components/modal';
-import Calendar from '@/components/floating-box/Calender';
+import Calendar from '@/components/floating-box/Calendar';
 import TimeSelector from '@/components/floating-box/TimeSelector';
 import BookingButton from '@/components/floating-box/BookingButton';
 import ParticipantsSelector from '@/components/floating-box/ParticipantSelector';

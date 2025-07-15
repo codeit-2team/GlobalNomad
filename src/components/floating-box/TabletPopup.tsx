@@ -1,4 +1,4 @@
-import Calendar from './Calender';
+import Calendar from './Calendar';
 
 export default function TabletPopup() {
   return (

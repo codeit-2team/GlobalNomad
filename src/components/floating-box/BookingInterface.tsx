@@ -2,7 +2,7 @@
 
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import BookingButton from './BookingButton';
-import Calendar from './Calender';
+import Calendar from './Calendar';
 import ParticipantsSelector from './ParticipantSelector';
 import PriceDisplay from './PriceDisplay';
 import TimeSelector from './TimeSelector';
