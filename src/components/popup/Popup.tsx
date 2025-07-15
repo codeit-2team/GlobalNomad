@@ -10,7 +10,7 @@ import useOutsideClick from '@/hooks/useOutsideClick';
 /**
  * Popup 컴포넌트는 `alert` 또는 `confirm` 타입의 모달을 렌더링합니다.
  * - `alert` 타입은 확인 버튼 하나만 있는 단순 알림 용도
- * - `confirm` 타입은 확인 및 취소(또는 예/아니오) 버튼이 있는 확인 용도
+ * - `confirm` 타입은 취소하기 / 아니오 버튼이 있는 확인 용도
  *
  * 외부 영역 클릭 또는 ESC 키 입력 시 onClose 콜백이 호출됩니다.
  *
