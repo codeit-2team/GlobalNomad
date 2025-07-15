@@ -19,7 +19,7 @@ import { useEffect } from 'react';
  */
 
 export default function useOutsideClick(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   onClose: () => void,
 ) {
   useEffect(() => {
