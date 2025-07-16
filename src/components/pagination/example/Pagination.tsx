@@ -8,8 +8,8 @@ export default function PaginationExample() {
   const totalPage = 7;
 
   return (
-    <div className="p-4">
-      <h2 className="mb-2 font-bold">Pagination Example</h2>
+    <div>
+      <h2>Pagination Example</h2>
 
       <Pagination currentPage={page} totalPage={totalPage} onPageChange={setPage} />
 
