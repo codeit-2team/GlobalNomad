@@ -4,6 +4,9 @@ services:
   # Next.js 애플리케이션
   nextjs:
     container_name: global-nomad-nextjs
+    # 환경 변수로 이미지 지정 (기본값 제공)
+    image: ${NEXTJS_IMAGE:-ghcr.io/cksgh5477/global-nomad:latest}
+    # 로컬 개발용 빌드 설정 (프로덕션에서는 무시됨)
     build:
       context: .
       dockerfile: Dockerfile
