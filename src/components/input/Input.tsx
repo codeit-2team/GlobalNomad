@@ -2,9 +2,9 @@
 
 import { useId, useState } from 'react';
 import { InputProps } from './types';
-import OpenEyeIcon from '@/assets/icon/open-eye';
-import CloseEyeIcon from '@/assets/icon/close-eye';
-import cn from '@/lib/utils';
+import OpenEyeIcon from '@assets/svg/open-eye';
+import CloseEyeIcon from '@assets/svg/close-eye';
+import cn from '@lib/cn';
 
 /**
  * 재사용 가능한 커스텀 Input 컴포넌트입니다.

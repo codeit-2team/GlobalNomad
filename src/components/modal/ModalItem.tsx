@@ -1,6 +1,6 @@
 import { ModalProps } from './types';
 
-import cn from '@/lib/cn';
+import cn from '@lib/cn';
 
 /**
  * @description Modal의 본문영역
