@@ -1,5 +1,5 @@
 import cn from '@lib/cn';
-import { ModalProps } from './types';
+import { ModalProps } from '@/types/modalTypes';
 
 /**
  * @description Modal의 제목을 정의합니다. `Modal.Header` 내부에 위치합니다.

@@ -1,7 +1,7 @@
 'use client';
 
 import cn from '@lib/cn';
-import { ModalProps } from './types';
+import { ModalProps } from '@/types/modalTypes';
 
 /**
  * @description Modal의 푸터 영역을 정의합니다. 주로 버튼들을 포함합니다.
