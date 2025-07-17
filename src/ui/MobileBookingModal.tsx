@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import Modal from '@/components/modal';
-import Calendar from '@/components/floating-box/Calendar';
+import DatePicker from '@/components/date-picker/DatePicker';
 import TimeSelector from '@/components/floating-box/TimeSelector';
 import BookingButton from '@/components/floating-box/BookingButton';
 import ParticipantsSelector from '@/components/floating-box/ParticipantSelector';
@@ -44,7 +44,7 @@ export default function MobileModal() {
         <Modal.Item className='relative min-h-400'>
           <div className={step === 'date-time' ? 'block' : 'hidden'}>
             <div className='flex justify-center'>
-              <Calendar />
+              <DatePicker />
             </div>
             <div className='mt-6'>
               <h3 className='mb-2 text-sm font-semibold text-gray-900'>

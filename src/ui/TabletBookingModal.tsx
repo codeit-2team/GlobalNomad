@@ -1,6 +1,6 @@
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import Modal from '@/components/modal';
-import Calendar from '@/components/floating-box/Calendar';
+import DatePicker from '@/components/date-picker/DatePicker';
 import TimeSelector from '@/components/floating-box/TimeSelector';
 
 export default function TabletModal() {
@@ -16,7 +16,7 @@ export default function TabletModal() {
         </Modal.Header>
         <Modal.Item>
           <div className='flex justify-center'>
-            <Calendar />
+            <DatePicker />
           </div>
           <TimeSelector />
         </Modal.Item>

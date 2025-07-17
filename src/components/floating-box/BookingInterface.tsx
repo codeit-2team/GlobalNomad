@@ -10,6 +10,7 @@ import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import { useState } from 'react';
 import TabletPopup from './TabletPopup';
+import DatePicker from '../date-picker/DatePicker';
 
 export default function BookingInterface() {
   const handleBooking = () => {
@@ -22,12 +23,12 @@ export default function BookingInterface() {
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-50 p-4'>
       <div className='w-full max-w-sm'>
-        {/* PC  */}
+        {/* PC */}
         <div className='hidden rounded-lg border border-gray-800 bg-white p-6 lg:block'>
           <div className='flex flex-col gap-10 px-20'>
             <PriceDisplay />
             <div className='flex justify-center'>
-              <Calendar />
+              <DatePicker />
             </div>
             <TimeSelector />
             <ParticipantsSelector />
