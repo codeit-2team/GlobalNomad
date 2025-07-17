@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { InputProps } from './types';
+import { InputProps } from '@/types/inputTypes';
 import OpenEyeIcon from '@assets/svg/open-eye';
 import CloseEyeIcon from '@assets/svg/close-eye';
 import cn from '@lib/cn';
