@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import IconLogo from '../../../public/assets/svg/logo';
-import IconBell from '../../../public/assets/svg/bell';
+import IconLogo from '@assets/svg/logo';
+import IconBell from '@assets/svg/bell';
 
 export default function Header() {
   // 실제로는 로그인 여부를 전역 상태나 context로 받아와야 함

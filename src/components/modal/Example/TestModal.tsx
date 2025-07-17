@@ -1,6 +1,6 @@
 'use client';
 
-import Modal from '@/components/modal';
+import Modal from '@components/modal';
 
 export default function TestModal({
   isOpen,
