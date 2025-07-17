@@ -1,7 +1,7 @@
-import IconFacebook from '../../../public/assets/svg/facebook';
-import IconInstagram from '../../../public/assets/svg/instagram';
-import IconYouTube from '../../../public/assets/svg/youtube';
-import IconTwitter from '../../../public/assets/svg/twitter';
+import IconFacebook from '@assets/svg/facebook';
+import IconInstagram from '@assets/svg/instagram';
+import IconYouTube from '@assets/svg/youtube';
+import IconTwitter from '@assets/svg/twitter';
 
 export default function Footer() {
   return (
