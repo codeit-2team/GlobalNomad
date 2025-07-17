@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ModalContext } from './ModalContext';
-import { ModalRootProps } from './types';
+import { ModalContext } from '@/contexts/ModalContext';
+import { ModalRootProps } from '@/types/modalTypes';
 
 /**
  * @component ModalWrapper

@@ -1,7 +1,7 @@
 'use client';
 
-import { useModalContext } from './ModalContext';
-import { ModalProps } from './types';
+import { useModalContext } from '@/contexts/ModalContext';
+import { ModalProps } from '@/types/modalTypes';
 
 /**
  * @description Modal을 열기 위한 트리거 컴포넌트입니다. 이 컴포넌트를 클릭하면 Modal이 열립니다.

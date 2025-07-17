@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { ModalContextType } from './types';
+import { ModalContextType } from '@/types/modalTypes';
 
 /**
  * @description Modal 컴포넌트의 상태를 공유하기 위한 React Context입니다.

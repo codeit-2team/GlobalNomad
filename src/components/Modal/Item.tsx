@@ -1,4 +1,4 @@
-import { ModalProps } from './types';
+import { ModalProps } from '@/types/modalTypes';
 
 import cn from '@lib/cn';
 

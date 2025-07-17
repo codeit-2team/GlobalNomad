@@ -1,8 +1,8 @@
 'use client';
 
 import cn from '@lib/cn';
-import { ModalProps } from './types';
-import { useModalContext } from './ModalContext';
+import { ModalProps } from '@/types/modalTypes';
+import { useModalContext } from '@/contexts/ModalContext';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 
