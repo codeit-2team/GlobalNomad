@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '@/lib/cn';
+import cn from '@lib/cn';
 import { useModalContext } from './ModalContext';
 import { ModalProps } from './types';
 import IconClose from '@assets/svg/close';
