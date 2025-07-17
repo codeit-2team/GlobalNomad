@@ -1,7 +1,7 @@
 'use client';
 
 import cn from '@lib/cn';
-import { ButtonProps } from './types';
+import { ButtonProps } from '@/types/buttonTypes';
 
 /**
  * 공통 Button 컴포넌트입니다.
