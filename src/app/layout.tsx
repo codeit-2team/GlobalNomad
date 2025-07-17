@@ -9,16 +9,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang='ko'>
-      <body className='bg-white text-gray-900'>
-        {/* 공통 헤더 */}
-        <Header />
+      <div id='modal-root'>
+        <body className='bg-white text-gray-900'>
+          {/* 공통 헤더 */}
+          <Header />
 
-        {/* 메인 콘텐츠 */}
-        <main className='min-h-screen pt-70'>{children}</main>
+          {/* 메인 콘텐츠 */}
+          <main className='min-h-screen pt-70'>{children}</main>
 
-        {/* 공통 푸터 */}
-        <Footer />
-      </body>
+          {/* 공통 푸터 */}
+          <Footer />
+        </body>
+      </div>
     </html>
   );
 }

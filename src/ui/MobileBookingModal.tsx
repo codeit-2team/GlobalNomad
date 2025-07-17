@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import useBookingStore from '@/stores/Booking/useBookingStore';
-import Modal from '@/components/modal';
-import DatePicker from '@/components/date-picker/DatePicker';
-import TimeSelector from '@/components/floating-box/TimeSelector';
-import BookingButton from '@/components/floating-box/BookingButton';
-import ParticipantsSelector from '@/components/floating-box/ParticipantSelector';
-import TotalPriceDisplay from '@/components/floating-box/TotalPriceDisplay';
+import Modal from '@/components/Modal';
+import DatePicker from '@/components/DatePicker/DatePicker';
+import TimeSelector from '@/components/FloatingBox/TimeSelector';
+import BookingButton from '@/components/FloatingBox/BookingButton';
+import ParticipantsSelector from '@/components/FloatingBox/ParticipantSelector';
+import TotalPriceDisplay from '@/components/FloatingBox/TotalPriceDisplay';
 
 export default function MobileModal() {
   const isOpen = useBookingStore((state) => state.isOpen);

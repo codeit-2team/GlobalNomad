@@ -1,7 +1,7 @@
 import useBookingStore from '@/stores/Booking/useBookingStore';
-import Modal from '@/components/modal';
-import DatePicker from '@/components/date-picker/DatePicker';
-import TimeSelector from '@/components/floating-box/TimeSelector';
+import Modal from '@/components/Modal';
+import DatePicker from '@/components/DatePicker/DatePicker';
+import TimeSelector from '@/components/FloatingBox/TimeSelector';
 
 export default function TabletModal() {
   const isOpen = useBookingStore((state) => state.isOpen);
