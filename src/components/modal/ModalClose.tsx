@@ -3,7 +3,7 @@
 import cn from '@/lib/cn';
 import { useModalContext } from './ModalContext';
 import { ModalProps } from './types';
-import IconClose from '@/app/assets/icons/close';
+import IconClose from '../../../public/assets/svg/close';
 
 /**
  * @description Modal을 닫는 버튼입니다. `Modal.Header` 내부에 위치하거나, 단독으로 사용할 수 있습니다.

@@ -2,8 +2,8 @@
 
 import { useId, useState } from 'react';
 import { InputProps } from './types';
-import OpenEyeIcon from '@/assets/icon/open-eye';
-import CloseEyeIcon from '@/assets/icon/close-eye';
+import OpenEyeIcon from '../../../public/assets/svg/open-eye';
+import CloseEyeIcon from '../../../public/assets/svg/close-eye';
 import cn from '@/lib/utils';
 
 /**
