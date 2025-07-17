@@ -1,11 +1,11 @@
 'use client';
 
-import cn from '@/lib/utils';
-import { PopupProps } from './types';
-import Button from '../button/Button';
-import CheckIcon from '@/assets/icon/check';
+import cn from '@lib/cn';
+import { PopupProps } from '@/types/popupTypes';
+import Button from './Button';
+import CheckIcon from '@assets/svg/check';
 import { useRef } from 'react';
-import useOutsideClick from '@/hooks/useOutsideClick';
+import useOutsideClick from '@hooks/useOutsideClick';
 
 /**
  * Popup 컴포넌트는 `alert` 또는 `confirm` 타입의 모달을 렌더링합니다.
