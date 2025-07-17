@@ -23,11 +23,8 @@ export default function Input({
   const [visibility, setVisibility] = useState(false);
   const id = useId();
 
-  let inputType = props.type;
-
-  if (props.type === 'password') {
-    inputType = visibility ? 'text' : 'password';
-  }
+  const inputType =
+    props.type === 'password' && visibility ? 'text' : props.type || 'text';
 
   const handleVisibility = () => {
     setVisibility((prev) => !prev);
