@@ -1,10 +1,5 @@
 import React from "react";
 
-interface IconInstagramProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
 const IconInstagram = ({ size = 20, color = '#fff', ...props }: IconInstagramProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -1,10 +1,5 @@
 import React from "react";
 
-interface IconYouTubeProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
 const IconYouTube = ({ size = 20, color = '#fff', ...props }: IconYouTubeProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

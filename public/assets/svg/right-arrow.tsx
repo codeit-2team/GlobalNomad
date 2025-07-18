@@ -1,10 +1,5 @@
 import React from 'react';
 
-interface IconArrowRightProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
 const IconArrowRight = ({
   size = 16,
   color = '#0B3B2D',

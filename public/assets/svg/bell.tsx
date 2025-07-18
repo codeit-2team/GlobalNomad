@@ -1,10 +1,5 @@
 import React from 'react';
 
-interface IconBellProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
 const IconBell = ({ size = 20, color = '#A1A1A1', ...props }: IconBellProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

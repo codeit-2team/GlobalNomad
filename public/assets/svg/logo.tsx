@@ -1,10 +1,5 @@
 import React from 'react';
 
-interface IconLogoProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
 const IconLogo = ({ size = 172, color = '#0B3B2D', ...props }: IconLogoProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
