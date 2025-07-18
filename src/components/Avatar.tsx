@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import Image from 'next/image';
 import cn from '@/lib/cn';
 import type { StaticImageData } from 'next/image';
@@ -76,6 +76,13 @@ export default function Avatar({
     src || DEFAULT_IMG,
   );
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (src) {
+      setImgSrc(src);
+      setIsError(false);
+    }
+  }, [src]);
 
   const isDefault =
     imgSrc === DEFAULT_IMG ||
