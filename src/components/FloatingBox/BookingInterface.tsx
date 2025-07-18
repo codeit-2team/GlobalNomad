@@ -2,7 +2,6 @@
 
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import BookingButton from './BookingButton';
-import Calendar from './Calendar';
 import ParticipantsSelector from './ParticipantSelector';
 import PriceDisplay from './PriceDisplay';
 import TimeSelector from './TimeSelector';
@@ -10,7 +9,7 @@ import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import { useState } from 'react';
 import TabletPopup from './TabletPopup';
-import DatePicker from '../date-picker/DatePicker';
+import DatePicker from '../DatePicker/DatePicker';
 
 export default function BookingInterface() {
   const handleBooking = () => {

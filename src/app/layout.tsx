@@ -18,6 +18,7 @@ export default function RootLayout({
 
         {/* 공통 푸터 */}
         <Footer />
+        <div id='modal-root' />
       </body>
     </html>
   );

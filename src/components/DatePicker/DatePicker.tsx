@@ -31,12 +31,8 @@ const mockAvailableDates = [
 ];
 
 export default function DatePicker() {
-  const {
-    selectedDate,
-    setSelectedDate,
-    setAvailableDates,
-    availableDates,
-  } = useBookingStore();
+  const { selectedDate, setSelectedDate, setAvailableDates, availableDates } =
+    useBookingStore();
 
   const today = dayjs();
   const [viewDate, setViewDate] = useState(dayjs(selectedDate));
