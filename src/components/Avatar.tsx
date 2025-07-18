@@ -4,43 +4,9 @@ import { ReactNode, useState, useEffect } from 'react';
 import Image from 'next/image';
 import cn from '@/lib/cn';
 import type { StaticImageData } from 'next/image';
-
-const SIZE = {
-  sm: 'w-40 h-40',
-  md: 'w-60 h-60',
-  lg: 'w-160 h-160',
-};
-
-const DEFAULT_IMG = '/assets/svg/profile-default.svg';
-
-interface AvatarProps {
-  /**
-   * 이미지 소스 (URL 문자열 또는 정적 이미지 객체)
-   */
-  src?: string | StaticImageData;
-
-  /**
-   * 이미지 대체 텍스트
-   * @default '프로필 이미지'
-   */
-  alt?: string;
-
-  /**
-   * 아바타 크기 (sm, md, lg 중 하나)
-   * @default 'lg'
-   */
-  size?: keyof typeof SIZE;
-
-  /**
-   * 추가로 적용할 Tailwind 클래스
-   */
-  className?: string;
-
-  /**
-   * 아바타 내부에 렌더링할 자식 요소
-   */
-  children?: ReactNode;
-}
+import { AvatarProps } from '@/types/AvatarType';
+import { DEFAULT_IMG } from '@/constants/AvatarConstants';
+import { AVATAR_SIZE } from '@/constants/AvatarConstants';
 
 /**
  * 사용자 프로필 이미지를 렌더링하는 컴포넌트.
@@ -91,7 +57,7 @@ export default function Avatar({
       imgSrc.src === DEFAULT_IMG);
 
   const avatarClass = cn(
-    SIZE[size],
+    AVATAR_SIZE[size],
     'relative rounded-full overflow-hidden',
     isDefault && 'bg-black',
     className,
