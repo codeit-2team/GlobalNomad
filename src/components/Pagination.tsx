@@ -52,7 +52,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center w-40 h-40 md:w-55 md:h-55 border rounded-[15px] disabled:opacity-30"
+        className="flex items-center justify-center w-40 h-40 md:w-55 md:h-55 border rounded-[15px] disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <IconArrowLeft className="md:w-21 md:h-21" />
       </button>
@@ -75,10 +75,31 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPage}
-        className="flex items-center justify-center w-40 h-40 md:w-55 md:h-55 border rounded-[15px] disabled:opacity-30"
+        className="flex items-center justify-center w-40 h-40 md:w-55 md:h-55 border rounded-[15px] disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <IconArrowRight className="md:w-21 md:h-21" />
       </button>
     </div>
   );
 }
+
+
+// 사용 예시:
+/*
+'use client';
+
+import { useState } from 'react';
+import Pagination from '@/components/pagination/Pagination';
+
+export default function ExamplePage() {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination
+      currentPage={page}
+      totalPage={10}
+      onPageChange={setPage}
+    />
+  );
+}
+*/
