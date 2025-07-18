@@ -1,17 +1,9 @@
 'use client';
 
 import cn from '@/lib/cn';
+import { PaginationProps } from '@/types/paginationTypes';
 import IconArrowLeft from '@assets/svg/left-arrow';
 import IconArrowRight from '@assets/svg/right-arrow';
-
-/**
- * Pagination 컴포넌트 props 타입 정의
- */
-interface PaginationProps {
-  currentPage: number;
-  totalPage: number;
-  onPageChange: (page: number) => void;
-}
 
 /**
  * Pagination 컴포넌트
@@ -93,9 +85,6 @@ export default function Pagination({
 
 // 사용 예시:
 /*
-'use client';
-
-import { useState } from 'react';
 import Pagination from '@/components/pagination/Pagination';
 
 export default function ExamplePage() {
