@@ -1,11 +1,6 @@
 import React from 'react';
 
-interface IconTwitterProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
-const IconTwitter = ({ size = 20, color = '#fff', ...props }: IconTwitterProps) => (
+const IconTwitter = ({ size = 20, color = '#fff', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
