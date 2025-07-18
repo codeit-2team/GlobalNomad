@@ -1,11 +1,6 @@
 import React from "react";
 
-interface IconFacebookProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  color?: string;
-}
-
-const IconFacebook = ({ size = 20, color = '#fff', ...props }: IconFacebookProps) => (
+const IconFacebook = ({ size = 20, color = '#fff', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

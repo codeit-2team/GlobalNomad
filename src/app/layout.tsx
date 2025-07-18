@@ -1,5 +1,5 @@
-import Header from '@/components/header/Header';
-import Footer from '@/components/footer/Footer';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 export default function RootLayout({
@@ -18,6 +18,7 @@ export default function RootLayout({
 
         {/* 공통 푸터 */}
         <Footer />
+        <div id='modal-root' />
       </body>
     </html>
   );

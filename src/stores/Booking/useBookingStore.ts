@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { BookingState } from './types';
+import { BookingState } from '@/types/bookingStoreTypes';
 
 const useBookingStore = create<BookingState>((set) => ({
   selectedDate: new Date(),
