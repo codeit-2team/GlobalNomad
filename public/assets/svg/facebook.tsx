@@ -1,6 +1,6 @@
 import React from "react";
 
-const IconFacebook = ({ size = 20, color = '#fff', ...props }: IconFacebookProps) => (
+const IconFacebook = ({ size = 20, color = '#fff', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

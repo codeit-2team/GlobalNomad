@@ -4,7 +4,7 @@ const IconArrowLeft = ({
   size = 16,
   color = '#0B3B2D',
   ...props
-}: IconArrowLeftProps) => (
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

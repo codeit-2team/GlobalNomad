@@ -1,6 +1,6 @@
 import React from 'react';
 
-const IconLogo = ({ size = 172, color = '#0B3B2D', ...props }: IconLogoProps) => (
+const IconLogo = ({ size = 172, color = '#0B3B2D', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

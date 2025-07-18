@@ -1,6 +1,6 @@
 import React from 'react';
 
-const IconTwitter = ({ size = 20, color = '#fff', ...props }: IconTwitterProps) => (
+const IconTwitter = ({ size = 20, color = '#fff', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
