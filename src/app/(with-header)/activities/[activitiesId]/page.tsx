@@ -9,11 +9,9 @@ export default function ActivityDetailPage() {
     title,
     category,
     description,
-    price,
     address,
     bannerImageUrl,
     subImages,
-    schedules,
     rating,
     reviewCount,
   } = mockActivity;
