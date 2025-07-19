@@ -3,18 +3,15 @@ import Footer from '@/components/Footer';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='ko'>
-      <body className='bg-white text-gray-900'>
-        {/* 공통 헤더 */}
-        <Header />
+    <>
+      {/* 공통 헤더 */}
+      <Header />
 
-        {/* 메인 콘텐츠 */}
-        <main className='min-h-screen pt-70'>{children}</main>
+      {/* 메인 콘텐츠 */}
+      <main className='min-h-screen pt-70'>{children}</main>
 
-        {/* 공통 푸터 */}
-        <Footer />
-        <div id='modal-root' />
-      </body>
-    </html>
+      {/* 공통 푸터 */}
+      <Footer />
+    </>
   );
 }
