@@ -9,7 +9,8 @@ import IconBell from '@assets/svg/bell';
 export default function Header() {
   // 실제로는 로그인 여부를 전역 상태나 context로 받아와야 함
   // test하려면 로그인 상태를 true로 변경
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 빌드 에러로 인해 setIsLoggedIn 변수 앞에 _를 붙여 의도적으로 사용하지 않음을 표시
+  const [isLoggedIn, _setIsLoggedIn] = useState(false);
 
   return (
     <header className='fixed z-10 w-full border-b border-gray-300 bg-white'>

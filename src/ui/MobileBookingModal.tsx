@@ -27,11 +27,11 @@ export default function MobileModal() {
     setStep((prev) => (prev === 'confirm' ? 'participants' : 'date-time'));
   };
 
-  const handleBooking = () => {
-    alert('예약이 완료되었습니다!');
-    setIsOpen(false);
-    setStep('date-time');
-  };
+  // const handleBooking = () => {
+  //   alert('예약이 완료되었습니다!');
+  //   setIsOpen(false);
+  //   setStep('date-time');
+  // };
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>

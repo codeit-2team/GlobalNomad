@@ -40,9 +40,10 @@ export default function Popup({
   onClose,
   onConfirm,
 }: PopupProps) {
-  if (!isOpen) return null;
   const popupRef = useRef<HTMLDivElement>(null);
   useOutsideClick(popupRef, onClose);
+
+  if (!isOpen) return null;
 
   return (
     <div
