@@ -1,6 +1,5 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import './globals.css';
+import QueryProvider from '@/lib/queryProvider';
 
 export default function RootLayout({
   children,
@@ -9,15 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang='ko'>
-      <body className='bg-white text-gray-900'>
-        {/* 공통 헤더 */}
-        <Header />
+      <body>
+        <QueryProvider>
+          <main>{children}</main>
+        </QueryProvider>
 
-        {/* 메인 콘텐츠 */}
-        <main className='min-h-screen pt-70'>{children}</main>
-
-        {/* 공통 푸터 */}
-        <Footer />
         <div id='modal-root' />
       </body>
     </html>
