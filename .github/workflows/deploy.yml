@@ -125,16 +125,13 @@ jobs:
             
             # 현재 실행 중인 이미지 태그 저장 (롤백용)
             echo "💾 Saving current version..."
-            CURRENT_IMAGE=$(docker-compose ps -q nextjs | xargs docker inspect -f '{{.Config.Image}}' 2>/dev/null || echo "none")
+            CURRENT_IMAGE=$(docker compose ps -q nextjs | xargs docker inspect -f '{{.Config.Image}}' 2>/dev/null || echo "none")
             echo "Current: $CURRENT_IMAGE" > ~/deployments/previous-version.txt
             
             # 기존 컨테이너 중지
             echo "🛑 Stopping existing containers..."
-            docker-compose down || true
+            docker compose down || true
             
-            # PM2 정리(환경 테스트를 하기 위해 사용했던 이전 배포 방식 정리 )
-            pm2 stop global-nomad || true
-            pm2 delete global-nomad || true
             
             # 최신 이미지 pull (정확한 버전)
             echo "📥 Pulling image: ${IMAGE_URL}"
@@ -143,7 +140,7 @@ jobs:
             # 환경 변수로 이미지 지정하여 실행
             echo "🚀 Starting containers..."
             export NEXTJS_IMAGE="${IMAGE_URL}"
-            docker-compose up -d
+            docker compose up -d
             
             # 헬스 체크
             echo "❤️ Health check..."
@@ -159,7 +156,7 @@ jobs:
             # 최종 확인
             if ! curl -f http://localhost:3000 > /dev/null 2>&1; then
               echo "❌ Service health check failed after 60 seconds!"
-              docker-compose logs --tail 50 nextjs
+              docker compose logs --tail 50 nextjs
               exit 1
             fi
             
