@@ -26,9 +26,8 @@ jobs:
     
     # Job의 결과를 다른 Job에서 사용할 수 있도록 출력 설정
     outputs:
-      # 정확한 이미지 태그 전달 (SHA 기반) - 배포할 정확한 이미지 주소, 버전 확인을 위한 커밋 해시
-      image-url: ${{ steps.image.outputs.image-url }}
-      git-sha: ${{ steps.vars.outputs.sha-short }}
+      # metadata-action이 생성한 고유하고 안정적인 태그를 전달
+      image_tag: ${{ steps.meta.outputs.version }}
     
     steps:
       # 코드 체크아웃
@@ -48,14 +47,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 빌드에 사용할 변수 생성 (짧은 커밋 해시, 빌드 날짜)
-      - name: Generate build vars
-        id: vars
-        run: |
-          echo "sha-short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "build-date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+      # docker/metadata-action을 사용하여 태그와 라벨을 자동으로 생성
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=develop-,format=short
 
-      # 도커 이미지 빌드 및 푸시 (불변 태그 사용)
+      # 도커 이미지 빌드 및 푸시 (자동 생성된 불변 태그 사용)
       - name: Build and push Docker image
         id: build
         uses: docker/build-push-action@v5
@@ -64,25 +65,14 @@ jobs:
           context: .
           # 빌드 후 레지스트리에 푸시
           push: true
-          # 이미지에 여러 태그를 부여
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop-${{ steps.vars.outputs.sha-short }}
-          # 이미지에 메타 데이터 라벨 추가
-          labels: |
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.created=${{ steps.vars.outputs.build-date }}
+          # metadata-action이 생성한 tags와 labels를 직접 사용
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           # GitHub Actions 캐시를 사용하여 빌드 속도 향상
           cache-from: type=gha
           cache-to: type=gha,mode=max
           # 빌드할 플랫폼 지정
           platforms: linux/amd64
-
-      # Job으로 전달할 정확한 이미지 URL 출력으로 설정
-      - name: Set image output
-        id: image
-        run: |
-          echo "image-url=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop-${{ steps.vars.outputs.sha-short }}" >> $GITHUB_OUTPUT
 
   # Job 2: OCI 서버에 배포
   deploy:
@@ -101,16 +91,16 @@ jobs:
 
       # 서버에 배포 스크립트 실행
       - name: Deploy to server
-        env:
-          IMAGE_URL: ${{ needs.build.outputs.image-url }}
-          GIT_SHA: ${{ needs.build.outputs.git-sha }}
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_HOST }} << 'ENDSSH'
             set -e
 
+            export IMAGE_TAG="${{ needs.build.outputs.image_tag }}"
+            export IMAGE_URL="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
+
             echo "📦 Starting deployment..."
-            echo "🏷️  Image: ${IMAGE_URL}"
-            echo "🔖 Version: ${GIT_SHA}"
+            echo "🏷️  Deploying image: ${IMAGE_URL}"
+            echo "🔖 Version: ${IMAGE_TAG}"
             
             # 프로젝트 디렉토리로 이동
             cd ~/projects/GlobalNomad
@@ -131,7 +121,6 @@ jobs:
             # 기존 컨테이너 중지
             echo "🛑 Stopping existing containers..."
             docker compose down || true
-            
             
             # 최신 이미지 pull (정확한 버전)
             echo "📥 Pulling image: ${IMAGE_URL}"
@@ -164,24 +153,24 @@ jobs:
             echo "📝 Recording deployment..."
             mkdir -p ~/deployments
             echo "${IMAGE_URL}" > ~/deployments/current-version.txt
-            echo "$(date -u +'%Y-%m-%d %H:%M:%S UTC') - ${GIT_SHA}" >> ~/deployments/history.log
+            echo "$(date -u +'%Y-%m-%d %H:%M:%S UTC') - ${IMAGE_TAG}" >> ~/deployments/history.log
             
             # 오래된 이미지 정리 (최근 3개만 유지)
             echo "🧹 Cleaning up old images..."
-            docker images | grep global-nomad | tail -n +4 | awk '{print $3}' | xargs -r docker rmi || true
+            docker images --filter=reference='*/*global-nomad' --format '{{.ID}}' | tail -n +4 | xargs -r docker rmi || true
             
             echo "✅ Deployment completed successfully!"
-            echo "📊 Deployed version: ${GIT_SHA}"
+            echo "📊 Deployed version: ${IMAGE_TAG}"
           ENDSSH
 
-      # 배포 결과 알림 (Slack, Discord 등 추가 가능)
+      # 배포 결과 알림
       - name: Notify deployment status
         if: always()
         run: |
           if [ ${{ job.status }} == 'success' ]; then
             echo "✅ 배포 성공!"
-            echo "🏷️  Image: ${{ needs.build.outputs.image-url }}"
-            echo "🔖 Version: ${{ needs.build.outputs.git-sha }}"
+            echo "🏷️  Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
+            echo "🔖 Version: ${{ needs.build.outputs.image_tag }}"
           else
             echo "❌ 배포 실패!"
           fi
