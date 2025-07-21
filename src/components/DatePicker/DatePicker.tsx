@@ -54,7 +54,7 @@ export default function DatePicker() {
   const highlightDates = availableDates.map((item) => dayjs(item.date));
 
   return (
-    <div className='w-full max-w-md rounded-2xl bg-white p-6'>
+    <div className='max-h-[746px] w-full max-w-md rounded-2xl bg-white p-6'>
       <CalendarHeader viewDate={viewDate} onMonthChange={changeMonth} />
       <CalendarBody
         viewDate={viewDate}

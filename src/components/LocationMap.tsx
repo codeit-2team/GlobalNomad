@@ -66,7 +66,7 @@ const LocationMap = ({ address }: LocationMapProps) => {
 
   return (
     <>
-      <div className='h-[480px] w-full max-w-[327px] overflow-hidden rounded-lg shadow-md md:max-w-[430px] lg:max-w-[800px]'>
+      <div className='flex h-[480px] w-full flex-col overflow-hidden rounded-lg shadow-md lg:max-w-[800px]'>
         {/* 지도 */}
         <Map
           center={coords}

@@ -14,10 +14,10 @@ export default function ReviewCard({
   avatarSrc,
 }: UserReviewProps) {
   return (
-    <div className='mx-auto flex max-w-md items-start gap-6 p-6 text-black md:max-w-2xl'>
+    <div className='flex max-w-md justify-start gap-6 p-6 text-black md:max-w-2xl'>
       <Avatar src={avatarSrc} size='sm' />
       <div className='grid flex-1 gap-6'>
-        <div className='flex items-center gap-10 text-sm md:text-lg'>
+        <div className='flex gap-10 text-sm md:text-lg'>
           <p className='font-bold'>{userName}</p>
           <p className='text-black'>|</p>
           <p className='text-gray-600'>{date}</p>
