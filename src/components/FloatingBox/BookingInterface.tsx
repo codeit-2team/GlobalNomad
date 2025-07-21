@@ -8,7 +8,6 @@ import TimeSelector from './TimeSelector';
 import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import { useState } from 'react';
-import TabletPopup from './TabletPopup';
 import DatePicker from '../DatePicker/DatePicker';
 import Button from '../Button';
 
@@ -18,7 +17,7 @@ export default function BookingInterface() {
   };
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
   const { selectedDate, selectedTime, participants } = useBookingStore();
-  const [openTablet, setOpenTablet] = useState(false);
+
 
   return (
     <div className='w-full max-w-sm'>
