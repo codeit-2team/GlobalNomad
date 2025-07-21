@@ -134,7 +134,7 @@ jobs:
             # 헬스 체크
             echo "❤️ Health check..."
             for i in {1..30}; do
-              if curl -f http://localhost:3000 > /dev/null 2>&1; then
+              if curl -f http://localhost > /dev/null 2>&1; then
                 echo "✅ Service is healthy!"
                 break
               fi
@@ -143,9 +143,10 @@ jobs:
             done
             
             # 최종 확인
-            if ! curl -f http://localhost:3000 > /dev/null 2>&1; then
+            if ! curl -f http://localhost > /dev/null 2>&1; then
               echo "❌ Service health check failed after 60 seconds!"
               docker compose logs --tail 50 nextjs
+              docker compose logs --tail 50 nginx
               exit 1
             fi
             
