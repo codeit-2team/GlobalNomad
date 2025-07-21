@@ -115,7 +115,6 @@ export default function Dropdown<T extends string>({
 
   return (
     <div ref={dropdownRef} className={cn('relative', className)}>
-      {' '}
       {/* 드롭다운 버튼 */}
       <button
         ref={buttonRef}
