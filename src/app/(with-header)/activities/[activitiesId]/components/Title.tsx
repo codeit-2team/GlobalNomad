@@ -1,15 +1,7 @@
 import React from 'react';
 import IconDropdown from '@assets/svg/dropdown';
 import Star from '@assets/svg/star';
-
-interface TitleProps {
-  title: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  address: string;
-  isDropDown?: boolean;
-}
+import { TitleProps } from '@/types/activityDetailType';
 
 export default function Title({
   title,

@@ -1,11 +1,6 @@
 'use client';
 
-import type dayjs from 'dayjs';
-
-interface CalendarHeaderProps {
-  viewDate: dayjs.Dayjs;
-  onMonthChange: (direction: 'add' | 'subtract') => void;
-}
+import { CalendarHeaderProps } from '@/types/datePickerTypes';
 
 export default function CalendarHeader({
   viewDate,

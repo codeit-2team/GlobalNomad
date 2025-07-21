@@ -1,18 +1,12 @@
 import Avatar from '@/components/Avatar';
-
-interface UserReviewProps {
-  userName: string;
-  date: string;
-  reviewText: string;
-  avatarSrc: string;
-}
+import { ReviewCardProps } from '@/types/activityDetailType';
 
 export default function ReviewCard({
   userName,
   date,
   reviewText,
   avatarSrc,
-}: UserReviewProps) {
+}: ReviewCardProps) {
   return (
     <div className='flex max-w-md justify-start gap-6 p-6 text-black md:max-w-2xl'>
       <Avatar src={avatarSrc} size='sm' />
