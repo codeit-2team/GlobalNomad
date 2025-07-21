@@ -2,7 +2,6 @@
 import '@/app/globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import HeroSection from '@/app/(with-header)/components/BannerSection';
 
 export default function WithHeaderLayout({
   children,

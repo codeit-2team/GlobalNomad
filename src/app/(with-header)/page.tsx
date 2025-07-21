@@ -1,10 +1,9 @@
-import HeroSection from '@/app/(with-header)/components/BannerSection';
-import SearchBar from '@/app/(with-header)/components/SearchBar';
+import BannerSection from '@/app/(with-header)/components/BannerSection';
 
 export default function HomePage() {
   return (
     <main>
-      <HeroSection />
+      <BannerSection />
     </main>
   );
 }
