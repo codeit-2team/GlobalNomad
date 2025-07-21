@@ -13,9 +13,7 @@ export default function WithHeaderLayout({
     <>
       {/* 헤더와 푸터 */}
       <Header />
-      <main className="pt-70">
-        <HeroSection />        
-      </main>
+      <main className="pt-70">{children}</main>
       <Footer />
     </>
   );
