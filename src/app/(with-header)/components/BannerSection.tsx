@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import SearchBar from './SearchBar';
 
-export default function HeroSection() {
+export default function BannerSection() {
   return (
-    <section className="relative w-full h-240 md:h-550">
+    <section className="relative w-full h-240 md:h-550 mb-93">
       {/* 배경 이미지 */}
       <Image
         src="/test/image1.png"
@@ -24,6 +25,9 @@ export default function HeroSection() {
         <p className="text-md md:text-xl lg:text-2xl">
           1월의 인기 경험 BEST 🔥
         </p>
+      </div>
+      <div className='absolute -bottom-100 left-0 right-0'>
+        <SearchBar />
       </div>
     </section>
   );
