@@ -7,7 +7,6 @@ import PriceDisplay from './PriceDisplay';
 import TimeSelector from './TimeSelector';
 import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
-import { useState } from 'react';
 import DatePicker from '../DatePicker/DatePicker';
 import Button from '../Button';
 
@@ -17,7 +16,6 @@ export default function BookingInterface() {
   };
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
   const { selectedDate, selectedTime, participants } = useBookingStore();
-
 
   return (
     <div className='w-full max-w-sm'>
@@ -68,7 +66,7 @@ export default function BookingInterface() {
       </div>
 
       {/* 모바일 */}
-      <div className='fixed bottom-0 left-0 right-0 z-100 block border border-gray-200 bg-white p-6 md:hidden'>
+      <div className='fixed right-0 bottom-0 left-0 z-100 block border border-gray-200 bg-white p-6 md:hidden'>
         <div className='mb-6 flex items-start justify-between'>
           <div className='flex-1'>
             <div className='mb-1 text-xl font-bold text-gray-900'>
