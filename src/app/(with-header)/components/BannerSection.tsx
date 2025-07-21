@@ -6,8 +6,8 @@ export default function BannerSection() {
     <section className="relative w-full h-240 md:h-550 mb-93">
       {/* 배경 이미지 */}
       <Image
-        src="/test/image1.png"
-        alt="스트릿 댄스"
+        src='/test/image1.png'
+        alt='스트릿 댄스'
         fill
         className="object-cover"
         priority

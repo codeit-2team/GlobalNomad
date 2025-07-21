@@ -1,5 +1,3 @@
-// src/app/(with-header)/layout.tsx
-import '@/app/globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -10,9 +8,8 @@ export default function WithHeaderLayout({
 }) {
   return (
     <>
-      {/* 헤더와 푸터 */}
       <Header />
-      <main className="pt-70">{children}</main>
+      <main className='pt-70'>{children}</main>
       <Footer />
     </>
   );
