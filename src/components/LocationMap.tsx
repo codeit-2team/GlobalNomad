@@ -61,8 +61,18 @@ const LocationMap = ({ address }: LocationMapProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [coords]);
 
-  if (!scriptLoad) return <div> 카카오맵 로딩 중...</div>;
-  if (!coords) return <div> 주소 좌표 불러오는 중...</div>;
+  if (!scriptLoad)
+    return (
+      <div className='flex h-[500px] w-full items-center justify-center overflow-hidden rounded-lg shadow-md lg:max-w-[800px]'>
+        <h2>지도 불러오는중...</h2>
+      </div>
+    );
+  if (!coords)
+    return (
+      <div className='flex h-[500px] w-full items-center justify-center overflow-hidden rounded-lg shadow-md lg:max-w-[800px]'>
+        <h2>좌표 불러오는중...</h2>
+      </div>
+    );
 
   return (
     <>
@@ -88,13 +98,10 @@ const LocationMap = ({ address }: LocationMapProps) => {
       </div>
 
       {/* 주소 텍스트 */}
-      <div className='mt-8 flex items-center justify-start text-base font-medium'>
+      <div className='relative mt-8 flex items-center justify-start text-base font-medium'>
         <div className='flex items-center space-x-1'>
-          <Location
-            size={30}
-            className='h-5 w-5 px-8 align-middle text-blue-300'
-          />
-          <p>{address}</p>
+          <Location size={50} className='px-8 align-middle text-blue-700' />
+          <p className='text-md md:text-lg'>{address}</p>
         </div>
       </div>
     </>

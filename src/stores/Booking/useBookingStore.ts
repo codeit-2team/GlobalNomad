@@ -3,12 +3,13 @@ import { BookingState } from '@/types/bookingStoreTypes';
 
 const useBookingStore = create<BookingState>((set) => ({
   selectedDate: new Date(),
-  selectedTime: '14:00-15:00',
+  selectedTime: null,
   participants: 1,
   isOpen: false,
   availableDates: [],
+  selectedTimeId: null,
   setAvailableDates: (data) => set({ availableDates: data }),
-
+  setSelectedTimeId: (id) => set({ selectedTimeId: id }),
   setSelectedDate: (date) => set({ selectedDate: date }),
   setSelectedTime: (time) => set({ selectedTime: time }),
   incrementParticipants: () =>

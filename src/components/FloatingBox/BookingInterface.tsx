@@ -15,7 +15,11 @@ export default function BookingInterface() {
     alert('예약이 완료되었습니다!');
   };
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
-  const { selectedDate, selectedTime, participants } = useBookingStore();
+  const { selectedDate, selectedTime, participants, selectedTimeId } =
+    useBookingStore();
+
+  const isBookable =
+    !!selectedDate && !!selectedTime && !!selectedTimeId && !!participants;
 
   return (
     <div className='w-full max-w-sm'>
@@ -28,7 +32,9 @@ export default function BookingInterface() {
           </div>
           <TimeSelector />
           <ParticipantsSelector />
-          <BookingButton onClick={handleBooking}>예약하기</BookingButton>
+          <BookingButton disabled={!isBookable} onClick={handleBooking}>
+            예약하기
+          </BookingButton>
           <TotalPriceDisplay />
         </div>
       </div>
@@ -59,7 +65,9 @@ export default function BookingInterface() {
             <ParticipantsSelector />
             <BookingModal />
 
-            <BookingButton onClick={handleBooking}>예약하기</BookingButton>
+            <BookingButton disabled={!isBookable} onClick={handleBooking}>
+              예약하기
+            </BookingButton>
             <TotalPriceDisplay />
           </div>
         </div>
@@ -91,7 +99,12 @@ export default function BookingInterface() {
               )}
             </div>
             <BookingModal />
-            <Button variant='primary' className='py-20' onClick={handleBooking}>
+            <Button
+              variant='primary'
+              disabled={!isBookable}
+              className='py-20'
+              onClick={handleBooking}
+            >
               예약하기
             </Button>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
+import { SvgProps } from '@/types/svgType';
 
-const Star = ({ size = 20, color = '#fff', ...props }) => (
+const Star = ({ size = 20, color = '#fff', ...props }:SvgProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width={size}
