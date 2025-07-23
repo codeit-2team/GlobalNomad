@@ -72,8 +72,6 @@ export default function LoginForm() {
   useEffect(() => {
     if (state.user) {
       setUser(state.user);
-      console.log('state:', state);
-      console.log('user:', state.user);
 
       router.push('/');
     }
