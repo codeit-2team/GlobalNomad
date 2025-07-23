@@ -1,0 +1,177 @@
+name: Deploy to OCI
+
+on:
+  push:
+    branches:
+      - develop
+  # GitHub Actions 탭에서 수동으로 실행 가능
+  workflow_dispatch:
+
+# 워크플로우 전체에서 사용할 환경 변수 설정
+env:
+  # 사용할 컨테이너 레지스트리(GitHub Container Registry)
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/global-nomad
+
+jobs:
+  # Job 1: Docker 이미지 빌드를 빌드하고 GHCR에 푸시
+  build:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    # 해당 Job이 사용할 권한 설정
+    permissions:
+      contents: read
+      # GHCR에 이미지를 쓰기(푸시) 위한 권한
+      packages: write
+    
+    # Job의 결과를 다른 Job에서 사용할 수 있도록 출력 설정
+    outputs:
+      # metadata-action이 생성한 고유하고 안정적인 태그를 전달
+      image_tag: ${{ steps.meta.outputs.version }}
+    
+    steps:
+      # 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Docker Buildx 설정
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # GHCR 로그인
+      # - secrets.GITHUB_TOKEN: 워크플로우 실행 시 GitHub이 자동으로 생성해주는 임시 토큰
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # docker/metadata-action을 사용하여 태그와 라벨을 자동으로 생성
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=develop-,format=short
+
+      # 도커 이미지 빌드 및 푸시 (자동 생성된 불변 태그 사용)
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          # 현재 디렉토리를 빌드 컨텍스트로 사용
+          context: .
+          # 빌드 후 레지스트리에 푸시
+          push: true
+          # metadata-action이 생성한 tags와 labels를 직접 사용
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # GitHub Actions 캐시를 사용하여 빌드 속도 향상
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # 빌드할 플랫폼 지정
+          platforms: linux/amd64
+
+  # Job 2: OCI 서버에 배포
+  deploy:
+    name: Deploy to OCI Server
+    runs-on: ubuntu-latest
+    # 빌드 Job이 성공해야만 실행
+    needs: build
+    
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.OCI_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.OCI_HOST }} >> ~/.ssh/known_hosts
+
+      # 서버에 배포 스크립트 실행
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_HOST }} << 'ENDSSH'
+            set -e
+
+            export IMAGE_TAG="${{ needs.build.outputs.image_tag }}"
+            export IMAGE_URL="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
+
+            echo "📦 Starting deployment..."
+            echo "🏷️  Deploying image: ${IMAGE_URL}"
+            echo "🔖 Version: ${IMAGE_TAG}"
+            
+            # 프로젝트 디렉토리로 이동
+            cd ~/projects/GlobalNomad
+            
+            # 최신 코드 가져오기
+            echo "🔄 Pulling latest code..."
+            git pull origin develop
+            
+            # GHCR 로그인 (PAT 사용)
+            echo "🔐 Logging in to GHCR..."
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # 현재 실행 중인 이미지 태그 저장 (롤백용)
+            echo "💾 Saving current version..."
+            CURRENT_IMAGE=$(docker compose ps -q nextjs | xargs docker inspect -f '{{.Config.Image}}' 2>/dev/null || echo "none")
+            echo "Current: $CURRENT_IMAGE" > ~/deployments/previous-version.txt
+            
+            # 기존 컨테이너 중지
+            echo "🛑 Stopping existing containers..."
+            docker compose down || true
+            
+            # 최신 이미지 pull (정확한 버전)
+            echo "📥 Pulling image: ${IMAGE_URL}"
+            docker pull ${IMAGE_URL}
+            
+            # 환경 변수로 이미지 지정하여 실행
+            echo "🚀 Starting containers..."
+            export NEXTJS_IMAGE="${IMAGE_URL}"
+            docker compose up -d
+            
+            # 헬스 체크
+            echo "❤️ Health check..."
+            for i in {1..30}; do
+              if curl -f http://localhost > /dev/null 2>&1; then
+                echo "✅ Service is healthy!"
+                break
+              fi
+              echo "⏳ Waiting for service... ($i/30)"
+              sleep 2
+            done
+            
+            # 최종 확인
+            if ! curl -f http://localhost > /dev/null 2>&1; then
+              echo "❌ Service health check failed after 60 seconds!"
+              docker compose logs --tail 50 nextjs
+              docker compose logs --tail 50 nginx
+              exit 1
+            fi
+            
+            # 배포 정보 기록
+            echo "📝 Recording deployment..."
+            mkdir -p ~/deployments
+            echo "${IMAGE_URL}" > ~/deployments/current-version.txt
+            echo "$(date -u +'%Y-%m-%d %H:%M:%S UTC') - ${IMAGE_TAG}" >> ~/deployments/history.log
+            
+            # 오래된 이미지 정리 (최근 3개만 유지)
+            echo "🧹 Cleaning up old images..."
+            docker images --filter=reference='*/*global-nomad' --format '{{.ID}}' | tail -n +4 | xargs -r docker rmi || true
+            
+            echo "✅ Deployment completed successfully!"
+            echo "📊 Deployed version: ${IMAGE_TAG}"
+          ENDSSH
+
+      # 배포 결과 알림
+      - name: Notify deployment status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ 배포 성공!"
+            echo "🏷️  Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
+            echo "🔖 Version: ${{ needs.build.outputs.image_tag }}"
+          else
+            echo "❌ 배포 실패!"
+          fi
