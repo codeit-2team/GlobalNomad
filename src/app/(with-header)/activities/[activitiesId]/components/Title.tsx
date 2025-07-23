@@ -1,14 +1,7 @@
 import React from 'react';
 import IconDropdown from '@assets/svg/dropdown';
-
-interface TitleProps {
-  title: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  address: string;
-  isDropDown?: boolean;
-}
+import Star from '@assets/svg/star';
+import { TitleProps } from '@/types/activityDetailType';
 
 export default function Title({
   title,
@@ -25,9 +18,9 @@ export default function Title({
         <h1 className='mb-2 text-2xl font-bold text-black md:text-3xl'>
           {title}
         </h1>
-        <div className='flex items-center gap-4 text-sm text-gray-600'>
+        <div className='flex items-center gap-10 text-sm text-gray-600'>
           <div className='flex items-center gap-1'>
-            <span className='text-yellow-500'>★</span>
+            <Star />
             <span className='font-medium'>
               {rating.toFixed(1)} ({reviewCount}명)
             </span>
@@ -37,7 +30,7 @@ export default function Title({
       </div>
 
       {isDropDown && (
-        <div className='mt-30 flex items-center gap-2'>
+        <div className='mt-30 flex items-center gap-1'>
           <IconDropdown />
         </div>
       )}

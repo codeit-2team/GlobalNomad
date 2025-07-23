@@ -2,13 +2,7 @@
 
 import type dayjs from 'dayjs';
 
-interface CalendarBodyProps {
-  viewDate: dayjs.Dayjs;
-  today: dayjs.Dayjs;
-  selectedDate: dayjs.Dayjs;
-  onSelectDate: (date: dayjs.Dayjs) => void;
-  highlightDates?: dayjs.Dayjs[];
-}
+import { CalendarBodyProps } from '@/types/datePickerTypes';
 
 export default function CalendarBody({
   viewDate,
