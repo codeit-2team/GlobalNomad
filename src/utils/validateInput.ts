@@ -10,6 +10,8 @@ const validateEmail = (value: string) => {
 const validateNickname = (value: string) => {
   if (!value) return '닉네임은 필수 입력입니다.';
   if (value.length > 10) return '열 자 이하로 작성해주세요.';
+  if (!/^[가-힣a-zA-Z0-9_]+$/.test(value))
+    return '닉네임은 한글, 영문, 숫자, 밑줄(_)만 사용 가능합니다.';
   return '';
 };
 
