@@ -59,7 +59,7 @@ export async function POST() {
     });
 
     return res;
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: '액세스 토큰 갱신 실패' },
       { status: 401 },
