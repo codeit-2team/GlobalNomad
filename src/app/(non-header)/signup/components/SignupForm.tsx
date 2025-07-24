@@ -91,7 +91,14 @@ export default function SignupForm() {
    * 카카오 OAuth 인증 페이지로 리다이렉션합니다.
    */
   const handleKakaoSignup = () => {
-    const redirectUrl = process.env.NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL ?? '';
+    const redirectUrl = process.env.NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL;
+
+    if (!redirectUrl) {
+      setErrorMessage('카카오 회원가입 설정이 올바르지 않습니다.');
+      setErrorPopupOpen(true);
+      return;
+    }
+
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}&response_type=code`;
     window.location.href = kakaoAuthUrl;
   };
