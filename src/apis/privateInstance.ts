@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 /**
- * Axios 인스턴스를 생성하여 인증이 필요한 클라이언트 요청을 처리합니다.
+ * 인증이 필요한 클라이언트 요청을 처리하기 위한 Axios 인스턴스입니다.
  *
- * 이 인스턴스는 기본적으로 `/api`를 baseURL로 사용하며,
- * 서버로부터 401 Unauthorized 응답을 받을 경우 `/api/auth/refresh` 엔드포인트를 통해
- * accessToken을 재발급받고, 실패했던 원래 요청을 한 번만 재시도합니다.
+ * - 기본 baseURL은 `/api`입니다.
+ * - 모든 요청에 `application/json` 헤더가 포함됩니다.
+ * - 응답으로 401 Unauthorized가 반환되면, `/api/auth/refresh`를 호출하여 accessToken을 재발급받습니다.
+ *   - 재발급에 성공하면, 실패했던 원래 요청을 한 번만 재시도합니다.
+ *   - 재시도 여부는 `_retry` 플래그로 제어합니다.
+ *
+ * @module privateInstance
  */
 
 const privateInstance = axios.create({
@@ -17,11 +21,12 @@ const privateInstance = axios.create({
 privateInstance.interceptors.response.use(
   (res) => res,
   /**
-   * 응답 인터셉터: 401 에러 발생 시 refresh 토큰을 사용하여 accessToken을 재발급하고,
-   * 실패했던 요청을 재시도합니다. 단, 동일 요청이 여러 번 재시도되지 않도록 `_retry` 플래그를 설정합니다.
+   * 응답 인터셉터
    *
-   * @param {import('axios').AxiosError} error - Axios 오류 객체
-   * @returns {Promise} - 성공 시 원래 요청 재시도, 실패 시 에러 반환
+   * 401 Unauthorized 응답이 발생한 경우:
+   * - accessToken 재발급을 위해 `/api/auth/refresh` 요청을 보냅니다.
+   * - 재발급 성공 시, 원래 요청에 새로운 토큰을 추가하여 재시도합니다.
+   * - 같은 요청이 반복되지 않도록 `originalRequest._retry` 플래그로 제어합니다.
    */
   async (error) => {
     const originalRequest = error.config;
@@ -30,8 +35,11 @@ privateInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post('/api/auth/refresh', null, {});
-        console.log('리프레시 토큰 전송');
+        const { data } = await axios.post('/api/auth/refresh');
+        const newAccessToken = data.accessToken;
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
         return privateInstance(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
