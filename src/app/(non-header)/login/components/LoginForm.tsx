@@ -82,7 +82,14 @@ export default function LoginForm() {
   }, [state, setUser, router]);
 
   const handleKakaoLogin = () => {
-    const redirectUrl = process.env.NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL ?? '';
+    const redirectUrl = process.env.NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL;
+
+    if (!redirectUrl) {
+      setErrorMessage('카카오 로그인 설정이 올바르지 않습니다.');
+      setErrorPopupOpen(true);
+      return;
+    }
+
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}&response_type=code`;
     window.location.href = kakaoAuthUrl;
   };
@@ -131,7 +138,6 @@ export default function LoginForm() {
               className='h-48 rounded-md'
               disabled={isDisabled}
               type='submit'
-              onClick={() => {}}
             >
               로그인 하기
             </Button>
