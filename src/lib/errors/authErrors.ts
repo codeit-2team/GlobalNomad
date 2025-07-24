@@ -31,7 +31,7 @@ export class PasswordMismatchError extends CustomError {
 }
 
 export class PasswordValidateError extends CustomError {
-  constructor(message = '비밀번호는 8자 이상이여야합니다.') {
+  constructor(message = '비밀번호는 8자 이상이어야 합니다.') {
     super(message, 400);
   }
 }
