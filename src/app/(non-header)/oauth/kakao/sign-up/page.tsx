@@ -83,7 +83,7 @@ export default function KakaoSignupCallbackPage() {
     };
 
     handleKakaoSignup();
-  }, [searchParams, router]);
+  }, [searchParams, router, nickname]);
 
   return <div>카카오 회원가입 처리 중입니다...</div>;
 }
