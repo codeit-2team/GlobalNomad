@@ -159,7 +159,7 @@ export default function LoginForm() {
               <hr className='w-80 border-t border-gray-300 md:w-180' />
             </div>
 
-            <button onClick={handleKakaoLogin}>
+            <button type='button' onClick={handleKakaoLogin}>
               <IconKakao className={'size-48 md:size-72'} />
             </button>
           </div>
