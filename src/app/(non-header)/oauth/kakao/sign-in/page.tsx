@@ -76,7 +76,7 @@ export default function KakaoSigninCallbackPage() {
     };
 
     handleKakaoLogin();
-  }, [searchParams, router]);
+  }, [searchParams, router, setUser]);
 
   return <div>카카오 로그인 처리 중입니다...</div>;
 }
