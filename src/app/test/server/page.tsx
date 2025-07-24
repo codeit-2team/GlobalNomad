@@ -1,4 +1,5 @@
 import { privateServerInstance } from '@/apis/privateServerInstance';
+import { AxiosError } from 'axios';
 
 export default async function ServerPrivateInstanceTest() {
   try {
@@ -11,11 +12,18 @@ export default async function ServerPrivateInstanceTest() {
         <pre>{JSON.stringify(res.data, null, 2)}</pre>
       </div>
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError;
     return (
       <div>
         <h1>❌ 서버 요청 실패</h1>
-        <pre>{JSON.stringify(err?.response?.data || err.message, null, 2)}</pre>
+        <pre>
+          {JSON.stringify(
+            axiosErr?.response?.data || axiosErr.message,
+            null,
+            2,
+          )}
+        </pre>
       </div>
     );
   }
