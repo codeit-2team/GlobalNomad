@@ -51,12 +51,12 @@ export default function KakaoSignupCallbackPage() {
   const searchParams = useSearchParams();
   const setUser = useUserStore((state) => state.setUser);
 
-  const nickname = `${adjectives[Math.floor(Math.random() * adjectives.length)]}${animals[Math.floor(Math.random() * animals.length)]}`;
-
   useEffect(() => {
     const code = searchParams.get('code');
 
     if (!code) return;
+
+    const nickname = `${adjectives[Math.floor(Math.random() * adjectives.length)]}${animals[Math.floor(Math.random() * animals.length)]}`;
 
     /**
      * 카카오 회원가입 처리를 위한 비동기 함수입니다.
@@ -83,7 +83,7 @@ export default function KakaoSignupCallbackPage() {
     };
 
     handleKakaoSignup();
-  }, [searchParams, router, nickname]);
+  }, [searchParams, router]);
 
   return <div>카카오 회원가입 처리 중입니다...</div>;
 }
