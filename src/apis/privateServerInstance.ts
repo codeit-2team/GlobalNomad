@@ -28,7 +28,7 @@ const refreshAccessToken = async (): Promise<string | null> => {
     );
 
     return res.data.accessToken;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
