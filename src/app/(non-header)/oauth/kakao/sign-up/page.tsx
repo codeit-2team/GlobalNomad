@@ -76,7 +76,7 @@ export default function KakaoSignupCallbackPage() {
           setUser(data.user);
           router.push('/login');
         }
-      } catch (err) {
+      } catch {
         alert('카카오 회원가입 실패');
         router.push('/signup');
       }
