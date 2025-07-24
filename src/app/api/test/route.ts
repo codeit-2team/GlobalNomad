@@ -10,6 +10,13 @@ export async function GET() {
   const cookieStore = cookies();
   const accessToken = (await cookieStore).get('accessToken')?.value;
 
+  if (!accessToken) {
+    return NextResponse.json(
+      { error: '액세스 토큰이 없습니다' },
+      { status: 401 },
+    );
+  }
+
   try {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/users/me`,
