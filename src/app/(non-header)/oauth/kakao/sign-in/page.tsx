@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import useUserStore from '@/stores/authStore';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
