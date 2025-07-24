@@ -2,18 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import { privateInstance } from '@/apis/privateInstance';
+import { User } from '@/types/user';
+import { AxiosError } from 'axios';
 
 export default function AuthFlowTestPage() {
-  const [user, setUser] = useState<any>(null);
-  const [error, setError] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | object | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await privateInstance.get('/test');
         setUser(res.data);
-      } catch (err: any) {
-        setError(err.response?.data || err.message);
+      } catch (err: unknown) {
+        const axiosErr = err as AxiosError;
+        setError(axiosErr.response?.data || axiosErr.message);
       }
     };
 
