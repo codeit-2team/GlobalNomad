@@ -1,5 +1,6 @@
 'use client';
 
+import BedIcon from '@assets/svg/bed';
 import BellIcon from '@assets/svg/bell';
 import CheckIcon from '@assets/svg/check';
 import ChevronIcon from '@assets/svg/chevron';
@@ -18,6 +19,7 @@ import IconYoutube from '@assets/svg/youtube';
 
 export default function Home() {
   const icons = [
+    { name: 'BedIcon', component: <BedIcon size={32} /> },
     { name: 'BellIcon', component: <BellIcon size={32} /> },
     { name: 'CheckIcon', component: <CheckIcon size={32} /> },
     {

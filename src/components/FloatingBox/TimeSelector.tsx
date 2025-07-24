@@ -6,6 +6,7 @@ export default function TimeSelector() {
   const setSelectedTime = useBookingStore((state) => state.setSelectedTime);
   const selectedDate = useBookingStore((state) => state.selectedDate);
   const availableDates = useBookingStore((state) => state.availableDates);
+  const setSelectedTimeId = useBookingStore((state) => state.setSelectedTimeId);
 
   const selectedDateStr = selectedDate
     ? format(selectedDate, 'yyyy-MM-dd')
@@ -26,7 +27,10 @@ export default function TimeSelector() {
             return (
               <button
                 key={id}
-                onClick={() => setSelectedTime(timeRange)}
+                onClick={() => {
+                  setSelectedTime(timeRange);
+                  setSelectedTimeId(id);
+                }}
                 className={`rounded-md px-6 py-3 text-sm font-semibold ${
                   selectedTime === timeRange
                     ? 'bg-green-800 text-white'
