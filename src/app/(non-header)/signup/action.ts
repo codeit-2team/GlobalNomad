@@ -45,6 +45,14 @@ export default async function Signup(
   const nickname = formData.get('nickname');
   const password = formData.get('password');
 
+  if (
+    typeof email !== 'string' ||
+    typeof nickname !== 'string' ||
+    typeof password !== 'string'
+  ) {
+    return { error: '잘못된 입력 형식입니다.' };
+  }
+
   try {
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/users`,
