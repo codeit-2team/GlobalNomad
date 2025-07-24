@@ -45,6 +45,10 @@ export default async function Login(
   const email = formData.get('email');
   const password = formData.get('password');
 
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    return { error: '이메일 또는 비밀번호가 올바르지 않습니다.' };
+  }
+
   try {
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/auth/login`,
