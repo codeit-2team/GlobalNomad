@@ -205,7 +205,7 @@ export default function SignupForm() {
             </div>
 
             <button type='button' onClick={handleKakaoSignup}>
-              <IconKakao className={'size-48 md:size-72'} />
+              <IconKakao className='size-48 md:size-72' />
             </button>
           </div>
         </form>
