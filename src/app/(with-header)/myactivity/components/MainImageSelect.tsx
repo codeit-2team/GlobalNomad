@@ -1,6 +1,5 @@
 'use client';
 
-import IconClose from '@assets/svg/close';
 import { ImageUpload } from './ImageUpload';
 import { ImagePreview } from './ImagePreview';
 

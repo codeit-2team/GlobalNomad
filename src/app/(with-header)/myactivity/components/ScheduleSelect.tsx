@@ -19,7 +19,7 @@ interface ScheduleSelectProps {
 export function ScheduleSelect({
   index,
   isRemovable,
-  onAddDate,
+
   onRemove,
   onDateChange,
   onStartTimeChange,

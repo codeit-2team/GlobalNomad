@@ -11,13 +11,22 @@ interface AddressInputProps {
   address: string;
 }
 
+interface PostcodeData {
+  address: string;
+  addressType: 'R' | 'J';
+  bname: string;
+  buildingName: string;
+  zonecode: string;
+  userSelectedType: string;
+}
+
 export default function AddressInput({
   onAddressChange,
   address,
 }: AddressInputProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: PostcodeData) => {
     let fullAddress = data.address;
     let extraAddress = '';
 
