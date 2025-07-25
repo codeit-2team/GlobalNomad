@@ -27,7 +27,9 @@
 //  * @component
 //  * @returns {JSX.Element} "카카오 로그인 처리 중입니다..."라는 텍스트를 포함한 JSX
 //  */
-// export default function KakaoSigninCallbackPage() {
+export default function KakaoSigninCallbackPage() {
+  return <div>카카오 로그인 처리 예정</div>;
+}
 //   const router = useRouter();
 //   const searchParams = useSearchParams();
 //   const setUser = useUserStore((state) => state.setUser);
