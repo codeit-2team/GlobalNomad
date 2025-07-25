@@ -18,6 +18,7 @@ export default function Input({
   label,
   error,
   className,
+  focusColor,
   ...props
 }: InputProps) {
   const [visibility, setVisibility] = useState(false);
@@ -42,7 +43,8 @@ export default function Input({
           id={id}
           type={inputType}
           className={cn(
-            'w-full rounded-md border bg-white px-20 py-15 placeholder-gray-600',
+            'w-full rounded-md border bg-white py-15 pr-50 pl-20 placeholder-gray-600 focus:outline-none',
+            focusColor,
             error ? 'border-red-300' : 'border-gray-800',
           )}
         />
