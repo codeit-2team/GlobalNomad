@@ -109,6 +109,7 @@ export default function LoginForm() {
               required
               name='email'
               error={errors.email}
+              focusColor='focus:border-nomad'
               label='이메일'
               placeholder='이메일을 입력해 주세요'
               type='email'
@@ -123,6 +124,7 @@ export default function LoginForm() {
               required
               name='password'
               error={errors.password}
+              focusColor='focus:border-nomad'
               label='비밀번호'
               placeholder='비밀번호를 입력해주세요'
               type='password'

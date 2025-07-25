@@ -128,6 +128,7 @@ export default function SignupForm() {
               name='email'
               error={errors.email}
               label='이메일'
+              focusColor='focus:border-nomad'
               placeholder='이메일을 입력해 주세요'
               type='email'
               value={email}
@@ -142,6 +143,7 @@ export default function SignupForm() {
               name='nickname'
               error={errors.nickname}
               label='닉네임'
+              focusColor='focus:border-nomad'
               placeholder='닉네임을 입력해 주세요'
               type='text'
               value={nickname}
@@ -156,6 +158,7 @@ export default function SignupForm() {
               name='password'
               error={errors.password}
               label='비밀번호'
+              focusColor='focus:border-nomad'
               placeholder='8자 이상 입력해 주세요'
               type='password'
               value={password}
@@ -170,6 +173,7 @@ export default function SignupForm() {
               name='passwordConfirmation'
               error={errors.passwordConfirmation}
               label='비밀번호 확인'
+              focusColor='focus:border-nomad'
               placeholder='비밀번호를 한번 더 입력해 주세요'
               type='password'
               value={passwordConfirmation}
