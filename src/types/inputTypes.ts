@@ -9,4 +9,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   /** 에러 메시지 (있으면 하단에 표시됨) */
   error?: string;
+
+  /** 포커스 시 적용할 테두리 색상  */
+  focusColor?: string;
 }
