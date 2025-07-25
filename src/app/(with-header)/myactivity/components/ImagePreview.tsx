@@ -29,7 +29,7 @@ export function ImagePreview({
       <button
         type='button'
         onClick={onRemove}
-        className='absolute top-2 right-2 rounded-full bg-gray-600 p-1 text-white opacity-0 transition-colors group-hover:opacity-100 hover:bg-gray-700'
+        className='absolute top-2 right-2 rounded-full bg-gray-600 p-1 text-white transition-colors hover:bg-gray-700'
         aria-label='이미지 삭제'
       >
         <IconClose />

@@ -26,6 +26,9 @@ export function SubImageSelect({
       </p>
 
       <div className='grid grid-cols-2 gap-20 sm:grid-cols-3 lg:grid-cols-4'>
+        {subImage.length < 4 && (
+          <ImageUpload onImageSelect={handleImageUpload} />
+        )}
         {subImage.map((img, idx) => (
           <ImagePreview
             key={idx}
@@ -34,10 +37,6 @@ export function SubImageSelect({
             alt={`소개 이미지 ${idx + 1}`}
           />
         ))}
-
-        {subImage.length < 4 && (
-          <ImageUpload onImageSelect={handleImageUpload} />
-        )}
       </div>
 
       <p className='text-md mt-3 text-gray-500'>

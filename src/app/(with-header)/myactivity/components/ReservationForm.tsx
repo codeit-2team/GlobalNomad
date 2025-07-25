@@ -6,6 +6,7 @@ import type React from 'react';
 import { InfoSection } from './InfoSection';
 import { ScheduleSelectForm } from './ScheduleSelectForm';
 import { ImageSection } from './ImageSection';
+import Button from '@/components/Button';
 
 interface DateSlot {
   date: string;
@@ -113,55 +114,50 @@ export default function ReservationForm() {
   return (
     <div className='min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
-        <div className='overflow-hidden rounded-lg bg-white shadow-lg'>
-          <div className='px-6 py-8 sm:px-8 sm:py-10'>
-            <div className='mb-8 flex justify-between'>
-              <h1 className='mb-2 text-3xl font-bold text-gray-900'>
-                내 체험 등록
-              </h1>
+        <form onSubmit={handleSubmit} className='space-y-8'>
+          <div className='mb-8 flex items-center justify-between'>
+            <h1 className='mb-2 text-3xl font-bold text-gray-900'>
+              내 체험 등록
+            </h1>
+            <div className='border-t border-gray-200 pt-6'>
+              <Button
+                variant='primary'
+                type='submit'
+                className='w-full px-5 py-10'
+              >
+                체험 등록하기
+              </Button>
             </div>
-
-            <form onSubmit={handleSubmit} className='space-y-8'>
-              <InfoSection
-                title={title}
-                category={category}
-                price={price}
-                description={description}
-                address={address}
-                onTitleChange={setTitle}
-                onCategoryChange={setCategory}
-                onPriceChange={(value) => setPrice(Number(value))}
-                onDescriptionChange={setDescription}
-                onAddressChange={setAddress}
-              />
-
-              <ScheduleSelectForm
-                dates={dates}
-                onAddDate={handleAddDate}
-                onRemoveDate={handleRemoveDate}
-                onDateChange={handleDateChange}
-              />
-
-              <ImageSection
-                mainImage={mainImage}
-                subImage={subImage}
-                onMainImageSelect={handleMainImageSelect}
-                onMainImageRemove={handleMainImageRemove}
-                onSubImageAdd={handleSubImagesAdd}
-                onSubImageRemove={handleSubImageRemove}
-              />
-
-              <div className='border-t border-gray-200 pt-6'>
-                <button
-                  type='submit'
-                  className='w-full rounded-lg bg-green-600 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-green-700 hover:shadow-xl focus:ring-4 focus:ring-green-200'
-                >
-                  체험 등록하기
-                </button>
-              </div>
-            </form>
           </div>
-        </div>
+          <InfoSection
+            title={title}
+            category={category}
+            price={price}
+            description={description}
+            address={address}
+            onTitleChange={setTitle}
+            onCategoryChange={setCategory}
+            onPriceChange={(value) => setPrice(Number(value))}
+            onDescriptionChange={setDescription}
+            onAddressChange={setAddress}
+          />
+
+          <ScheduleSelectForm
+            dates={dates}
+            onAddDate={handleAddDate}
+            onRemoveDate={handleRemoveDate}
+            onDateChange={handleDateChange}
+          />
+
+          <ImageSection
+            mainImage={mainImage}
+            subImage={subImage}
+            onMainImageSelect={handleMainImageSelect}
+            onMainImageRemove={handleMainImageRemove}
+            onSubImageAdd={handleSubImagesAdd}
+            onSubImageRemove={handleSubImageRemove}
+          />
+        </form>
       </div>
     </div>
   );

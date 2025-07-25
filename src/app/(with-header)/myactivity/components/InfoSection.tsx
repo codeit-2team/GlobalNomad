@@ -2,6 +2,7 @@
 
 import Input from '@/components/Input';
 import AddressInput from './AddressInput';
+import CategoryInput from './CategoryInput';
 
 interface InfoSectionProps {
   title?: string;
@@ -43,28 +44,10 @@ export function InfoSection({
           />
         </div>
 
-        <div>
-          <label
-            htmlFor='category'
-            className='mb-2 block text-sm font-medium text-gray-700'
-          >
-            카테고리 *
-          </label>
-          <select
-            id='category'
-            className='w-full rounded-md border bg-white px-20 py-15 placeholder-gray-600'
-            value={category}
-            onChange={(e) => onCategoryChange(e.target.value)}
-          >
-            <option value=''>카테고리를 선택해주세요</option>
-            <option value='outdoor'>문화/예술</option>
-            <option value='culture'>식음료</option>
-            <option value='food'>스포츠</option>
-            <option value='craft'>투어</option>
-            <option value='craft'>관광</option>
-            <option value='craft'>웰빙</option>
-          </select>
-        </div>
+        <CategoryInput
+          category={category}
+          onCategoryChange={onCategoryChange}
+        />
 
         <div>
           <div className='relative'>
