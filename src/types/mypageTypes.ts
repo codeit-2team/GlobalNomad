@@ -26,7 +26,32 @@ export interface MyPageStoreState {
   setError: (error: string | null) => void;
   setEditing: (editing: boolean) => void;
   clearError: () => void;
+}
 
-  // 목업 데이터 (API 연결 전 임시)
-  initMockData: () => void;
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface UpdateProfileRequest {
+  nickname?: string;
+  profileImageUrl?: string;
+  newPassword?: string;
+}
+
+export interface LoginResponse {
+  user: User;
+  refreshToken: string;
+  accessToken: string;
+}
+
+export interface ProfileImageResponse {
+  profileImageUrl: string;
+}
+
+export interface ProfileFormData {
+  nickname: string;
+  email: string;
+  newPassword: string;
+  confirmPassword: string;
 }

@@ -1,9 +1,11 @@
 'use client';
 
+import { useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import ProfileImage from './ProfileImage';
 import useMyPageStore from '@/stores/MyPage/useMyPageStore';
+import { useUploadProfileImage } from '@/hooks/useMyPageQueries';
 import MyUserIcon from '@assets/svg/my-user';
 import MyReservationIcon from '@assets/svg/my-reservation';
 import MyActivitiesIcon from '@assets/svg/my-activities';
@@ -18,6 +20,8 @@ import MyActivitiesDashboardIcon from '@assets/svg/my-activities-dashboard';
 export default function ProfileNavigation() {
   const { user } = useMyPageStore();
   const pathname = usePathname();
+  const uploadImageMutation = useUploadProfileImage();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const menuItems = [
     { href: '/mypage/profile', icon: MyUserIcon, label: '내 정보' },
@@ -43,6 +47,34 @@ export default function ProfileNavigation() {
     return pathname === href;
   };
 
+  // 프로필 이미지 편집 버튼
+  const handleImageEdit = () => {
+    fileInputRef.current?.click();
+  };
+
+  // 파일 선택
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // 파일 타입 검증
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일만 업로드 가능합니다.');
+        return;
+      }
+
+      // 파일 크기 검증
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기는 5MB 이하여야 합니다.');
+        return;
+      }
+
+      uploadImageMutation.mutate(file);
+    }
+
+    // 같은 파일을 다시 선택할 수 있도록 input 값 초기화
+    event.target.value = '';
+  };
+
   return (
     <div className='hidden flex-shrink-0 md:block'>
       <div className='h-432 w-251 rounded border border-gray-300 bg-white p-24 lg:w-384'>
@@ -52,7 +84,16 @@ export default function ProfileNavigation() {
             src={user?.profileImageUrl}
             nickname={user?.nickname}
             showEditButton={true}
-            onEdit={() => alert('프로필 이미지 편집')} // TODO: API 연결
+            onEdit={handleImageEdit}
+          />
+
+          {/* 숨겨진 파일 입력 */}
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='image/*'
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
           />
         </div>
 

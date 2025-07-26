@@ -10,22 +10,20 @@ import MyUserIcon from '@assets/svg/my-user';
 import MyReservationIcon from '@assets/svg/my-reservation';
 import MyActivitiesIcon from '@assets/svg/my-activities';
 import MyActivitiesDashboardIcon from '@assets/svg/my-activities-dashboard';
-
 /**
  * 마이페이지 메인 페이지 (/mypage)
  * - 모바일: 메뉴 리스트 표시
  * - 데스크톱/태블릿: /mypage/profile로 자동 리다이렉트
  */
 export default function MyPageMainPage() {
-  const { user, initMockData } = useMyPageStore();
+  const { user } = useMyPageStore();
   const [mounted, setMounted] = useState(false);
   const deviceType = useDeviceSize();
   const router = useRouter();
 
   useEffect(() => {
-    initMockData();
     setMounted(true);
-  }, [initMockData]);
+  }, []);
 
   // 데스크톱/태블릿에서는 프로필 페이지로 리다이렉트
   useEffect(() => {
