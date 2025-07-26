@@ -10,6 +10,8 @@ import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
 import Button from '../Button';
 import { SchedulesProps } from '@/types/activityDetailType';
+import { privateInstance } from '@/apis/privateInstance';
+import { useParams } from 'next/navigation';
 
 export default function BookingInterface({
   schedules,
@@ -18,12 +20,29 @@ export default function BookingInterface({
   schedules: SchedulesProps;
   onMonthChange?: (year: number, month: number) => void;
 }) {
-  const handleBooking = () => {
-    alert('예약이 완료되었습니다!');
+  const handleBooking = async () => {
+    try {
+      await privateInstance.post(`/activities/${id}/reservation`, {
+        selectedTimeId,
+        participants,
+      });
+      alert('예약이 완료되었습니다!');
+      setIsOpen(false);
+    } catch (err: any) {
+      console.error('전체 에러:', err);
+
+      alert(
+        err?.response?.data?.error ||
+          err?.response?.data?.message ||
+          err?.message ||
+          '예약에 실패했습니다.',
+      );
+    }
   };
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
   const { selectedDate, selectedTime, participants, selectedTimeId } =
     useBookingStore();
+  const { id } = useParams();
 
   const isBookable =
     !!selectedDate && !!selectedTime && !!selectedTimeId && !!participants;
