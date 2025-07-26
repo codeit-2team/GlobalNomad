@@ -9,8 +9,15 @@ import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
 import Button from '../Button';
+import { SchedulesProps } from '@/types/activityDetailType';
 
-export default function BookingInterface() {
+export default function BookingInterface({
+  schedules,
+  onMonthChange,
+}: {
+  schedules: SchedulesProps;
+  onMonthChange?: (year: number, month: number) => void;
+}) {
   const handleBooking = () => {
     alert('예약이 완료되었습니다!');
   };
@@ -28,7 +35,7 @@ export default function BookingInterface() {
         <div className='flex flex-col gap-10 px-20'>
           <PriceDisplay />
           <div className='flex justify-center'>
-            <DatePicker />
+            <DatePicker schedules={schedules} onMonthChange={onMonthChange} />
           </div>
           <TimeSelector />
           <ParticipantsSelector />
@@ -63,7 +70,7 @@ export default function BookingInterface() {
           </div>
           <div className='flex flex-col items-center justify-center gap-20 px-10'>
             <ParticipantsSelector />
-            <BookingModal />
+            <BookingModal schedules={schedules} />
 
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
               예약하기
@@ -98,7 +105,7 @@ export default function BookingInterface() {
                 '날짜 선택하기'
               )}
             </div>
-            <BookingModal />
+            <BookingModal schedules={schedules} />
             <Button
               variant='primary'
               disabled={!isBookable}

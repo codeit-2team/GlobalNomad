@@ -13,7 +13,8 @@ export default function TimeSelector() {
     : null;
 
   const timeSlots =
-    availableDates.find((item) => item.date === selectedDateStr)?.times ?? [];
+    (availableDates ?? []).find((item) => item.date === selectedDateStr)
+      ?.times ?? [];
 
   return (
     <div className='mb-6'>
