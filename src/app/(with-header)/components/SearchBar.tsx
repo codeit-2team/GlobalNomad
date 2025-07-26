@@ -13,7 +13,7 @@ export default function SearchBar() {
   };
 
   return (
-    <section className='flex lg:w-full lg:max-w-1152 lg:ml-auto lg:mr-auto justify-center px-16 lg:px-0'>
+    <section className='flex lg:w-full lg:max-w-1200 lg:ml-auto lg:mr-auto justify-center px-16 lg:px-0'>
       <div className='flex flex-col w-full gap-15 md:gap-32 px-24 py-16 md:px-24 md:py-32 rounded-[16px] bg-white shadow-md'>
         <div className='flex items-start gap-2 mb-4'>
           <h3 className='text-lg md:text-xl font-bold text-left'>
