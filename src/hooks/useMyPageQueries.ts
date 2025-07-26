@@ -116,8 +116,6 @@ export const useUploadProfileImage = () => {
 
         setUser(updatedUser);
         queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
-
-        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
       }
 
       setLoading(false);
