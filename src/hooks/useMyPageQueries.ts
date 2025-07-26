@@ -96,7 +96,20 @@ export const useUploadProfileImage = () => {
   const { setUser, setLoading, setError } = useMyPageStore();
 
   const mutation = useMutation({
-    mutationFn: (file: File) => uploadProfileImage(file),
+    mutationFn: async (file: File) => {
+      // 이미지 업로드
+      const imageResponse = await uploadProfileImage(file);
+
+      // 사용자 정보 업데이트 (새 이미지 URL 포함)
+      const userResponse = await updateMyProfile({
+        profileImageUrl: imageResponse.profileImageUrl,
+      });
+
+      return {
+        imageResponse,
+        userResponse,
+      };
+    },
   });
 
   useEffect(() => {
@@ -106,17 +119,11 @@ export const useUploadProfileImage = () => {
     }
 
     if (mutation.isSuccess && mutation.data) {
-      // 사용자 정보에 새 이미지 URL 반영
-      const currentUser = queryClient.getQueryData<User>(QUERY_KEYS.PROFILE);
-      if (currentUser) {
-        const updatedUser = {
-          ...currentUser,
-          profileImageUrl: mutation.data.profileImageUrl,
-        };
+      // 서버에서 업데이트된 사용자 정보로 캐시 업데이트
+      const updatedUser = mutation.data.userResponse;
 
-        setUser(updatedUser);
-        queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
-      }
+      setUser(updatedUser);
+      queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
 
       setLoading(false);
       alert('프로필 이미지가 성공적으로 업로드되었습니다!');
