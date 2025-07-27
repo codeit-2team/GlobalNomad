@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 import type React from 'react';
@@ -23,7 +23,6 @@ export default function ReservationForm() {
   ]);
   const [mainImage, setMainImage] = useState<File | string | null>(null);
   const [subImage, setSubImage] = useState<(File | string)[]>([]);
-
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState(0);
