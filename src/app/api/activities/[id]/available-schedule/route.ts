@@ -7,17 +7,24 @@ interface ErrorResponse {
   message?: string;
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await params;
+export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
-  const { searchParams } = request.nextUrl;
+  const { searchParams, pathname } = request.nextUrl;
+
   const year = searchParams.get('year');
   const month = searchParams.get('month');
+
+  const segments = pathname.split('/');
+  const id = segments[segments.indexOf('activities') + 1];
+
+  if (!id) {
+    return NextResponse.json(
+      { error: '유효하지 않은 요청입니다.' },
+      { status: 400 },
+    );
+  }
 
   try {
     const response = await axios.get(
