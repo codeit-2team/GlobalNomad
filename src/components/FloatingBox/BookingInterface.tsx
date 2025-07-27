@@ -16,9 +16,11 @@ import { useParams } from 'next/navigation';
 export default function BookingInterface({
   schedules,
   onMonthChange,
+  isOwner,
 }: {
   schedules: SchedulesProps;
   onMonthChange?: (year: number, month: number) => void;
+  isOwner: boolean;
 }) {
   const handleBooking = async () => {
     try {
@@ -45,7 +47,11 @@ export default function BookingInterface({
   const { id } = useParams();
 
   const isBookable =
-    !!selectedDate && !!selectedTime && !!selectedTimeId && !!participants;
+    !!selectedDate &&
+    !!selectedTime &&
+    !!selectedTimeId &&
+    !!participants &&
+    !isOwner;
 
   return (
     <div className='w-full max-w-sm'>
@@ -59,7 +65,7 @@ export default function BookingInterface({
           <TimeSelector />
           <ParticipantsSelector />
           <BookingButton disabled={!isBookable} onClick={handleBooking}>
-            예약하기
+            {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
           </BookingButton>
           <TotalPriceDisplay />
         </div>
@@ -92,7 +98,7 @@ export default function BookingInterface({
             <BookingModal schedules={schedules} />
 
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
-              예약하기
+              {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
             </BookingButton>
             <TotalPriceDisplay />
           </div>

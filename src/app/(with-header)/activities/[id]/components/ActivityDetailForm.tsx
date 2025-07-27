@@ -9,10 +9,12 @@ import ReviewTitle from './ReviewTitle';
 import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import { useState, useEffect } from 'react';
+import useUserStore from '@/stores/authStore';
 
 export default function ActivityDetailForm() {
   const [year, setYear] = useState(2025);
   const [month, setMonth] = useState(12);
+  const [isOwner, setIsOwner] = useState(false);
 
   const { id } = useParams();
 
@@ -23,8 +25,22 @@ export default function ActivityDetailForm() {
     },
     select: (response) => response.data,
     enabled: !!id,
-    staleTime: 0,
   });
+
+  const userId = activityData?.userId;
+
+  const currentUserId = useUserStore((state) =>
+    state.user ? state.user.id : null,
+  );
+
+  useEffect(() => {
+    if (currentUserId && currentUserId === userId) {
+      setIsOwner(true);
+      console.log('니가 작성한 체험임');
+    } else {
+      setIsOwner(false);
+    }
+  }, [currentUserId, userId]);
 
   const { data: schedulesData } = useQuery({
     queryKey: ['available-schedule', id, year, month],
@@ -65,7 +81,7 @@ export default function ActivityDetailForm() {
 
   return (
     <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
-      <Title {...activityData} />
+      <Title {...activityData} isOwner={isOwner} />
       <ImageGrid
         mainImage={activityData.bannerImageUrl}
         subImages={subImageUrls}
@@ -85,6 +101,7 @@ export default function ActivityDetailForm() {
                 setMonth(month);
               }, 0);
             }}
+            isOwner={isOwner}
           />
         </div>
 

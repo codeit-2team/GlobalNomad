@@ -45,6 +45,7 @@ export interface ActivitySubImage {
 
 export interface ActivityDetail {
   id: number;
+  isOwner : boolean;
   userId: number;
   title: string;
   description: string;

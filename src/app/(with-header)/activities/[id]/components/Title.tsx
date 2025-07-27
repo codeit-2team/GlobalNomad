@@ -11,22 +11,8 @@ export default function Title({
   reviewCount,
   address,
   userId,
+  isOwner,
 }: ActivityDetail) {
-  const [isOwner, setIsOwner] = useState(false);
-
-  const currentUserId = useUserStore((state) =>
-    state.user ? state.user.id : null,
-  );
-
-  useEffect(() => {
-    if (currentUserId && currentUserId === userId) {
-      setIsOwner(true);
-      console.log('니가 작성한 체험임');
-    } else {
-      setIsOwner(false);
-    }
-  }, [currentUserId, userId]);
-
   return (
     <div className='mb-6 flex items-start justify-between'>
       <div className='flex flex-col gap-8'>
