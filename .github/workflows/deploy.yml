@@ -104,6 +104,16 @@ jobs:
             
             # 프로젝트 디렉토리로 이동
             cd ~/projects/GlobalNomad
+
+            # .env 파일 생성
+            echo "📝 Creating .env file from secrets..."
+            # 기존 .env 파일이 있다면 삭제하여 최신 상태 유지
+            rm -f .env
+            touch .env
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+            echo "NEXT_PUBLIC_TEAM_ID=${{ secrets.NEXT_PUBLIC_TEAM_ID }}" >> .env
+            echo "NEXT_PUBLIC_KAKAO_APP_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_APP_JS_KEY }}" >> .env
+            echo "NEXT_PUBLIC_API_SERVER_URL=${{ secrets.NEXT_PUBLIC_API_SERVER_URL }}" >> .env
             
             # 최신 코드 가져오기
             echo "🔄 Pulling latest code..."
