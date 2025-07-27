@@ -6,7 +6,7 @@
  */
 
 export const ACTIVITY_CATEGORIES = [
-  '문화 예술',
+  '문화 · 예술',
   '식음료',
   '스포츠',
   '투어',

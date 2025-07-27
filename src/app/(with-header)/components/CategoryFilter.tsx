@@ -1,13 +1,12 @@
 'use client';
 
 import Button from '@/components/Button';
+import { ACTIVITY_CATEGORIES, ActivityCategory } from '@/constants/categories';
 
 interface CategoryFilterProps {
-  selectedCategory: string;
-  onChange: (category: string) => void;
+  selectedCategory: ActivityCategory;
+  onChange: (category: ActivityCategory) => void;
 }
-
-const CATEGORY_LIST = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
 export default function CategoryFilter({
   selectedCategory,
@@ -15,7 +14,7 @@ export default function CategoryFilter({
 }: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap gap-12">
-      {CATEGORY_LIST.map((category) => (
+      {ACTIVITY_CATEGORIES.map((category) => (
         <Button
           key={category}
           variant="category"

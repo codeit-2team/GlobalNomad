@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
-import ExperienceCard from '@/app/(with-header)/components/ExperienceCard';
 import IconArrowRight from '@assets/svg/right-arrow';
 import IconArrowLeft from '@assets/svg/left-arrow';
+import PopularCard from '@/app/(with-header)/components/PopularCard';
 
 export default function PopularExperiences() {
   // 카드 슬라이더를 참조할 DOM ref
@@ -47,7 +47,7 @@ export default function PopularExperiences() {
         {[...Array(4)].map((_, idx) => (
           // 카드 wrapper: flex-shrink-0으로 크기 고정 + 'card' 클래스로 식별
           <div key={idx} className='flex-shrink-0 card'>
-            <ExperienceCard />
+            <PopularCard />
           </div>
         ))}
       </div>
