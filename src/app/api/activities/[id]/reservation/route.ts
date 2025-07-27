@@ -2,6 +2,11 @@ import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
+interface ErrorResponse {
+  error?: string;
+  message?: string;
+}
+
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } },
@@ -27,15 +32,13 @@ export async function POST(
     );
     return NextResponse.json(response.data);
   } catch (err) {
-    const error = err as AxiosError;
-    //디버그용 전체 에러 뽑아서 넘기기
-    console.error('예약 에러:', error.toJSON?.() ?? error);
+    const error = err as AxiosError<ErrorResponse>;
 
     const message =
-      (error.response?.data as any)?.error ||
-      (error.response?.data as any)?.message ||
-      error.message ||
-      '예약실패';
+      error.response?.data?.error ||
+      error.response?.data?.message ||
+      '예약 실패';
+
     const status = error.response?.status || 500;
     return NextResponse.json({ error: message }, { status });
   }

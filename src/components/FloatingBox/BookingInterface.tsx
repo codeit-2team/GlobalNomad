@@ -12,6 +12,7 @@ import Button from '../Button';
 import { SchedulesProps } from '@/types/activityDetailType';
 import { privateInstance } from '@/apis/privateInstance';
 import { useParams } from 'next/navigation';
+import { AxiosError } from 'axios';
 
 export default function BookingInterface({
   schedules,
@@ -30,15 +31,22 @@ export default function BookingInterface({
         selectedTimeId,
         participants,
       });
+
       alert('예약이 완료되었습니다!');
       setIsOpen(false);
-    } catch (err: any) {
-      console.error('전체 에러:', err);
+    } catch (err) {
+      const error = err as AxiosError;
+
+      const responseData = error.response?.data as
+        | { error?: string; message?: string }
+        | undefined;
+
+      console.error('전체 에러:', error);
 
       alert(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          err?.message ||
+        responseData?.error ||
+          responseData?.message ||
+          error.message ||
           '예약에 실패했습니다.',
       );
     }

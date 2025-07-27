@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import IconDropdown from '@assets/svg/dropdown';
 import Star from '@assets/svg/star';
-import useUserStore from '@/stores/authStore';
 import { ActivityDetail } from '@/types/activityDetailType';
 
 export default function Title({
