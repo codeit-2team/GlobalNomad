@@ -97,7 +97,7 @@ export default function BookingInterface({
           </div>
           <div className='flex flex-col items-center justify-center gap-20 px-10'>
             <ParticipantsSelector />
-            <BookingModal schedules={schedules} />
+            <BookingModal schedules={schedules} price={price} />
 
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
               {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
@@ -132,7 +132,7 @@ export default function BookingInterface({
                 '날짜 선택하기'
               )}
             </div>
-            <BookingModal schedules={schedules} />
+            <BookingModal schedules={schedules} price={price} />
             <Button
               variant='primary'
               disabled={!isBookable}
