@@ -23,3 +23,9 @@ export interface PopupProps {
   onClose: () => void;
   onConfirm?: () => void;
 }
+
+export interface PopupState {
+  message: string;
+  redirect: string;
+  isOpen: boolean;
+}
