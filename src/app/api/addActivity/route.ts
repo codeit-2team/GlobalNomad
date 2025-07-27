@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
+
+interface ErrorResponse {
+  message?: string;
+  error?: string;
+}
 
 export async function POST(req: NextRequest) {
   const cookieStore = await cookies();
@@ -46,17 +51,15 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json(response.data, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('체험 등록 에러:', error);
 
     if (axios.isAxiosError(error)) {
-      const status = error.response?.status || 500;
-      const detail = error.response?.data;
+      const axiosError = error as AxiosError<ErrorResponse>;
+      const status = axiosError.response?.status || 500;
+      const detail = axiosError.response?.data;
 
-      const errorMessage =
-        typeof detail === 'object' && detail?.message
-          ? detail.message
-          : '체험 등록 실패';
+      const errorMessage = detail?.message || detail?.error || '체험 등록 실패';
 
       return NextResponse.json({ message: errorMessage }, { status });
     }
