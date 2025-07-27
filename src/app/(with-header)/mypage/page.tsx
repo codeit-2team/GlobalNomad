@@ -10,6 +10,7 @@ import MyUserIcon from '@assets/svg/my-user';
 import MyReservationIcon from '@assets/svg/my-reservation';
 import MyActivitiesIcon from '@assets/svg/my-activities';
 import MyActivitiesDashboardIcon from '@assets/svg/my-activities-dashboard';
+import { useProfileImageUpload } from '@/hooks/useProfileImageUpload';
 /**
  * 마이페이지 메인 페이지 (/mypage)
  * - 모바일: 메뉴 리스트 표시
@@ -17,6 +18,8 @@ import MyActivitiesDashboardIcon from '@assets/svg/my-activities-dashboard';
  */
 export default function MyPageMainPage() {
   const { user } = useMyPageStore();
+  const { fileInputRef, handleImageEdit, handleFileChange } =
+    useProfileImageUpload();
   const [mounted, setMounted] = useState(false);
   const deviceType = useDeviceSize();
   const router = useRouter();
@@ -85,7 +88,15 @@ export default function MyPageMainPage() {
               src={user?.profileImageUrl}
               nickname={user?.nickname}
               showEditButton={true}
-              onEdit={() => alert('프로필 이미지 편집')}
+              onEdit={handleImageEdit}
+            />
+
+            <input
+              ref={fileInputRef}
+              type='file'
+              accept='image/*'
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
             />
           </div>
 
