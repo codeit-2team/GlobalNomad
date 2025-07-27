@@ -17,10 +17,12 @@ export default function BookingInterface({
   schedules,
   onMonthChange,
   isOwner,
+  price,
 }: {
   schedules: SchedulesProps;
   onMonthChange?: (year: number, month: number) => void;
   isOwner: boolean;
+  price: number;
 }) {
   const handleBooking = async () => {
     try {
@@ -58,7 +60,7 @@ export default function BookingInterface({
       {/* PC */}
       <div className='hidden rounded-lg border border-gray-800 bg-white p-6 lg:block'>
         <div className='flex flex-col gap-10 px-20'>
-          <PriceDisplay />
+          <PriceDisplay price={price} />
           <div className='flex justify-center'>
             <DatePicker schedules={schedules} onMonthChange={onMonthChange} />
           </div>
@@ -67,7 +69,7 @@ export default function BookingInterface({
           <BookingButton disabled={!isBookable} onClick={handleBooking}>
             {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
           </BookingButton>
-          <TotalPriceDisplay />
+          <TotalPriceDisplay price={price} />
         </div>
       </div>
 
@@ -75,7 +77,7 @@ export default function BookingInterface({
       <div className='relative hidden w-full max-w-sm rounded-lg border border-gray-800 bg-white p-6 md:block lg:hidden'>
         <div className='flex flex-col gap-20 px-18'>
           <div className='mb-6'>
-            <PriceDisplay />
+            <PriceDisplay price={price} />
             <h3 className='mb-4 text-lg font-semibold text-gray-900'>날짜</h3>
             <button
               onClick={() => setIsOpen(true)}
@@ -100,7 +102,7 @@ export default function BookingInterface({
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
               {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
             </BookingButton>
-            <TotalPriceDisplay />
+            <TotalPriceDisplay price={price} />
           </div>
         </div>
       </div>

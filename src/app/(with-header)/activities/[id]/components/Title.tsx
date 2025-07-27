@@ -10,7 +10,6 @@ export default function Title({
   rating,
   reviewCount,
   address,
-  userId,
   isOwner,
 }: ActivityDetail) {
   return (
