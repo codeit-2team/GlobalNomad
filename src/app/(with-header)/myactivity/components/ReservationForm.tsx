@@ -1,38 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import type React from 'react';
 import { InfoSection } from './InfoSection';
 import { ScheduleSelectForm } from './ScheduleSelectForm';
 import { ImageSection } from './ImageSection';
 import Button from '@/components/Button';
+import { uploadImage } from '../utils/uploadImage';
+import { privateInstance } from '@/apis/privateInstance';
 
 interface DateSlot {
   date: string;
   startTime: string;
   endTime: string;
 }
-const mockData = {
-  title: '함께 배우면 즐거운 스트릿댄스',
-  category: '투어',
-  description: '둠칫 둠칫 두둠칫',
-  address: '서울특별시 강남구 테헤란로 427',
-  price: 10000,
-  schedules: [
-    { date: '2023-12-01', startTime: '12:00', endTime: '13:00' },
-    { date: '2023-12-05', startTime: '12:00', endTime: '13:00' },
-    { date: '2023-12-05', startTime: '13:00', endTime: '14:00' },
-    { date: '2023-12-05', startTime: '14:00', endTime: '15:00' },
-  ],
-  bannerImageUrl: '/test/image1.png',
-  subImageUrls: [
-    '/test/image2.png',
-    '/test/image3.png',
-    '/test/image4.png',
-    '/test/image5.png',
-  ],
-};
 
 export default function ReservationForm() {
   const [dates, setDates] = useState<DateSlot[]>([
@@ -46,20 +29,6 @@ export default function ReservationForm() {
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
-
-  useEffect(() => {
-    // mock데이터로 수정페이지용 테스트
-    setTimeout(() => {
-      setTitle(mockData.title);
-      setCategory(mockData.category);
-      setPrice(mockData.price);
-      setDescription(mockData.description);
-      setAddress(mockData.address);
-      setDates(mockData.schedules);
-      setMainImage(mockData.bannerImageUrl);
-      setSubImage(mockData.subImageUrls);
-    }, 500);
-  }, []);
 
   const handleAddDate = () => {
     setDates([...dates, { date: '', startTime: '', endTime: '' }]);
@@ -80,37 +49,88 @@ export default function ReservationForm() {
     setDates(updatedDates);
   };
 
-  const handleMainImageSelect = (file: File) => {
-    setMainImage(file);
+  const handleMainImageSelect = async (file: File) => {
+    try {
+      const url = await uploadImage(file);
+      setMainImage(url);
+    } catch (err) {
+      console.error(err);
+      alert('메인 이미지 업로드에 실패했습니다.');
+    }
   };
 
   const handleMainImageRemove = () => {
     setMainImage(null);
   };
 
-  const handleSubImagesAdd = (newFiles: File[]) => {
+  const handleSubImagesAdd = async (newFiles: File[]) => {
     const remainingSlots = 4 - subImage.length;
     const filesToAdd = newFiles.slice(0, remainingSlots);
-    setSubImage([...subImage, ...filesToAdd]);
+
+    try {
+      const uploadPromises = filesToAdd.map((file) => uploadImage(file));
+      const uploadedUrls = await Promise.all(uploadPromises);
+      setSubImage([...subImage, ...uploadedUrls]);
+    } catch (err) {
+      console.error('서브 이미지 업로드 실패', err);
+      alert('서브 이미지 업로드 중 문제가 발생.');
+    }
   };
 
   const handleSubImageRemove = (index: number) => {
     setSubImage(subImage.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('title:', title);
-    console.log('category:', category);
-    console.log('price:', price);
-    console.log('description:', description);
-    console.log('address:', address);
-    console.log('dates:', dates);
-    console.log('mainImage:', mainImage);
-    console.log('subImage:', subImage);
-  };
+    if (!mainImage) {
+      alert('메인 이미지를 업로드해주세요.'); //추후 토스트나 팝업으로 대체
+      return;
+    }
 
+    if (
+      !title ||
+      !category ||
+      !description ||
+      !address ||
+      !price ||
+      dates.length === 0
+    ) {
+      alert('모든 필드를 입력해주세요.'); //추후 토스트나 팝업으로 대체
+      return;
+    }
+
+    const payload = {
+      title,
+      category,
+      description,
+      address,
+      price,
+      schedules: dates,
+      bannerImageUrl: mainImage,
+      subImageUrls: subImage,
+    };
+
+    try {
+      const response = await privateInstance.post('/addActivity', payload);
+      console.log('등록 성공:', response.data);
+      alert('체험이 성공적으로 등록되었습니다!'); //추후 토스트나 팝업으로 대체
+    } catch (err) {
+      console.error('체험 등록 실패:', err);
+
+      if (axios.isAxiosError(err)) {
+        const detailMessage =
+          err.response?.data?.detail?.message ||
+          err.response?.data?.message ||
+          '체험 등록 중 오류가 발생했습니다.';
+
+        alert(detailMessage); //추후 토스트나 팝업으로 대체
+      } else {
+        alert('알 수 없는 오류가 발생했습니다.'); //추후 토스트나 팝업으로 대체
+      }
+    }
+  };
   return (
     <div className='min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>

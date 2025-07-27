@@ -1,6 +1,7 @@
 'use client';
 
 import IconClose from '@assets/svg/close';
+import { useState,useEffect } from 'react';
 
 interface ImagePreviewProps {
   image: File | string;
@@ -15,7 +16,20 @@ export function ImagePreview({
   alt,
   className = '',
 }: ImagePreviewProps) {
-  const src = typeof image === 'string' ? image : URL.createObjectURL(image);
+  const [src, setSrc] = useState('');
+
+  useEffect(() => {
+    if (typeof image === 'string') {
+      setSrc(image);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(image);
+    setSrc(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [image]);
 
   return (
     <div className={`group relative ${className}`}>
