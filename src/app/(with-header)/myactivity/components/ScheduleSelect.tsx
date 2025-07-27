@@ -33,30 +33,30 @@ export function ScheduleSelect({
       <div className='grid grid-cols-1 items-center gap-10 sm:grid-cols-4'>
         <div className='sm:col-span-1'>
           <Input
+            className='w-full'
             label='날짜'
             type='date'
             value={date}
-            className='w-full'
             onChange={(e) => onDateChange(index, e.target.value)}
           />
         </div>
 
         <div className='sm:col-span-1'>
           <Input
+            className='w-full'
             label='시작시간'
             type='time'
             value={startTime}
-            className='w-full'
             onChange={(e) => onStartTimeChange(index, e.target.value)}
           />
         </div>
 
         <div className='sm:col-span-1'>
           <Input
+            className='w-full'
             label='종료시간'
             type='time'
             value={endTime}
-            className='w-full'
             onChange={(e) => onEndTimeChange(index, e.target.value)}
           />
         </div>

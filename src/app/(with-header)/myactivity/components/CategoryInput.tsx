@@ -10,16 +10,13 @@ export default function CategoryInput({
 }: CategoryProps) {
   return (
     <div>
-      <label
-        htmlFor='category'
-        className='font-regular flex flex-col text-lg text-black'
-      >
+      <label className='font-regular flex flex-col text-lg text-black'>
         카테고리
       </label>
       <div>
         <select
-          id='category'
           className='w-full rounded-md border border-gray-800 bg-white px-20 py-17 placeholder-gray-600'
+          id='category'
           value={category}
           onChange={(e) => onCategoryChange(e.target.value)}
         >
