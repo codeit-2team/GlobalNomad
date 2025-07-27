@@ -7,7 +7,7 @@ import { MyPageStoreState } from '@/types/mypageTypes';
  * @description
  * - UI 상태 관리 (로딩, 에러, 편집 모드)
  */
-const useMyPageStore = create<MyPageStoreState>((set, get) => ({
+const useMyPageStore = create<MyPageStoreState>((set) => ({
   user: null,
   isLoading: false,
   error: null,

@@ -9,6 +9,7 @@ import {
   validatePasswordConfirmation,
 } from '@/utils/validateInput';
 import { useUpdateProfile } from '@/hooks/useMyPageQueries';
+import { UpdateProfileRequest } from '@/types/mypageTypes';
 
 export default function ProfilePage() {
   const { user } = useMyPageStore();
@@ -90,7 +91,7 @@ export default function ProfilePage() {
       return;
     }
 
-    const updateData: any = {
+    const updateData: UpdateProfileRequest = {
       nickname: formData.nickname,
     };
 

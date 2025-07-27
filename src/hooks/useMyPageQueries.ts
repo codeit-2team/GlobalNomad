@@ -6,11 +6,7 @@ import {
   updateMyProfile,
   uploadProfileImage,
 } from '@/apis/mypage';
-import {
-  UpdateProfileRequest,
-  ProfileImageResponse,
-} from '@/types/mypageTypes';
-import { User } from '@/types/user';
+import { UpdateProfileRequest } from '@/types/mypageTypes';
 import useMyPageStore from '@/stores/MyPage/useMyPageStore';
 import { useEffect } from 'react';
 
