@@ -7,6 +7,7 @@ const PenIcon = ({ size = 24, ...props }) => (
     height={size}
     fill='none'
     viewBox='0 0 25 24'
+    {...props}
   >
     <path
       stroke='#fff'

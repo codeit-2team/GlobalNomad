@@ -7,6 +7,7 @@ const ProfileDefaultIcon = ({ size = 24, ...props }) => (
     height={size}
     fill='none'
     viewBox='0 0 160 160'
+    {...props}
   >
     <path
       fill='#E3E5E8'
