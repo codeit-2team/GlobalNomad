@@ -2,10 +2,13 @@
 
 export const dynamic = 'force-dynamic';
 
+import Loading from '@/components/Loading';
+import Popup from '@/components/Popup';
 import useUserStore from '@/stores/authStore';
+import { PopupState } from '@/types/popupTypes';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const adjectives = [
   '상냥한',
@@ -53,6 +56,12 @@ export default function KakaoSignupCallbackPage() {
   const searchParams = useSearchParams();
   const setUser = useUserStore((state) => state.setUser);
 
+  const [popup, setPopup] = useState<PopupState>({
+    message: '',
+    redirect: '',
+    isOpen: false,
+  });
+
   useEffect(() => {
     const code = searchParams.get('code');
 
@@ -78,14 +87,60 @@ export default function KakaoSignupCallbackPage() {
           setUser(data.user);
           router.push('/login');
         }
-      } catch {
-        alert('카카오 회원가입 실패');
-        router.push('/signup');
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          const status = err.response?.status;
+
+          switch (status) {
+            case 400:
+              setPopup({
+                message: '이미 가입된 회원입니다.',
+                redirect: '/login',
+                isOpen: true,
+              });
+              break;
+            case 500:
+              setPopup({
+                message: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+                redirect: '/signup',
+                isOpen: true,
+              });
+              break;
+            default:
+              setPopup({
+                message: '회원가입에 실패했습니다. 다시 시도해주세요.',
+                redirect: '/signup',
+                isOpen: true,
+              });
+              break;
+          }
+        } else {
+          setPopup({
+            message: '예기치 못한 오류가 발생했습니다. 다시 시도해주세요.',
+            redirect: '/signup',
+            isOpen: true,
+          });
+        }
       }
     };
 
     handleKakaoSignup();
   }, [searchParams, router]);
 
-  return <div>카카오 회원가입 처리 중입니다...</div>;
+  return (
+    <>
+      <Loading />
+
+      <Popup
+        isOpen={popup.isOpen}
+        type='alert'
+        onClose={() => {
+          setPopup((prev) => ({ ...prev, isOpen: false }));
+          router.push(popup.redirect);
+        }}
+      >
+        {popup.message}
+      </Popup>
+    </>
+  );
 }

@@ -2,10 +2,13 @@
 
 export const dynamic = 'force-dynamic';
 
+import Loading from '@/components/Loading';
+import Popup from '@/components/Popup';
 import useUserStore from '@/stores/authStore';
+import { PopupState } from '@/types/popupTypes';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * 카카오 로그인 콜백 처리 페이지 컴포넌트입니다.
@@ -32,6 +35,12 @@ export default function KakaoSigninCallbackPage() {
   const searchParams = useSearchParams();
   const setUser = useUserStore((state) => state.setUser);
 
+  const [popup, setPopup] = useState<PopupState>({
+    message: '',
+    redirect: '',
+    isOpen: false,
+  });
+
   useEffect(() => {
     const code = searchParams.get('code');
     if (!code) return;
@@ -54,25 +63,35 @@ export default function KakaoSigninCallbackPage() {
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           const status = err.response?.status;
-          const message = err.response?.data?.error;
 
           switch (status) {
             case 404:
-              alert('가입된 회원이 아닙니다. 회원가입을 진행해주세요.');
-              router.push('/signup');
+              setPopup({
+                message: '가입된 회원이 아닙니다. 회원가입을 진행해주세요.',
+                redirect: '/signup',
+                isOpen: true,
+              });
               break;
             case 500:
-              alert('서버 오류입니다. 잠시 후 다시 시도해주세요.');
-              router.push('/login');
-              break;
+              setPopup({
+                message: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+                redirect: '/login',
+                isOpen: true,
+              });
             default:
-              alert(message || '카카오 로그인 실패');
-              router.push('/login');
+              setPopup({
+                message: '카카오 로그인 실패',
+                redirect: '/login',
+                isOpen: true,
+              });
               break;
           }
         } else {
-          alert('사용자 정보가 없습니다. 다시 시도해주세요.');
-          router.push('/login');
+          setPopup({
+            message: '사용자 정보가 없습니다. 다시 시도해주세요.',
+            redirect: '/login',
+            isOpen: true,
+          });
         }
       }
     };
@@ -80,5 +99,20 @@ export default function KakaoSigninCallbackPage() {
     handleKakaoLogin();
   }, [searchParams, router]);
 
-  return <div>카카오 로그인 처리 중입니다...</div>;
+  return (
+    <>
+      <Loading />
+
+      <Popup
+        isOpen={popup.isOpen}
+        type='alert'
+        onClose={() => {
+          setPopup((prev) => ({ ...prev, isOpen: false }));
+          router.push(popup.redirect);
+        }}
+      >
+        {popup.message}
+      </Popup>
+    </>
+  );
 }
