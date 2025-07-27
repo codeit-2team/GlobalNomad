@@ -108,7 +108,7 @@ export default function BookingInterface({
       </div>
 
       {/* 모바일 */}
-      <div className='fixed right-0 bottom-0 left-0 z-100 block border border-gray-200 bg-white p-6 md:hidden'>
+      <div className='fixed right-0 bottom-0 left-0 z-50 block border border-gray-200 bg-white p-6 md:hidden'>
         <div className='mb-6 flex items-start justify-between'>
           <div className='flex-1'>
             <div className='mb-1 text-xl font-bold text-gray-900'>

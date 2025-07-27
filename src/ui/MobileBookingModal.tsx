@@ -12,8 +12,10 @@ import { SchedulesProps } from '@/types/activityDetailType';
 
 export default function MobileModal({
   schedules,
+  price,
 }: {
   schedules: SchedulesProps;
+  price: number;
 }) {
   const isOpen = useBookingStore((state) => state.isOpen);
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
@@ -75,7 +77,7 @@ export default function MobileModal({
               <div>
                 <p className='font-bold'>인원 {participants}</p>
               </div>
-              <TotalPriceDisplay />
+              <TotalPriceDisplay price={price} />
             </div>
           </div>
         </Modal.Item>
