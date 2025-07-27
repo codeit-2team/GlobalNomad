@@ -36,7 +36,7 @@ export default function ExperienceList() {
       <div className='m-0'>
         <h2 className='text-xl md:text-3xl font-bold'>🛼 모든 체험</h2>
         <div className='grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-3 lg:grid-cols-4 lg:grid-rows-2 gap-8 md:gap-16 lg:gap-24 mt-24'>
-          {[...Array(6)].map((_, idx) => (
+          {[...Array(7)].map((_, idx) => (
             <ExperienceCard
               key={idx}
               imageUrl={`/test/image${idx + 1}.png`}
