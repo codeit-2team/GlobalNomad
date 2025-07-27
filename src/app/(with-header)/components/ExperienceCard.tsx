@@ -16,27 +16,27 @@ export default function ExperienceCard({
   price,
 }: Props) {
   return (
-    <div className="rounded-[20px] overflow-hidden bg-white shadow-sm border w-full">
+    <div className='flex flex-col w-full gap-16'>
       {/* 썸네일 */}
-      <div className="relative w-full h-160">
+      <div className='relative w-full h-168 md:h-221 lg:h-283 rounded-[20px] overflow-hidden'>
         <Image
           src={imageUrl}
           alt={title}
           fill
-          className="object-cover"
+          className='object-cover'
         />
       </div>
 
       {/* 텍스트 정보 */}
-      <div className="p-16 flex flex-col gap-8">
-        <span className="text-sm text-gray-600">
-          ⭐ {rating} ({reviews})
+      <div className='flex flex-col'>
+        <span className='pb-10 text-lg text-black'>
+          ⭐ {rating} <span className='text-gray-700 text-lg'>({reviews})</span>
         </span>
-        <p className="text-md font-semibold text-gray-900 line-clamp-2">
+        <p className='pb-15 text-2lg font-semibold text-black line-clamp-2'>
           {title}
         </p>
-        <p className="text-md text-gray-900 font-bold">
-          ₩ {price.toLocaleString()} <span className="text-gray-500 text-sm">/ 인</span>
+        <p className='text-xl text-black font-bold'>
+          ₩ {price.toLocaleString()} <span className='text-gray-900 text-lg font-medium'>/ 인</span>
         </p>
       </div>
     </div>
