@@ -7,15 +7,22 @@ interface ErrorResponse {
   message?: string;
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await params;
+export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
   const { selectedTimeId, participants } = await request.json();
+
+  const pathname = request.nextUrl.pathname;
+  const segments = pathname.split('/');
+  const id = segments[segments.indexOf('activities') + 1];
+
+  if (!id) {
+    return NextResponse.json(
+      { error: '유효하지 않은 요청입니다.' },
+      { status: 400 },
+    );
+  }
 
   try {
     const response = await axios.post(
