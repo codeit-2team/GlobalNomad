@@ -2,13 +2,13 @@
 
 export const dynamic = 'force-dynamic';
 
-import Loading from '@/components/Loading';
 import Popup from '@/components/Popup';
 import useUserStore from '@/stores/authStore';
 import { PopupState } from '@/types/popupTypes';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import KakaoLoading from '../components/KakaoLoading';
 
 const adjectives = [
   '상냥한',
@@ -47,9 +47,6 @@ const animals = [
  * 3. 서버에 회원가입 요청 전송
  * 4. 성공 시 사용자 정보 저장 및 리다이렉션
  * 5. 실패 시 알림 후 회원가입 페이지로 이동
- *
- * @component
- * @returns {JSX.Element} "카카오 회원가입 처리 중입니다..."라는 텍스트를 포함한 JSX
  */
 export default function KakaoSignupCallbackPage() {
   const router = useRouter();
@@ -129,7 +126,7 @@ export default function KakaoSignupCallbackPage() {
 
   return (
     <>
-      <Loading />
+      <KakaoLoading message='카카오 회원가입 처리 중...' />
 
       <Popup
         isOpen={popup.isOpen}

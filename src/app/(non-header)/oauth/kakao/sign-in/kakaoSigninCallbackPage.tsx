@@ -2,13 +2,13 @@
 
 export const dynamic = 'force-dynamic';
 
-import Loading from '@/components/Loading';
 import Popup from '@/components/Popup';
 import useUserStore from '@/stores/authStore';
 import { PopupState } from '@/types/popupTypes';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import KakaoLoading from '../components/KakaoLoading';
 
 /**
  * 카카오 로그인 콜백 처리 페이지 컴포넌트입니다.
@@ -27,8 +27,6 @@ import { useEffect, useState } from 'react';
  * 3. 사용자 존재 시 상태 저장 및 리다이렉트
  * 4. 오류 상황에 따라 알림 및 경로 분기
  *
- * @component
- * @returns {JSX.Element} "카카오 로그인 처리 중입니다..."라는 텍스트를 포함한 JSX
  */
 export default function KakaoSigninCallbackPage() {
   const router = useRouter();
@@ -101,7 +99,7 @@ export default function KakaoSigninCallbackPage() {
 
   return (
     <>
-      <Loading />
+      <KakaoLoading message='카카오 로그인 처리 중...' />
 
       <Popup
         isOpen={popup.isOpen}
