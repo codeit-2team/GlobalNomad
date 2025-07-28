@@ -5,9 +5,10 @@ interface Params {
   page: number;
   category?: string;
   sort?: string;
+  keyword?: string; // 검색어 추가
 }
 
-export const getExperiences = async ({ page, category, sort }: Params) => {
+export const getExperiences = async ({ page, category, sort, keyword }: Params) => {
   const res = await api.get(`/teams/${process.env.NEXT_PUBLIC_TEAM_ID}/activities`, {
     params: {
       method: 'offset',
@@ -15,6 +16,7 @@ export const getExperiences = async ({ page, category, sort }: Params) => {
       size: 8,
       ...(category && { category: encodeURIComponent(category) }),
       ...(sort && { sort }),
+      ...(keyword && { keyword }),
     },
   });
 

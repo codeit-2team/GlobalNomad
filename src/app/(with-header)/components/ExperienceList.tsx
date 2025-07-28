@@ -10,33 +10,40 @@ import { SORT_OPTIONS, SortOption } from '@/constants/SortPrices';
 import { Experience } from '@/types/experienceListTypes';
 import { getExperiences } from '@/app/api/experiences/getExperiences';
 
+interface ExperienceListProps {
+  keyword?: string;
+}
 
-export default function ExperienceList() {
+export default function ExperienceList({ keyword }: ExperienceListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<ActivityCategory>(ACTIVITY_CATEGORIES[0]);
   const [sortOption, setSortOption] = useState<SortOption | ''>('');
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [totalCount, setTotalCount] = useState(0);
 
-  // ✅ API 호출
+  // API 호출
   useEffect(() => {
     const fetchExperiences = async () => {
-      try {
-        const response = await getExperiences({
-          page: currentPage,
-          category: selectedCategory,
-          sort: sortOption,
-        });
+      const res = await getExperiences({
+        page: currentPage,
+        sort: sortOption,
+        keyword, // 검색어
+      });
 
-        setExperiences(response.experiences);
-        setTotalCount(response.totalCount);
-      } catch (error) {
-        console.error('체험 목록을 불러오는 데 실패했습니다:', error);
-      }
+      setExperiences(res.experiences);
+      setTotalCount(res.totalCount);
     };
 
     fetchExperiences();
-  }, [currentPage, selectedCategory, sortOption]);
+  }, [currentPage, sortOption, keyword]);
+
+  useEffect(() => {
+    if (keyword) {
+      setSelectedCategory(ACTIVITY_CATEGORIES[0]);
+      setSortOption('');
+      setCurrentPage(1);
+    }
+  }, [keyword]);
 
   const totalPage = Math.ceil(totalCount / 8); // 한 페이지당 8개 기준
 

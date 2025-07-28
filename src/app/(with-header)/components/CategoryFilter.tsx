@@ -20,15 +20,15 @@ export default function CategoryFilter({
       {ACTIVITY_CATEGORIES.map((category) => (
         <Button
           key={category}
-          variant="category"
+          variant='category'
           selected={selectedCategory === category}
           onClick={() => onChange(category)}
-          className="flex-shrink-0 max-w-80 max-h-41 py-12 text-[16px] rounded-[15px]"
+          className='flex-shrink-0 max-w-80 max-h-41 py-12 text-[16px] rounded-[15px]'
         >
           {category}
         </Button>
       ))}
-      <div className="pointer-events-none absolute top-0 right-0 h-full w-100 bg-gradient-to-l from-white to-transparent" />
+      <div className='pointer-events-none absolute top-0 right-0 h-full w-100 bg-gradient-to-l from-white to-transparent' />
     </div>
   );
 }

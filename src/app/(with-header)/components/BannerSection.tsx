@@ -1,7 +1,11 @@
 import Image from 'next/image';
-import SearchBar from './SearchBar';
+import SearchBar from '@/app/(with-header)/components/SearchBar';
 
-export default function BannerSection() {
+interface BannerSectionProps {
+  onSearch: (keyword: string) => void;
+}
+
+export default function BannerSection({ onSearch }: BannerSectionProps) {
   return (
     <section className='relative w-full h-240 md:h-550 mb-93'>
       {/* 배경 이미지 */}
@@ -27,7 +31,7 @@ export default function BannerSection() {
         </p>
       </div>
       <div className='absolute -bottom-100 left-0 right-0'>
-        <SearchBar />
+        <SearchBar onSearch={onSearch} />
       </div>
     </section>
   );

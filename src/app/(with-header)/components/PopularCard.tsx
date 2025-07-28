@@ -1,12 +1,26 @@
 import Image from 'next/image';
 
-export default function PopularCard() {
+interface PopularCardProps {
+  imageUrl: string;
+  title: string;
+  rating: number;
+  reviews: number;
+  price: number;
+}
+
+export default function PopularCard({
+  imageUrl,
+  title,
+  rating,
+  reviews,
+  price,
+}: PopularCardProps) {
   return (
     <div className='relative w-186 h-186 md:w-384 md:h-384 rounded-[20px] overflow-hidden shadow-md bg-white'>
       {/* 배경 이미지 */}
       <Image
-        src='/test/image1.png'
-        alt='체험 이미지'
+        src={imageUrl}
+        alt={title}
         className='w-full object-cover'
         fill
       />
@@ -15,11 +29,11 @@ export default function PopularCard() {
       {/* 텍스트 정보 블록 (카드 하단 위치 고정) */}
       <div className='absolute bottom-12 flex flex-col gap-6 md:gap-20 px-20 py-12 text-white'>
         {/* 별점 정보 */}
-        <span className='text-md'>⭐ 4.9 (293)</span>
+        <span className='text-md'>⭐ {rating} ({reviews})</span>
         {/* 체험명 (줄바꿈 포함, 반응형 크기) */}
-        <p className='text-2lg md:text-3xl font-semibold'>함께 배우면 즐거운<br />스트릿 댄스</p>
+        <p className='text-2lg md:text-3xl font-semibold'>{title}</p>
         {/* 가격 정보 */}
-        <p className='text-lg md:text-xl'>₩ 38,000 <span className='text-gray-600 text-md'>/ 인</span></p>
+        <p className='text-lg md:text-xl'>₩ {price.toLocaleString()} <span className='text-gray-600 text-md'>/ 인</span></p>
       </div>
     </div>
   );

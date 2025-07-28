@@ -4,12 +4,17 @@ import { useState, FormEvent } from 'react';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  onSearch: (keyword: string) => void;
+}
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('검색어:', searchValue); // 검색 로직은 추후 API 연동
+    onSearch(searchValue);       // 부모(HomePage)로 검색어 전달
+    setSearchValue('');          // 선택 사항: 검색어 초기화
   };
 
   return (
