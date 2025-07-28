@@ -2,6 +2,10 @@ import React from 'react';
 import IconDropdown from '@assets/svg/dropdown';
 import Star from '@assets/svg/star';
 import { ActivityDetail } from '@/types/activityDetailType';
+import ActivityDropdown from '@/components/ActivityDropdown';
+import Menu from '@/components/ActivityDropdown/menu';
+import Item from '@/components/ActivityDropdown/Item';
+import Trigger from '@/components/ActivityDropdown/trigger';
 
 export default function Title({
   title,
@@ -30,9 +34,15 @@ export default function Title({
       </div>
 
       {isOwner && (
-        <button>
-          <IconDropdown />
-        </button>
+        <ActivityDropdown>
+          <Trigger>
+            <IconDropdown />
+          </Trigger>
+          <Menu>
+            <Item onClick={() => alert('수정')}>수정하기</Item>
+            <Item onClick={() => alert('삭제')}>삭제하기</Item>
+          </Menu>
+        </ActivityDropdown>
       )}
     </div>
   );
