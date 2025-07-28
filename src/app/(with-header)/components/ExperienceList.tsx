@@ -89,7 +89,7 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
             className='w-200'
             placeholder='가격'
             options={SORT_OPTIONS}
-            value={SORT_LABEL_MAP[sortOption || ''] ?? ''}
+            value={sortOption && SORT_LABEL_MAP[sortOption as keyof typeof SORT_LABEL_MAP] || ''}
             onChange={(label: keyof typeof SORT_VALUE_MAP) => {
               const value = SORT_VALUE_MAP[label];
               setSortOption(value);
