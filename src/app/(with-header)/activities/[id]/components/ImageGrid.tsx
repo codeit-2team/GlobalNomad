@@ -4,10 +4,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { ImageGridProps } from '@/types/activityDetailType';
 
-export default function ImageGrid({
-  mainImage,
-  subImages,
-}: ImageGridProps) {
+export default function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   const images = [mainImage, ...subImages];
   const [currentIndex, setCurrentIndex] = useState(0); //캐러셀 구현용 state
 

@@ -6,52 +6,78 @@ import weekday from 'dayjs/plugin/weekday';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import 'dayjs/locale/ko';
+
 import CalendarHeader from './CalendarHeader';
 import CalendarBody from './CalendarBody';
 import useBookingStore from '@/stores/Booking/useBookingStore';
+import { SchedulesProps } from '@/types/activityDetailType';
 
 dayjs.extend(weekday);
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
 dayjs.locale('ko');
 
-const mockAvailableDates = [
-  {
-    date: '2025-12-01',
-    times: [{ id: 21498, startTime: '12:00', endTime: '13:00' }],
-  },
-  {
-    date: '2025-12-05',
-    times: [
-      { id: 21499, startTime: '12:00', endTime: '13:00' },
-      { id: 21500, startTime: '13:00', endTime: '14:00' },
-      { id: 21501, startTime: '14:00', endTime: '15:00' },
-    ],
-  },
-];
-
-export default function DatePicker() {
+export default function DatePicker({
+  schedules,
+  onMonthChange,
+}: {
+  schedules: SchedulesProps;
+  onMonthChange?: (year: number, month: number) => void;
+}) {
   const { selectedDate, setSelectedDate, setAvailableDates, availableDates } =
     useBookingStore();
 
   const today = dayjs();
-  const [viewDate, setViewDate] = useState(dayjs(selectedDate));
+
+  const [viewDate, setViewDate] = useState(() =>
+    selectedDate ? dayjs(selectedDate) : today,
+  );
 
   useEffect(() => {
-    setAvailableDates(mockAvailableDates);
-  }, [setAvailableDates]);
+    setAvailableDates(schedules);
+  }, [setAvailableDates, schedules]);
+
+  useEffect(() => {
+    if (!selectedDate && schedules.length > 0) {
+      const firstSchedule = schedules.find(
+        (item) =>
+          dayjs(item.date).year() === viewDate.year() &&
+          dayjs(item.date).month() === viewDate.month(),
+      );
+      if (firstSchedule) {
+        setSelectedDate(dayjs(firstSchedule.date).toDate());
+      }
+    }
+  }, [schedules, viewDate]);
+
+  useEffect(() => {
+    console.log(
+      '가능날짜',
+      availableDates.map((d) => d.date),
+    );
+    console.log(
+      '하이라이트날짜',
+      highlightDates.map((d) => d.format('YYYY-MM-DD')),
+    );
+    console.log('뷰데이트', viewDate.format('YYYY-MM-DD'));
+  }, [availableDates, viewDate]);
+
+  const changeMonth = (direction: 'add' | 'subtract') => {
+    setViewDate((prev) => {
+      const newDate =
+        direction === 'add' ? prev.add(1, 'month') : prev.subtract(1, 'month');
+      onMonthChange?.(newDate.year(), newDate.month() + 1);
+      return newDate;
+    });
+  };
+
+  console.log('schedules', schedules);
 
   const handleDateSelect = (date: dayjs.Dayjs) => {
     setSelectedDate(date.toDate());
   };
 
-  const changeMonth = (direction: 'add' | 'subtract') => {
-    setViewDate((prev) =>
-      direction === 'add' ? prev.add(1, 'month') : prev.subtract(1, 'month'),
-    );
-  };
-
-  const highlightDates = availableDates.map((item) => dayjs(item.date));
+  const highlightDates = (availableDates ?? []).map((item) => dayjs(item.date));
 
   return (
     <div className='max-h-[746px] w-full max-w-md rounded-2xl bg-white p-6'>
@@ -59,7 +85,7 @@ export default function DatePicker() {
       <CalendarBody
         viewDate={viewDate}
         today={today}
-        selectedDate={dayjs(selectedDate)}
+        selectedDate={selectedDate ? dayjs(selectedDate) : dayjs('')}
         onSelectDate={handleDateSelect}
         highlightDates={highlightDates}
       />

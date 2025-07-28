@@ -5,8 +5,13 @@ import DatePicker from '@/components/DatePicker/DatePicker';
 import TimeSelector from '@/components/FloatingBox/TimeSelector';
 import IconClose from '@assets/svg/close';
 import Button from '@/components/Button';
+import { SchedulesProps } from '@/types/activityDetailType';
 
-export default function TabletModal() {
+export default function TabletModal({
+  schedules,
+}: {
+  schedules: SchedulesProps;
+}) {
   const isOpen = useBookingStore((state) => state.isOpen);
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
 
@@ -23,7 +28,7 @@ export default function TabletModal() {
 
       <div className='min-h-[400px] w-full'>
         <div className='mb-4 flex justify-center'>
-          <DatePicker />
+          <DatePicker schedules={schedules} />
         </div>
 
         <div className='mt-6'>
