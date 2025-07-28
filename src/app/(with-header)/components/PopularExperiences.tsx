@@ -12,7 +12,7 @@ export default function PopularExperiences() {
 
   const [popularExperiences, setPopularExperiences] = useState<Experience[]>([]);
 
-  // ✅ 좌우 버튼 클릭 시 한 장씩 슬라이드 이동
+  // 좌우 버튼 클릭 시 한 장씩 슬라이드 이동
   const scrollByCard = (direction: 'left' | 'right') => {
     if (!sliderRef.current) return;
 
@@ -29,7 +29,7 @@ export default function PopularExperiences() {
     });
   };
 
-  // ✅ 인기 체험 목록 불러오기
+  // 인기 체험 목록 불러오기
   useEffect(() => {
     const fetchPopular = async () => {
       try {
