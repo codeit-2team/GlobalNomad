@@ -36,7 +36,7 @@ export default function PopularExperiences() {
   useEffect(() => {
     const fetchPopular = async () => {
       try {
-        const res = await getPopularExperiences({ cursorId: 0 });
+        const res = await getPopularExperiences();
         setPopularExperiences(res.activities);
       } catch (error) {
         console.error('인기 체험을 불러오는 데 실패했습니다:', error);
