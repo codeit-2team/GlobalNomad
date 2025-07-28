@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
-import KakaoSigninCallbackPage from './kakaoSignupCallbackPage';
 import Loading from '@/components/Loading';
+import KakaoSignupCallbackPage from './kakaoSignupCallbackPage';
 
 export default function KakaoSignupPage() {
   return (
     <Suspense fallback={<Loading />}>
-      <KakaoSigninCallbackPage />
+      <KakaoSignupCallbackPage />
     </Suspense>
   );
 }
