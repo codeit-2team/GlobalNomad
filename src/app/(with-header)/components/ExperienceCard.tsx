@@ -1,25 +1,43 @@
 import Image from 'next/image';
 
-export default function ExperienceCard() {
+interface Props {
+  imageUrl: string;
+  title: string;
+  rating: number;
+  reviews: number;
+  price: number;
+}
+
+export default function ExperienceCard({
+  imageUrl,
+  title,
+  rating,
+  reviews,
+  price,
+}: Props) {
   return (
-    <div className='relative w-186 h-186 md:w-384 md:h-384 rounded-[20px] overflow-hidden shadow-md bg-white'>
-      {/* 배경 이미지 */}
-      <Image
-        src='/test/image1.png'
-        alt='체험 이미지'
-        className='w-full object-cover'
-        fill
-      />
-      {/* 어두운 오버레이 */}
-      <div className='absolute inset-0 bg-gradient-to-r from-black to-transparent' />
-      {/* 텍스트 정보 블록 (카드 하단 위치 고정) */}
-      <div className='absolute bottom-12 flex flex-col gap-6 md:gap-20 px-20 py-12 text-white'>
-        {/* 별점 정보 */}
-        <span className='text-md'>⭐ 4.9 (293)</span>
-        {/* 체험명 (줄바꿈 포함, 반응형 크기) */}
-        <p className='text-2lg md:text-3xl font-semibold'>함께 배우면 즐거운<br />스트릿 댄스</p>
-        {/* 가격 정보 */}
-        <p className='text-lg md:text-xl'>₩ 38,000 <span className='text-gray-600 text-md'>/ 인</span></p>
+    <div className='flex flex-col w-full gap-16'>
+      {/* 썸네일 */}
+      <div className='relative w-full h-168 md:h-221 lg:h-283 rounded-[20px] overflow-hidden'>
+        <Image
+          fill
+          alt={title}
+          className='object-cover'
+          src={imageUrl}
+        />
+      </div>
+
+      {/* 텍스트 정보 */}
+      <div className='flex flex-col'>
+        <span className='pb-10 text-lg text-black'>
+          ⭐ {rating} <span className='text-gray-700 text-lg'>({reviews})</span>
+        </span>
+        <p className='pb-15 text-2lg font-semibold text-black line-clamp-2'>
+          {title}
+        </p>
+        <p className='text-xl text-black font-bold'>
+          ₩ {price.toLocaleString()} <span className='text-gray-900 text-lg font-medium'>/ 인</span>
+        </p>
       </div>
     </div>
   );
