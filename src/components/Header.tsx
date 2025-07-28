@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import IconLogo from '@assets/svg/logo';
 import IconBell from '@assets/svg/bell';
 import useUserStore from '@/stores/authStore';
-import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ProfileDefaultIcon from '@assets/svg/profile-default';
+import ProfileDropdown from '@/components/ProfileDropdown';
 
 export default function Header() {
   const router = useRouter();
@@ -15,24 +13,7 @@ export default function Header() {
   const setUser = useUserStore((state) => state.setUser);
   const isLoggedIn = !!user;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // 바깥 클릭 시 드롭다운 닫기
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // 로그아웃 처리 후 홈 이동
+  // 로그아웃 처리
   const handleLogout = () => {
     setUser(null);
     router.push('/');
@@ -53,51 +34,20 @@ export default function Header() {
         <div className='text-md relative flex items-center gap-24 text-black'>
           {isLoggedIn ? (
             <>
+              {/* 알림 아이콘 */}
               <button aria-label='알림' className='hover:text-primary'>
                 <IconBell />
               </button>
 
+              {/* 구분선 */}
               <div className='mx-12 h-22 w-px bg-gray-300' />
 
-              {/* 프로필 + 드롭다운 */}
-              <div
-                className='flex items-center gap-8 cursor-pointer'
-                onClick={() => setIsOpen((prev) => !prev)}
-                ref={dropdownRef}
-              >
-                {user.profileImageUrl ? (
-                  <Image
-                    src={user.profileImageUrl}
-                    alt='프로필 이미지'
-                    width={32}
-                    height={32}
-                    className='rounded-full border border-gray-300'
-                  />
-                ) : (
-                  <div className='size-32 rounded-full border border-gray-300 overflow-hidden'>
-                    <ProfileDefaultIcon size={32} />
-                  </div>
-                )}
-                <span>{user.nickname || '사용자'}</span>
-
-                {/* 드롭다운 메뉴 */}
-                {isOpen && (
-                  <div className='absolute top-50 right-0 z-50 mt-20 w-120 rounded-md border border-gray-200 bg-white shadow-md'>
-                    <Link
-                      href='/mypage'
-                      className='block w-full px-16 py-12 text-left hover:bg-gray-50 cursor-pointer'
-                    >
-                      마이페이지
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className='w-full px-16 py-12 text-left hover:bg-gray-50 cursor-pointer'
-                    >
-                      로그아웃
-                    </button>
-                  </div>
-                )}
-              </div>
+              {/* 프로필 드롭다운 */}
+              <ProfileDropdown
+                nickname={user.nickname}
+                profileImageUrl={user.profileImageUrl}
+                onLogout={handleLogout}
+              />
             </>
           ) : (
             <>
