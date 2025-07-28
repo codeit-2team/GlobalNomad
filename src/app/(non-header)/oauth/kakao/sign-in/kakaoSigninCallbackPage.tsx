@@ -76,6 +76,7 @@ export default function KakaoSigninCallbackPage() {
                 redirect: '/login',
                 isOpen: true,
               });
+              break;
             default:
               setPopup({
                 message: '카카오 로그인 실패',
