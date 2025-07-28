@@ -27,6 +27,7 @@ export default function ExperienceList({ keyword }: ExperienceListProps) {
       const res = await getExperiences({
         page: currentPage,
         sort: sortOption,
+        category: selectedCategory,
         keyword,
       });
 
@@ -35,7 +36,7 @@ export default function ExperienceList({ keyword }: ExperienceListProps) {
     };
 
     fetchExperiences();
-  }, [currentPage, sortOption, keyword]);
+  }, [currentPage, sortOption, selectedCategory, keyword]);
 
   useEffect(() => {
     if (keyword) {

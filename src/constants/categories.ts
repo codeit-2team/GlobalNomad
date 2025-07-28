@@ -6,6 +6,7 @@
  */
 
 export const ACTIVITY_CATEGORIES = [
+  '전체',   // 프론트 단에서만 사용
   '문화 · 예술',
   '식음료',
   '스포츠',
