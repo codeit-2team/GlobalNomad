@@ -7,8 +7,8 @@ interface ResponseData {
   activities: Experience[];
 }
 
-const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
-const url = `/${teamId}/activities`;
+const baseUrl = process.env.NEXT_PUBLIC_API_SERVER_URL;
+const url = `${baseUrl}/activities`;
 
 export const getPopularExperiences = async (): Promise<ResponseData> => {
   const res = await instance.get<ResponseData>(url, {
