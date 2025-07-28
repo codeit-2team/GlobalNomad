@@ -16,6 +16,7 @@ interface ExperienceResponse {
 
 const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
 const url = `/${teamId}/activities`;
+const validSorts = ['price_asc', 'price_desc'];
 
 export const getExperiences = async ({ page, category, sort, keyword }: Params) => {
   const res = await instance.get<ExperienceResponse>(url, {
@@ -24,7 +25,7 @@ export const getExperiences = async ({ page, category, sort, keyword }: Params) 
       page,
       size: 8,
       ...(category && { category }),
-      ...(sort && { sort }),
+      ...(sort && validSorts.includes(sort) && { sort }),
       ...(keyword && { keyword }),
     },
   });
