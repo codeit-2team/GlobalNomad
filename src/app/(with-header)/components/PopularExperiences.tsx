@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import IconArrowRight from '@assets/svg/right-arrow';
 import IconArrowLeft from '@assets/svg/left-arrow';
+import IconArrowRight from '@assets/svg/right-arrow';
+import { useEffect, useRef, useState } from 'react';
+
 import PopularCard from '@/app/(with-header)/components/PopularCard';
-import { getPopularExperiences } from '../../api/experiences/getPopularExperiences';
 import { Experience } from '@/types/experienceListTypes';
+
+import { getPopularExperiences } from '../../api/experiences/getPopularExperiences';
 
 export default function PopularExperiences() {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -49,8 +51,8 @@ export default function PopularExperiences() {
       <div className='flex justify-between items-center pb-16 md:pb-32 mb-6'>
         <h2 className='text-xl md:text-3xl font-bold'>🔥 인기 체험</h2>
         <div className='flex gap-2'>
-          <IconArrowLeft size={32} onClick={() => scrollByCard('left')} className='text-2xl px-3' />
-          <IconArrowRight size={32} onClick={() => scrollByCard('right')} className='text-2xl px-3' />
+          <IconArrowLeft className='text-2xl px-3' size={32} onClick={() => scrollByCard('left')} />
+          <IconArrowRight className='text-2xl px-3' size={32} onClick={() => scrollByCard('right')} />
         </div>
       </div>
 
@@ -63,10 +65,10 @@ export default function PopularExperiences() {
           <div key={exp.id} className='flex-shrink-0 card'>
             <PopularCard
               imageUrl={exp.bannerImageUrl}
-              title={exp.title}
+              price={exp.price}
               rating={exp.rating}
               reviews={exp.reviewCount}
-              price={exp.price}
+              title={exp.title}
             />
           </div>
         ))}

@@ -1,14 +1,15 @@
 'use client';
 
+import Dropdown from '@components/Dropdown';
+import Pagination from '@components/Pagination';
 import { useEffect, useState } from 'react';
+
 import CategoryFilter from '@/app/(with-header)/components/CategoryFilter';
 import ExperienceCard from '@/app/(with-header)/components/ExperienceCard';
-import Pagination from '@components/Pagination';
-import Dropdown from '@components/Dropdown';
+import { getExperiences } from '@/app/api/experiences/getExperiences';
 import { ACTIVITY_CATEGORIES, ActivityCategory } from '@/constants/categories';
 import { SORT_OPTIONS, SortOption } from '@/constants/SortPrices';
 import { Experience } from '@/types/experienceListTypes';
-import { getExperiences } from '@/app/api/experiences/getExperiences';
 
 interface ExperienceListProps {
   keyword?: string;
@@ -27,10 +28,10 @@ export default function ExperienceList({ keyword }: ExperienceListProps) {
       const res = await getExperiences({
         page: currentPage,
         sort: sortOption,
-        keyword, // 검색어
+        keyword,
       });
 
-      setExperiences(res.experiences);
+      setExperiences(res.experiences); // ✅ 오류 없는 사용
       setTotalCount(res.totalCount);
     };
 
@@ -45,28 +46,28 @@ export default function ExperienceList({ keyword }: ExperienceListProps) {
     }
   }, [keyword]);
 
-  const totalPage = Math.ceil(totalCount / 8); // 한 페이지당 8개 기준
+  const totalPage = Math.ceil(totalCount / 8);
 
   return (
     <section className='max-w-1200 m-auto px-24 md:px-0 pb-83'>
-      {/* 필터 + 드롭다운 라인 */}
+      {/* 필터 + 드롭다운 */}
       <div className='flex justify-between items-center mb-40'>
         <CategoryFilter
           selectedCategory={selectedCategory}
           onChange={(category) => {
             setSelectedCategory(category);
-            setCurrentPage(1); // 필터 변경 시 페이지 초기화
+            setCurrentPage(1);
           }}
         />
         <Dropdown
+          className='w-120 h-41 text-[14px]'
           options={SORT_OPTIONS}
           placeholder='가격'
           value={sortOption}
           onChange={(sort) => {
             setSortOption(sort);
-            setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            setCurrentPage(1);
           }}
-          className='w-120 h-41 text-[14px]'
         />
       </div>
 
@@ -78,10 +79,10 @@ export default function ExperienceList({ keyword }: ExperienceListProps) {
             <ExperienceCard
               key={exp.id}
               imageUrl={exp.bannerImageUrl}
-              title={exp.title}
+              price={exp.price}
               rating={exp.rating}
               reviews={exp.reviewCount}
-              price={exp.price}
+              title={exp.title}
             />
           ))}
         </div>

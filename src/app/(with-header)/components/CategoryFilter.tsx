@@ -1,8 +1,8 @@
 'use client';
 
-import cn from '@/lib/cn';
 import Button from '@/components/Button';
 import { ACTIVITY_CATEGORIES, ActivityCategory } from '@/constants/categories';
+import cn from '@/lib/cn';
 
 interface CategoryFilterProps {
   selectedCategory: ActivityCategory;
@@ -20,10 +20,10 @@ export default function CategoryFilter({
       {ACTIVITY_CATEGORIES.map((category) => (
         <Button
           key={category}
-          variant='category'
-          selected={selectedCategory === category}
-          onClick={() => onChange(category)}
           className='flex-shrink-0 max-w-80 max-h-41 py-12 text-[16px] rounded-[15px]'
+          selected={selectedCategory === category}
+          variant='category'
+          onClick={() => onChange(category)}
         >
           {category}
         </Button>

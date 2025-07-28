@@ -19,10 +19,10 @@ export default function PopularCard({
     <div className='relative w-186 h-186 md:w-384 md:h-384 rounded-[20px] overflow-hidden shadow-md bg-white'>
       {/* 배경 이미지 */}
       <Image
-        src={imageUrl}
+        fill
         alt={title}
         className='w-full object-cover'
-        fill
+        src={imageUrl}
       />
       {/* 어두운 오버레이 */}
       <div className='absolute inset-0 bg-gradient-to-r from-black to-transparent' />

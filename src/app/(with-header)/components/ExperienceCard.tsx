@@ -20,10 +20,10 @@ export default function ExperienceCard({
       {/* 썸네일 */}
       <div className='relative w-full h-168 md:h-221 lg:h-283 rounded-[20px] overflow-hidden'>
         <Image
-          src={imageUrl}
-          alt={title}
           fill
+          alt={title}
           className='object-cover'
+          src={imageUrl}
         />
       </div>
 

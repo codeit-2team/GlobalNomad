@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import { FormEvent,useState } from 'react';
 
 interface SearchBarProps {
   onSearch: (keyword: string) => void;
@@ -27,21 +27,21 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         </div>
         <div className='text-center mb-6'>
           <form
-            onSubmit={handleSubmit}
             className='flex flex-row gap-12 h-56'
+            onSubmit={handleSubmit}
           >
             <div className='relative flex-1'>
               <Input
+                placeholder='내가 원하는 체험은'
                 type='text'
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                placeholder='내가 원하는 체험은'
               />
             </div>
             <Button
+              className='w-96 h-56 rounded-[4px] md:w-136 md:h-56'
               type='submit'
               variant='primary'
-              className='w-96 h-56 rounded-[4px] md:w-136 md:h-56'
             >
               검색하기
             </Button>

@@ -1,4 +1,4 @@
-import api from '@/lib/api/api';
+import { instance } from '@/apis/instance';
 import { Experience } from '@/types/experienceListTypes';
 
 interface Params {
@@ -11,19 +11,17 @@ interface ResponseData {
   activities: Experience[];
 }
 
-// 댓글 수 기준 인기 체험 조회 (무한스크롤)
-export const getPopularExperiences = async ({ cursorId }: Params) => {
-  const res = await api.get<ResponseData>(
-    `/teams/${process.env.NEXT_PUBLIC_TEAM_ID}/activities`,
-    {
-      params: {
-        method: 'cursor',
-        cursorId,
-        sort: 'most_reviewed',
-        size: 10,
-      },
-    }
-  );
+const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
+const url = `/${teamId}/activities`;
+
+export const getPopularExperiences = async () => {
+  const res = await instance.get(url, {
+    params: {
+      method: 'offset',
+      sort: 'most_reviewed',
+      size: 10,
+    },
+  });
 
   return res.data;
 };
