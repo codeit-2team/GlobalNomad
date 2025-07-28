@@ -3,6 +3,7 @@
 import IconArrowLeft from '@assets/svg/left-arrow';
 import IconArrowRight from '@assets/svg/right-arrow';
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 import PopularCard from '@/app/(with-header)/components/PopularCard';
 import { Experience } from '@/types/experienceListTypes';
@@ -51,8 +52,8 @@ export default function PopularExperiences() {
       <div className='flex justify-between items-center pb-16 md:pb-32 mb-6'>
         <h2 className='text-xl md:text-3xl font-bold'>🔥 인기 체험</h2>
         <div className='flex gap-2'>
-          <IconArrowLeft className='text-2xl px-3' size={32} onClick={() => scrollByCard('left')} />
-          <IconArrowRight className='text-2xl px-3' size={32} onClick={() => scrollByCard('right')} />
+          <IconArrowLeft className='text-2xl px-3 cursor-pointer' size={32} onClick={() => scrollByCard('left')} />
+          <IconArrowRight className='text-2xl px-3 cursor-pointer' size={32} onClick={() => scrollByCard('right')} />
         </div>
       </div>
 
@@ -63,13 +64,19 @@ export default function PopularExperiences() {
       >
         {popularExperiences.map((exp) => (
           <div key={exp.id} className='flex-shrink-0 card'>
-            <PopularCard
-              imageUrl={exp.bannerImageUrl}
-              price={exp.price}
-              rating={exp.rating}
-              reviews={exp.reviewCount}
-              title={exp.title}
-            />
+            <Link
+              key={exp.id}
+              href={`/activities/${exp.id}`} // ✅ 상세페이지로 이동
+              className='flex-shrink-0 card' // ✅ 여기에 card 클래스 유지
+            >
+              <PopularCard
+                imageUrl={exp.bannerImageUrl}
+                price={exp.price}
+                rating={exp.rating}
+                reviews={exp.reviewCount}
+                title={exp.title}
+              />
+            </Link>
           </div>
         ))}
       </div>
