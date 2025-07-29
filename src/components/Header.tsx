@@ -6,17 +6,24 @@ import IconBell from '@assets/svg/bell';
 import useUserStore from '@/stores/authStore';
 import { useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
+import useLogout from '@/hooks/useLogout';
 
 export default function Header() {
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   const isLoggedIn = !!user;
+  const logout = useLogout();
 
   // 로그아웃 처리
-  const handleLogout = () => {
-    setUser(null);
-    router.push('/');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+      router.push('/');
+    } catch {
+      alert('로그아웃 실패'); //토스트 예정
+    }
   };
 
   return (
