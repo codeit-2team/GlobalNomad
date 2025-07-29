@@ -9,33 +9,75 @@ import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
 import Button from '../Button';
+import { SchedulesProps } from '@/types/activityDetailType';
+import { privateInstance } from '@/apis/privateInstance';
+import { useParams } from 'next/navigation';
+import { AxiosError } from 'axios';
 
-export default function BookingInterface() {
-  const handleBooking = () => {
-    alert('예약이 완료되었습니다!');
+export default function BookingInterface({
+  schedules,
+  onMonthChange,
+  isOwner,
+  price,
+}: {
+  schedules: SchedulesProps;
+  onMonthChange?: (year: number, month: number) => void;
+  isOwner: boolean;
+  price: number;
+}) {
+  const handleBooking = async () => {
+    try {
+      await privateInstance.post(`/activities/${id}/reservation`, {
+        selectedTimeId,
+        participants,
+      });
+
+      alert('예약이 완료되었습니다!');
+      setIsOpen(false);
+    } catch (err) {
+      const error = err as AxiosError;
+
+      const responseData = error.response?.data as
+        | { error?: string; message?: string }
+        | undefined;
+
+      console.error('전체 에러:', error);
+
+      alert(
+        responseData?.error ||
+          responseData?.message ||
+          error.message ||
+          '예약에 실패했습니다.',
+      );
+    }
   };
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
   const { selectedDate, selectedTime, participants, selectedTimeId } =
     useBookingStore();
+  const { id } = useParams();
 
   const isBookable =
-    !!selectedDate && !!selectedTime && !!selectedTimeId && !!participants;
+    !!selectedDate &&
+    !!selectedTime &&
+    !!selectedTimeId &&
+    !!participants &&
+    !isOwner;
 
   return (
     <div className='w-full max-w-sm'>
       {/* PC */}
       <div className='hidden rounded-lg border border-gray-800 bg-white p-6 lg:block'>
         <div className='flex flex-col gap-10 px-20'>
-          <PriceDisplay />
+          <PriceDisplay price={price} />
           <div className='flex justify-center'>
-            <DatePicker />
+            <DatePicker schedules={schedules} onMonthChange={onMonthChange} />
           </div>
           <TimeSelector />
           <ParticipantsSelector />
           <BookingButton disabled={!isBookable} onClick={handleBooking}>
-            예약하기
+            {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
           </BookingButton>
-          <TotalPriceDisplay />
+          <TotalPriceDisplay price={price} />
         </div>
       </div>
 
@@ -43,7 +85,7 @@ export default function BookingInterface() {
       <div className='relative hidden w-full max-w-sm rounded-lg border border-gray-800 bg-white p-6 md:block lg:hidden'>
         <div className='flex flex-col gap-20 px-18'>
           <div className='mb-6'>
-            <PriceDisplay />
+            <PriceDisplay price={price} />
             <h3 className='mb-4 text-lg font-semibold text-gray-900'>날짜</h3>
             <button
               onClick={() => setIsOpen(true)}
@@ -63,18 +105,18 @@ export default function BookingInterface() {
           </div>
           <div className='flex flex-col items-center justify-center gap-20 px-10'>
             <ParticipantsSelector />
-            <BookingModal />
+            <BookingModal schedules={schedules} price={price} />
 
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
-              예약하기
+              {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
             </BookingButton>
-            <TotalPriceDisplay />
+            <TotalPriceDisplay price={price} />
           </div>
         </div>
       </div>
 
       {/* 모바일 */}
-      <div className='fixed right-0 bottom-0 left-0 z-100 block border border-gray-200 bg-white p-6 md:hidden'>
+      <div className='fixed right-0 bottom-0 left-0 z-50 block border border-gray-200 bg-white p-6 md:hidden'>
         <div className='mb-6 flex items-start justify-between'>
           <div className='flex-1'>
             <div className='mb-1 text-xl font-bold text-gray-900'>
@@ -98,7 +140,7 @@ export default function BookingInterface() {
                 '날짜 선택하기'
               )}
             </div>
-            <BookingModal />
+            <BookingModal schedules={schedules} price={price} />
             <Button
               variant='primary'
               disabled={!isBookable}

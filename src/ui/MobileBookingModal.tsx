@@ -8,8 +8,15 @@ import TimeSelector from '@/components/FloatingBox/TimeSelector';
 import BookingButton from '@/components/FloatingBox/BookingButton';
 import ParticipantsSelector from '@/components/FloatingBox/ParticipantSelector';
 import TotalPriceDisplay from '@/components/FloatingBox/TotalPriceDisplay';
+import { SchedulesProps } from '@/types/activityDetailType';
 
-export default function MobileModal() {
+export default function MobileModal({
+  schedules,
+  price,
+}: {
+  schedules: SchedulesProps;
+  price: number;
+}) {
   const isOpen = useBookingStore((state) => state.isOpen);
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
 
@@ -44,7 +51,7 @@ export default function MobileModal() {
         <Modal.Item className='relative min-h-400'>
           <div className={step === 'date-time' ? 'block' : 'hidden'}>
             <div className='flex justify-center'>
-              <DatePicker />
+              <DatePicker schedules={schedules} />
             </div>
             <div className='mt-6'>
               <h3 className='mb-2 text-sm font-semibold text-gray-900'>
@@ -70,7 +77,7 @@ export default function MobileModal() {
               <div>
                 <p className='font-bold'>인원 {participants}</p>
               </div>
-              <TotalPriceDisplay />
+              <TotalPriceDisplay price={price} />
             </div>
           </div>
         </Modal.Item>
