@@ -96,7 +96,7 @@ export default function LoginForm() {
 
   return (
     <div className='flex justify-center bg-white'>
-      <div className='mx-13 mt-110 mb-57 flex w-full min-w-350 flex-col gap-24 md:mx-0 md:mt-180 md:max-w-640 md:gap-56'>
+      <div className='mx-13 mt-110 mb-57 flex w-full min-w-350 flex-col gap-24 md:mx-0 md:mt-118 md:max-w-640 md:gap-56'>
         <div className='flex justify-center'>
           <Link href='/'>
             <BrandMark className='h-154 w-270 md:h-192 md:w-340' />
