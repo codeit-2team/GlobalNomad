@@ -33,6 +33,7 @@ export default function Dropdown<T extends string>({
   placeholder,
   className,
   disabled = false,
+  disableScroll = false,
 }: DropdownProps<T>) {
   // 내부 상태 관리
   const [internalValue, setInternalValue] = useState<T | ''>('');
@@ -160,7 +161,13 @@ export default function Dropdown<T extends string>({
               'overflow-hidden shadow-lg',
             )}
           >
-            <ul role='listbox' className='max-h-240 overflow-auto p-8'>
+            <ul
+              role='listbox'
+              className={cn(
+                'p-8',
+                disableScroll ? '' : 'max-h-240 overflow-auto',
+              )}
+            >
               {options.map((option, index) => {
                 const isSelected = option === selectedValue;
                 const isFocused = index === focusedIndex;
