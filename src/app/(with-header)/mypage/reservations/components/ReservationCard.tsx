@@ -14,7 +14,7 @@ interface ReservationCardProps {
 
 // 체험 완료 여부 확인 (현재 시간이 체험 종료 시간을 지났는지)
 const isExperienceCompleted = (date: string, endTime: string): boolean => {
-  const experienceEndDateTime = new Date(`${date}T${endTime}`);
+  const experienceEndDateTime = new Date(`${date}T${endTime}+09:00`);
   return new Date() > experienceEndDateTime;
 };
 
