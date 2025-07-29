@@ -6,6 +6,11 @@ import { ScheduleSelectForm } from '../../components/ScheduleSelectForm';
 import { ImageSection } from '../../components/ImageSection';
 import { useEditActivityForm } from '../hooks/useEditActivityForm';
 
+interface SubImageType {
+  id?: number;
+  url: string | File;
+}
+
 export default function EditActivityForm() {
   const {
     title,
@@ -69,7 +74,7 @@ export default function EditActivityForm() {
 
           <ImageSection
             mainImage={mainImage}
-            subImage={subImages.map((img: any) => img.url)}
+            subImage={subImages.map((img: SubImageType) => img.url)}
             onMainImageSelect={handleMainImageSelect}
             onMainImageRemove={handleMainImageRemove}
             onSubImageAdd={handleSubImagesAdd}
