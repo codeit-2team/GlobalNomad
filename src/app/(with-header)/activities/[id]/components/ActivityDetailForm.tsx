@@ -11,6 +11,7 @@ import { privateInstance } from '@/apis/privateInstance';
 import { useState, useEffect } from 'react';
 import useUserStore from '@/stores/authStore';
 import { padMonth } from '../utils/MonthFormatChange';
+import ReviewSection from './ReviewSection';
 
 export default function ActivityDetailForm() {
   const [year, setYear] = useState(2025);
@@ -71,8 +72,6 @@ export default function ActivityDetailForm() {
     enabled: !!id && !!year && !!month,
   });
 
-  
-
   if (isLoading || !activityData) {
     return <div>로딩 중...</div>;
   }
@@ -118,7 +117,8 @@ export default function ActivityDetailForm() {
         <div className={`${isOwner ? 'md:col-span-4' : 'md:col-span-2'}`}>
           <h2 className='mb-4 pb-2 text-2xl font-bold'>체험 장소</h2>
           <LocationMap address={activityData.address} />
-          <ReviewTitle />
+
+          <ReviewSection activityId={id as string} {...activityData} />
         </div>
       </div>
     </div>
