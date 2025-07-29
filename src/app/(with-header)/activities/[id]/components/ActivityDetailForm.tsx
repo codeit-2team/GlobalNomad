@@ -71,6 +71,8 @@ export default function ActivityDetailForm() {
     enabled: !!id && !!year && !!month,
   });
 
+  
+
   if (isLoading || !activityData) {
     return <div>로딩 중...</div>;
   }

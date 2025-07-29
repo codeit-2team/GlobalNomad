@@ -1,20 +1,15 @@
 'use client';
 
 import { ScheduleSelect } from './ScheduleSelect';
-
-interface ScheduleType {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { Schedule } from '@/types/activityDetailType';
 
 interface ScheduleSelectFormProps {
-  dates: ScheduleType[];
+  dates: Schedule[];
   onAddDate: () => void;
   onRemoveDate: (index: number) => void;
   onDateChange: (
     index: number,
-    field: keyof ScheduleType,
+    field: keyof Omit<Schedule, 'id'>,
     value: string,
   ) => void;
 }
@@ -39,9 +34,8 @@ export function ScheduleSelectForm({
       </div>
 
       {dates.map((dateSlot, idx) => (
-        <div className='flex'>
+        <div key={dateSlot.id ?? idx} className='flex'>
           <ScheduleSelect
-            key={idx}
             index={idx}
             isRemovable={dates.length > 1}
             onAddDate={onAddDate}

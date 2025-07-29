@@ -45,7 +45,7 @@ export interface ActivitySubImage {
 
 export interface ActivityDetail {
   id: number;
-  isOwner : boolean;
+  isOwner: boolean;
   userId: number;
   title: string;
   description: string;
@@ -63,4 +63,25 @@ export interface ActivityDetail {
 
 export interface BookinDateProps {
   schedules: ActivitySchedule[];
+}
+
+export interface Schedule {
+  id?: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface ActivityDetailEdit {
+  title: string;
+  category: string;
+  description: string;
+  address: string;
+  price: number;
+  bannerImageUrl: string;
+  subImages: {
+    id: number;
+    imageUrl: string;
+  }[];
+  schedules: Schedule[];
 }
