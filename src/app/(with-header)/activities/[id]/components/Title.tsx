@@ -6,6 +6,9 @@ import ActivityDropdown from '@/components/ActivityDropdown';
 import Menu from '@/components/ActivityDropdown/menu';
 import Item from '@/components/ActivityDropdown/Item';
 import Trigger from '@/components/ActivityDropdown/trigger';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Title({
   title,
@@ -15,6 +18,15 @@ export default function Title({
   address,
   isOwner,
 }: ActivityDetail) {
+  const { id } = useParams();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const handleEdit = () => {
+    queryClient.invalidateQueries({ queryKey: ['edit-activity', id] });
+    router.push(`/myactivity/${id}`);
+  };
+
   return (
     <div className='mb-6 flex items-start justify-between'>
       <div className='flex flex-col gap-8'>
@@ -39,7 +51,7 @@ export default function Title({
             <IconDropdown />
           </Trigger>
           <Menu>
-            <Item onClick={() => alert('수정')}>수정하기</Item>
+            <Item onClick={handleEdit}>수정하기</Item>
             <Item onClick={() => alert('삭제')}>삭제하기</Item>
           </Menu>
         </ActivityDropdown>
