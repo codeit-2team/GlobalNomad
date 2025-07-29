@@ -10,7 +10,7 @@ const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const cookieStore = await cookies();
