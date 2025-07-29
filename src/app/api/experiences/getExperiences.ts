@@ -14,8 +14,8 @@ interface ExperienceResponse {
   cursorId: number;
 }
 
-const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
-const url = `/${teamId}/activities`;
+const baseUrl = process.env.NEXT_PUBLIC_API_SERVER_URL;
+const url = `${baseUrl}/activities`;
 const validSorts = ['price_asc', 'price_desc'];
 
 export const getExperiences = async ({ page, category, sort, keyword }: Params) => {

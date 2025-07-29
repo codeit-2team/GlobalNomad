@@ -1,19 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
 import IconLogo from '@assets/svg/logo';
 import IconBell from '@assets/svg/bell';
+import useUserStore from '@/stores/authStore';
+import { useRouter } from 'next/navigation';
+import ProfileDropdown from '@/components/ProfileDropdown';
 
 export default function Header() {
-  // 실제로는 로그인 여부를 전역 상태나 context로 받아와야 함
-  // test하려면 로그인 상태를 true로 변경
-  // 빌드 에러로 인해 setIsLoggedIn 변수 앞에 _를 붙여 의도적으로 사용하지 않음을 표시
-  const [isLoggedIn, _setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
+  const isLoggedIn = !!user;
+
+  // 로그아웃 처리
+  const handleLogout = () => {
+    setUser(null);
+    router.push('/');
+  };
 
   return (
-    <header className='fixed z-10 w-full border-b border-gray-300 bg-white'>
+    <header className='fixed z-100 w-full border-b border-gray-300 bg-white'>
       <div className='mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
         {/* 로고 */}
         <Link
@@ -24,7 +31,7 @@ export default function Header() {
         </Link>
 
         {/* 우측 메뉴 */}
-        <div className='text-md flex items-center gap-24 text-black'>
+        <div className='text-md relative flex items-center gap-24 text-black'>
           {isLoggedIn ? (
             <>
               {/* 알림 아이콘 */}
@@ -32,20 +39,15 @@ export default function Header() {
                 <IconBell />
               </button>
 
-              {/* 세로 구분선 */}
+              {/* 구분선 */}
               <div className='mx-12 h-22 w-px bg-gray-300' />
 
-              {/* 유저 프로필 */}
-              <div className='flex items-center gap-2'>
-                <Image
-                  src='/img/sample-user.png' // 사용자 프로필 이미지
-                  alt='프로필 이미지'
-                  width={32}
-                  height={32}
-                  className='rounded-full border border-gray-300'
-                />
-                <span>김보경</span>
-              </div>
+              {/* 프로필 드롭다운 */}
+              <ProfileDropdown
+                nickname={user.nickname}
+                profileImageUrl={user.profileImageUrl}
+                onLogout={handleLogout}
+              />
             </>
           ) : (
             <>
