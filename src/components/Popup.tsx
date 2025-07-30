@@ -39,8 +39,6 @@ export default function Popup({
   children,
   onClose,
   onConfirm,
-  closeText,
-  confirmText,
 }: PopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
   useOutsideClick(popupRef, onClose);
@@ -92,14 +90,14 @@ export default function Popup({
               className={cn('w-80 rounded-md')}
               onClick={onClose}
             >
-              {closeText}
+              아니요
             </Button>
             <Button
               variant='primary'
               className={cn('w-80 rounded-md')}
               onClick={onConfirm}
             >
-              {confirmText}
+              예
             </Button>
           </div>
         </div>
