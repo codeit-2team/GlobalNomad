@@ -1,5 +1,6 @@
 import './globals.css';
 import QueryProvider from '@/lib/queryProvider';
+import { Toaster } from 'sonner';
 
 export const metadata = {
   title: 'GlobalNomad',
@@ -17,6 +18,7 @@ export default function RootLayout({
         <QueryProvider>
           <main>{children}</main>
         </QueryProvider>
+        <Toaster richColors position='top-center' />
         <div id='modal-root' />
       </body>
     </html>
