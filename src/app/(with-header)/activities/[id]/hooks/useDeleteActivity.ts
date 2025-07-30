@@ -14,7 +14,7 @@ export const useDeleteActivity = () => {
 
   return useMutation({
     mutationFn: deleteActivity,
-    onSuccess: (_data, id) => {
+    onSuccess: (_data) => {
       queryClient.invalidateQueries({ queryKey: ['activity'] });
       router.push(`/`);
     },
