@@ -9,6 +9,7 @@ import Trigger from '@/components/ActivityDropdown/trigger';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useDeleteActivity } from '../hooks/useDeleteActivity';
 
 export default function Title({
   title,
@@ -22,6 +23,14 @@ export default function Title({
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const { mutate, isError, error } = useDeleteActivity();
+
+  const handleDelete = () => {
+    if (!id) return;
+    if (confirm('정말 삭제하시겠습니까?')) {
+      mutate(id as string);
+    }
+  };
   const handleEdit = () => {
     queryClient.invalidateQueries({ queryKey: ['edit-activity', id] });
     router.push(`/myactivity/${id}`);
@@ -52,7 +61,7 @@ export default function Title({
           </Trigger>
           <Menu>
             <Item onClick={handleEdit}>수정하기</Item>
-            <Item onClick={() => alert('삭제')}>삭제하기</Item>
+            <Item onClick={handleDelete}>삭제하기</Item>
           </Menu>
         </ActivityDropdown>
       )}

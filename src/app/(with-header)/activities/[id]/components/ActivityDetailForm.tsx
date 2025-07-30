@@ -5,7 +5,6 @@ import Title from './Title';
 import ImageGrid from './ImageGrid';
 import BookingInterface from '@/components/FloatingBox/BookingInterface';
 import LocationMap from '@/components/LocationMap';
-import ReviewTitle from './ReviewTitle';
 import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import { useState, useEffect } from 'react';
@@ -95,7 +94,9 @@ export default function ActivityDetailForm() {
       >
         <div className={`${isOwner ? 'md:col-span-2' : 'md:col-span-2'}`}>
           <h2 className='mb-4 pb-2 text-2xl font-bold'>체험 설명</h2>
-          <p className='whitespace-pre-line'>{activityData.description}</p>
+          <p className='leading-relaxed whitespace-pre-line'>
+            {activityData.description}
+          </p>
         </div>
 
         {!isOwner && (

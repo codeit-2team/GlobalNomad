@@ -24,7 +24,7 @@ export default function ReviewTitle({ reviewCount, rating }: ReviewTitleProps) {
     };
 
     handleSummary();
-  }, [rating]);
+  }, [reviewCount]);
 
   return (
     <div className='mt-10 mb-10 flex flex-col'>
