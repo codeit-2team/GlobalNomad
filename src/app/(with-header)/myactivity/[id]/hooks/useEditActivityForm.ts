@@ -7,6 +7,7 @@ import { privateInstance } from '@/apis/privateInstance';
 import { uploadImage } from '../../utils/uploadImage';
 import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 interface SubImageType {
   id?: number;
@@ -31,7 +32,7 @@ export const useEditActivityForm = () => {
   const [originalSchedules, setOriginalSchedules] = useState<Schedule[]>([]);
   const [dates, setDates] = useState<Schedule[]>([]);
 
-  const { data, isLoading, error } = useQuery<ActivityDetailEdit, Error>({
+  const { data, isLoading, isError } = useQuery<ActivityDetailEdit, Error>({
     queryKey: ['edit-activity', id],
     queryFn: async () => {
       const res = await privateInstance.get(`/activities/${id}`);
@@ -151,7 +152,7 @@ export const useEditActivityForm = () => {
 
       await privateInstance.patch(`/editActivity/${id}`, payload);
 
-      alert('수정이 완료되었습니다.'); //토스트로 대체
+      toast.success('수정되었습니다!'); //토스트로 대체
       queryClient.invalidateQueries({ queryKey: ['activity', id] });
       router.push(`/activities/${id}`);
     } catch (err) {
@@ -159,9 +160,10 @@ export const useEditActivityForm = () => {
       const responseData = error.response?.data as
         | { error?: string; message?: string }
         | undefined;
+
       console.error('전체 에러:', error);
-      alert(
-        //토스트로대체
+
+      toast.error(
         responseData?.error ||
           responseData?.message ||
           error.message ||
@@ -180,7 +182,7 @@ export const useEditActivityForm = () => {
     subImages,
     dates,
     isLoading,
-    error,
+    isError,
     setTitle,
     setCategory,
     setPrice,
