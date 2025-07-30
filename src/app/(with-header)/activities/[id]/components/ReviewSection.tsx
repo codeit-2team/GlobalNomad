@@ -14,6 +14,16 @@ interface ReviewSectionProps {
   rating: number;
 }
 
+interface ReviewProps {
+  id: string;
+  user: {
+    nickname: string;
+    profileImageUrl: string;
+  };
+  createdAt: string;
+  content: string;
+}
+
 export default function ReviewSection({
   activityId,
   reviewCount,
@@ -57,7 +67,7 @@ export default function ReviewSection({
 
       <div className='relative min-h-350'>
         <div className={user ? '' : 'blur-sm'}>
-          {reviewData.reviews.map((review: any) => (
+          {reviewData.reviews.map((review: ReviewProps) => (
             <ReviewCard
               key={review.id}
               userName={review.user.nickname}
