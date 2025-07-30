@@ -5,8 +5,8 @@ import {
   useQueryClient,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { getMyReservations, updateMyReservation } from '@/apis/reservations';
-import { ReservationStatus } from '@/types/reservationTypes';
+import { getMyReservations, updateMyReservation, createReview } from '@/apis/reservations';
+import { ReservationStatus, CreateReviewRequest } from '@/types/reservationTypes';
 
 export const RESERVATION_QUERY_KEYS = {
   RESERVATIONS: ['reservations'] as const,
@@ -49,6 +49,22 @@ export const useCancelReservation = () => {
     },
     onError: (error) => {
       alert(`예약 취소 실패: ${error.message}`);
+    },
+  });
+};
+
+// 후기 작성 훅
+export const useCreateReview = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ reservationId, data }: { reservationId: number; data: CreateReviewRequest }) =>
+      createReview(reservationId, data),
+    onSuccess: () => {
+      // 예약 리스트 캐시 무효화하여 reviewSubmitted 상태 업데이트
+      queryClient.invalidateQueries({
+        queryKey: RESERVATION_QUERY_KEYS.RESERVATIONS,
+      });
     },
   });
 };

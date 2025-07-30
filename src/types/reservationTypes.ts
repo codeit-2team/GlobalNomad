@@ -46,3 +46,22 @@ export interface GetMyReservationsParams {
   size?: number;
   status?: ReservationStatus;
 }
+
+// 후기 작성 요청
+export interface CreateReviewRequest {
+  rating: number;
+  content: string;
+}
+
+// 후기 작성 응답
+export interface ReviewResponse {
+  id: number;
+  teamId: string;
+  userId: number;
+  activityId: number;
+  rating: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}

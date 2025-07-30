@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {
   useMyReservations,
   useCancelReservation,
+  useCreateReview,
 } from '@/hooks/useReservationQueries';
 import { FilterOption } from '@/constants/reservationConstants';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
@@ -11,6 +12,7 @@ import ReservationCard from './components/ReservationCard';
 import ReservationFilter from './components/ReservationFilter';
 import EmptyReservations from './components/EmptyReservations';
 import CancelReservationModal from './components/CancelReservationModal';
+import ReviewModal from './components/ReviewModal';
 
 export default function MyReservationsPage() {
   const [filter, setFilter] = useState<FilterOption>('');
@@ -20,6 +22,26 @@ export default function MyReservationsPage() {
   }>({
     isOpen: false,
     reservationId: null,
+  });
+
+  const [reviewModal, setReviewModal] = useState<{
+    isOpen: boolean;
+    reservationId: number | null;
+    activityTitle: string | null;
+    activityImage: string | null;
+    activityDate: string | null;
+    activityTime: string | null;
+    headCount: number | null;
+    totalPrice: number | null;
+  }>({
+    isOpen: false,
+    reservationId: null,
+    activityTitle: null,
+    activityImage: null,
+    activityDate: null,
+    activityTime: null,
+    headCount: null,
+    totalPrice: null,
   });
 
   // 예약 리스트 조회 (무한 스크롤)
@@ -34,6 +56,9 @@ export default function MyReservationsPage() {
 
   // 예약 취소 뮤테이션
   const cancelReservationMutation = useCancelReservation();
+
+  // 후기 작성 뮤테이션
+  const createReviewMutation = useCreateReview();
 
   // 무한 스크롤 훅
   const { lastElementRef } = useInfiniteScroll({
@@ -64,10 +89,64 @@ export default function MyReservationsPage() {
     setCancelModal({ isOpen: false, reservationId: null });
   };
 
-  // 후기 작성 (나중에 구현)
+  // 후기 작성 모달 열기
   const handleReviewClick = (reservationId: number) => {
-    console.log('후기 작성:', reservationId);
-    // TODO: 후기 작성 모달 구현
+    const reservation = allReservations.find((r) => r.id === reservationId);
+    setReviewModal({
+      isOpen: true,
+      reservationId,
+      activityTitle: reservation?.activity.title || null,
+      activityImage: reservation?.activity.bannerImageUrl || null,
+      activityDate: reservation?.date || null,
+      activityTime:
+        `${reservation?.startTime} - ${reservation?.endTime}` || null,
+      headCount: reservation?.headCount || null,
+      totalPrice: reservation?.totalPrice || null,
+    });
+  };
+
+  // 후기 작성 확인
+  const handleReviewConfirm = (rating: number, content: string) => {
+    if (reviewModal.reservationId) {
+      createReviewMutation.mutate(
+        {
+          reservationId: reviewModal.reservationId,
+          data: { rating, content },
+        },
+        {
+          onSuccess: () => {
+            alert('후기가 작성되었습니다.');
+            setReviewModal({
+              isOpen: false,
+              reservationId: null,
+              activityTitle: null,
+              activityImage: null,
+              activityDate: null,
+              activityTime: null,
+              headCount: null,
+              totalPrice: null,
+            });
+          },
+          onError: (error) => {
+            alert(`후기 작성 실패: ${error.message}`);
+          },
+        },
+      );
+    }
+  };
+
+  // 후기 작성 모달 닫기
+  const handleReviewClose = () => {
+    setReviewModal({
+      isOpen: false,
+      reservationId: null,
+      activityTitle: null,
+      activityImage: null,
+      activityDate: null,
+      activityTime: null,
+      headCount: null,
+      totalPrice: null,
+    });
   };
 
   // 전체 예약 목록
@@ -77,9 +156,9 @@ export default function MyReservationsPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className='w-full max-w-none lg:max-w-[792px]'>
+      <div className='w-full max-w-none lg:max-w-792'>
         <div className='mb-24 flex items-center justify-between'>
-          <h1 className='text-nomad text-[32px] leading-[42px] font-bold'>
+          <h1 className='text-nomad text-3xl leading-42 font-bold'>
             예약 내역
           </h1>
           <ReservationFilter value={filter} onChange={setFilter} />
@@ -88,7 +167,7 @@ export default function MyReservationsPage() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className='h-[204px] w-[792px] animate-pulse rounded-[24px] bg-gray-200'
+              className='rounded-24 h-204 w-792 animate-pulse bg-gray-200'
             />
           ))}
         </div>
@@ -99,9 +178,9 @@ export default function MyReservationsPage() {
   // 에러 상태
   if (error) {
     return (
-      <div className='w-full max-w-none lg:max-w-[792px]'>
+      <div className='w-full max-w-none lg:max-w-792'>
         <div className='mb-24 flex items-center justify-between'>
-          <h1 className='text-nomad text-[32px] leading-[42px] font-bold'>
+          <h1 className='text-nomad text-3xl leading-42 font-bold'>
             예약 내역
           </h1>
           <ReservationFilter value={filter} onChange={setFilter} />
@@ -116,10 +195,10 @@ export default function MyReservationsPage() {
 
   return (
     <>
-      <div className='w-full max-w-none lg:max-w-[792px]'>
+      <div className='w-full max-w-none lg:max-w-792'>
         {/* 제목과 필터 */}
         <div className='mb-48 flex items-center justify-between'>
-          <h1 className='text-nomad text-[32px] leading-[42px] font-bold'>
+          <h1 className='text-nomad text-3xl leading-42 font-bold'>
             예약 내역
           </h1>
           <ReservationFilter value={filter} onChange={setFilter} />
@@ -147,7 +226,7 @@ export default function MyReservationsPage() {
 
             {/* 무한 스크롤 로딩 */}
             {isFetchingNextPage && (
-              <div className='h-[204px] w-[792px] animate-pulse rounded-[24px] bg-gray-200' />
+              <div className='rounded-24 h-204 w-792 animate-pulse bg-gray-200' />
             )}
           </div>
         )}
@@ -159,6 +238,20 @@ export default function MyReservationsPage() {
         onCancel={handleCancelClose}
         onConfirm={handleCancelConfirm}
         isLoading={cancelReservationMutation.isPending}
+      />
+
+      {/* 후기 작성 모달 */}
+      <ReviewModal
+        isOpen={reviewModal.isOpen}
+        onClose={handleReviewClose}
+        onConfirm={handleReviewConfirm}
+        isLoading={createReviewMutation.isPending}
+        activityTitle={reviewModal.activityTitle || undefined}
+        activityImage={reviewModal.activityImage || undefined}
+        activityDate={reviewModal.activityDate || undefined}
+        activityTime={reviewModal.activityTime || undefined}
+        headCount={reviewModal.headCount || undefined}
+        totalPrice={reviewModal.totalPrice || undefined}
       />
     </>
   );

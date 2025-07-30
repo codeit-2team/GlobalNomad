@@ -4,6 +4,8 @@ import {
   GetMyReservationsParams,
   UpdateReservationRequest,
   Reservation,
+  CreateReviewRequest,
+  ReviewResponse,
 } from '@/types/reservationTypes';
 
 /**
@@ -41,6 +43,21 @@ export const updateMyReservation = async (
 ): Promise<Reservation> => {
   const response = await privateInstance.patch(
     `/reservations/${reservationId}`,
+    data,
+  );
+  return response.data;
+};
+
+/**
+ * 내 예약 리뷰 작성
+ * POST /api/reservations/{reservationId}/reviews
+ */
+export const createReview = async (
+  reservationId: number,
+  data: CreateReviewRequest,
+): Promise<ReviewResponse> => {
+  const response = await privateInstance.post(
+    `/reservations/${reservationId}/reviews`,
     data,
   );
   return response.data;
