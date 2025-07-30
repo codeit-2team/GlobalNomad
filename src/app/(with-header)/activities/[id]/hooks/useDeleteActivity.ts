@@ -1,5 +1,6 @@
 import { privateInstance } from '@/apis/privateInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
 const deleteActivity = async (id: string) => {
@@ -17,8 +18,20 @@ export const useDeleteActivity = () => {
       queryClient.invalidateQueries({ queryKey: ['activity'] });
       router.push(`/`);
     },
-    onError: (error) => {
-      console.error('삭제 실패:', error);
+    onError: (error: AxiosError) => {
+      const responseData = error.response?.data as
+        | { error?: string; message?: string }
+        | undefined;
+
+      console.error('전체 에러:', error);
+
+      alert(
+        //토스트로 대체
+        responseData?.error ||
+          responseData?.message ||
+          error.message ||
+          '삭제에 실패했습니다.',
+      );
     },
   });
 };

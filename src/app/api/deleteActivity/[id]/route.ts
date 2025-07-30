@@ -11,24 +11,21 @@ interface ErrorResponse {
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const id = params.id;
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
-  if (!id) {
-    return NextResponse.json(
-      { error: '유효하지 않은 요청입니다.' },
-      { status: 400 },
-    );
-  }
-
-  if (!accessToken) {
-    return NextResponse.json({ message: '액세스 토큰 없음' }, { status: 401 });
-  }
-
   try {
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: '액세스 토큰 없음' },
+        { status: 401 },
+      );
+    }
     const response = await axios.delete(
       `${BACKEND_BASE_URL}/my-activities/${id}`,
 
