@@ -18,8 +18,6 @@ type PopupType = 'alert' | 'confirm';
 
 export interface PopupProps {
   isOpen: boolean;
-  closeText: string;
-  confirmText: string;
   type: PopupType;
   children: ReactNode;
   onClose: () => void;

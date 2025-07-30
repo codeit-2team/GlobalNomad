@@ -76,8 +76,6 @@ export default function Title({
         type='confirm'
         onClose={() => setIsPopupOpen(false)}
         onConfirm={handleDeleteConfirm}
-        confirmText='삭제하기'
-        closeText='취소'
       >
         정말 삭제하시겠습니까?
       </Popup>
