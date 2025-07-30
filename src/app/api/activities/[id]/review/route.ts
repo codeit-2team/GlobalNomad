@@ -7,15 +7,17 @@ const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
   const { searchParams } = new URL(req.url);
 
   const page = searchParams.get('page') || '1';
   const size = searchParams.get('size') || '3';
 
   try {
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+
     const response = await axios.get(
       `${BACKEND_BASE_URL}/activities/${id}/reviews?page=${page}&size=${size}`,
     );
