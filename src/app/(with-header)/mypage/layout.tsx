@@ -16,7 +16,7 @@ export default function MyPageLayout({
   if (!mounted || isLoading) {
     return (
       <div className='min-h-screen bg-gray-100'>
-        <div className='mx-auto max-w-1200 px-20 py-[72px]'>
+        <div className='mx-auto max-w-1200 px-20 py-24 lg:py-72'>
           <div className='flex gap-24'>
             {/* 좌측 프로필 네비게이션 스켈레톤 - 데스크톱/태블릿 */}
             <div className='hidden flex-shrink-0 animate-pulse md:block'>
@@ -60,7 +60,7 @@ export default function MyPageLayout({
   // API 로딩 완료 + mounted 상태일 때만 실행
   return (
     <div className='min-h-screen bg-gray-100'>
-      <div className='mx-auto max-w-1200 px-20 py-[72px]'>
+      <div className='mx-auto max-w-1200 px-20 py-24 lg:py-72'>
         <div className='flex gap-24'>
           {/* 좌측 프로필 네비게이션 섹션 - 데스크톱/태블릿에서만 표시 */}
           <ProfileNavigation />

@@ -54,9 +54,9 @@ export default function ReservationDashboardCalendar({
   }
 
   return (
-    <div className='w-800'>
+    <div className='mx-auto w-full max-w-800'>
       {/* 월 헤더 */}
-      <div className='mb-30 flex h-42 w-800 items-center justify-center gap-24'>
+      <div className='mb-30 flex h-42 w-full items-center justify-center gap-24'>
         <button
           onClick={() => changeMonth('prev')}
           className='flex h-32 w-32 items-center justify-center rounded-md transition-colors hover:bg-gray-100'
@@ -77,7 +77,7 @@ export default function ReservationDashboardCalendar({
       </div>
 
       {/* 달력 */}
-      <div className='rounded-12 w-800 overflow-hidden border border-gray-200 bg-white'>
+      <div className='rounded-12 w-full overflow-hidden border border-gray-200 bg-white'>
         {/* 요일 헤더 */}
         <div className='grid grid-cols-7 bg-gray-50'>
           {WEEKDAYS.map((day, index) => (

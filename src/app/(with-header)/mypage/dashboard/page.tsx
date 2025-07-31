@@ -37,7 +37,7 @@ export default function MyDashboardPage() {
       (option) => parseInt(option.value) === selectedActivityId,
     )?.label || '';
 
-  // 날짜 클릭 -> 모달 열기
+  // 날짜 클릭 (모달 열기)
   const handleDateClick = (date: string) => {
     setSelectedDate(date);
     setIsModalOpen(true);
@@ -52,14 +52,14 @@ export default function MyDashboardPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className='w-full max-w-none lg:max-w-792'>
+      <div className='w-full'>
         {/* 제목 */}
         <h1 className='text-nomad mb-32 text-3xl leading-42 font-bold'>
           예약 현황
         </h1>
 
         {/* 드롭다운 스켈레톤 */}
-        <div className='mb-48 h-56 w-792 animate-pulse rounded-md bg-gray-200' />
+        <div className='mb-48 h-56 w-full max-w-792 animate-pulse rounded-md bg-gray-200' />
 
         {/* 달력 스켈레톤 */}
         <div className='rounded-24 h-600 w-full animate-pulse bg-gray-200' />
@@ -70,14 +70,14 @@ export default function MyDashboardPage() {
   // 에러 상태
   if (error) {
     return (
-      <div className='w-full max-w-none lg:max-w-792'>
+      <div className='w-full'>
         {/* 제목 */}
         <h1 className='text-nomad mb-32 text-3xl leading-42 font-bold'>
           예약 현황
         </h1>
 
         {/* 드롭다운 */}
-        <div className='mb-48 w-792'>
+        <div className='mb-48 w-full max-w-792'>
           <Dropdown
             options={uniqueTitles}
             value={selectedActivityTitle}
@@ -98,14 +98,14 @@ export default function MyDashboardPage() {
 
   return (
     <>
-      <div className='w-full max-w-none lg:max-w-792'>
+      <div className='w-full'>
         {/* 제목 */}
         <h1 className='text-nomad mb-32 text-3xl leading-42 font-bold'>
           예약 현황
         </h1>
 
         {/* 체험 선택 드롭다운 */}
-        <div className='mb-48 w-792'>
+        <div className='mb-48 w-full max-w-792'>
           <Dropdown
             options={uniqueTitles}
             value={selectedActivityTitle}

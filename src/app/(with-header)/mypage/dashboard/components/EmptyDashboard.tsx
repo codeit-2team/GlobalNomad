@@ -2,7 +2,7 @@ import EmptyDocumentIcon from '@assets/svg/empty-document';
 
 export default function EmptyDashboard() {
   return (
-    <div className='flex flex-col items-center justify-center py-120'>
+    <div className='flex flex-col items-center justify-center py-16 md:py-24 lg:py-50'>
       {/* 빈 상태 아이콘 */}
       <div className='mb-24'>
         <EmptyDocumentIcon size={131} />
