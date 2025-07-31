@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import IconDropdown from '@assets/svg/dropdown';
 import Star from '@assets/svg/star';
-import { ActivityDetail } from '@/types/activityDetailType';
 import ActivityDropdown from '@/components/ActivityDropdown';
 import Menu from '@/components/ActivityDropdown/menu';
 import Item from '@/components/ActivityDropdown/Item';
