@@ -13,6 +13,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
 
+interface TitleProps {
+  title: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
+  address: string;
+  isOwner: boolean;
+}
+
 export default function Title({
   title,
   category,
@@ -20,7 +29,7 @@ export default function Title({
   reviewCount,
   address,
   isOwner,
-}: ActivityDetail) {
+}: TitleProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { id } = useParams();

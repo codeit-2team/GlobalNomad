@@ -7,7 +7,7 @@ import BookingInterface from '@/components/FloatingBox/BookingInterface';
 import LocationMap from '@/components/LocationMap';
 import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useUserStore from '@/stores/authStore';
 import { padMonth } from '../utils/MonthFormatChange';
 import ReviewSection from './ReviewSection';
@@ -73,6 +73,13 @@ export default function ActivityDetailForm() {
     enabled: !!id && !!year && !!month,
   });
 
+  const handleMonthChange = useCallback((year: number, month: number) => {
+    setTimeout(() => {
+      setYear(year);
+      setMonth(month);
+    }, 0);
+  }, []);
+
   if (isLoading || !activityData) {
     return <ActivityDetailSkeleton isOwner={isOwner} />;
   }
@@ -83,7 +90,14 @@ export default function ActivityDetailForm() {
 
   return (
     <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
-      <Title {...activityData} isOwner={isOwner} />
+      <Title
+        title={activityData.title}
+        category={activityData.category}
+        rating={activityData.rating}
+        reviewCount={activityData.reviewCount}
+        address={activityData.address}
+        isOwner={isOwner}
+      />
       <ImageGrid
         mainImage={activityData.bannerImageUrl}
         subImages={subImageUrls}
@@ -105,12 +119,7 @@ export default function ActivityDetailForm() {
           <div className='md:row-span-2'>
             <BookingInterface
               schedules={schedulesData ?? []}
-              onMonthChange={(year, month) => {
-                setTimeout(() => {
-                  setYear(year);
-                  setMonth(month);
-                }, 0);
-              }}
+              onMonthChange={handleMonthChange}
               isOwner={isOwner}
               price={activityData.price}
             />
@@ -121,7 +130,11 @@ export default function ActivityDetailForm() {
           <h2 className='mb-4 pb-2 text-2xl font-bold'>체험 장소</h2>
           <LocationMap address={activityData.address} />
 
-          <ReviewSection activityId={id as string} {...activityData} />
+          <ReviewSection
+            activityId={id as string}
+            reviewCount={activityData.reviewCount}
+            rating={activityData.rating}
+          />
         </div>
       </div>
     </div>

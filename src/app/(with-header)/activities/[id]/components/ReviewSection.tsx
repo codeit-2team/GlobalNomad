@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ReviewCard from './ReviewCard';
 import Pagination from '@/components/Pagination';
 import { useQuery } from '@tanstack/react-query';
@@ -9,7 +9,7 @@ import ReviewTitle from './ReviewTitle';
 import useUserStore from '@/stores/authStore';
 
 interface ReviewSectionProps {
-  activityId: number;
+  activityId: string;
   reviewCount: number;
   rating: number;
 }
@@ -49,6 +49,22 @@ export default function ReviewSection({
     enabled: !!activityId,
   });
 
+  const ReviewComponent = useCallback(() => {
+    return reviewData?.reviews.map((review: ReviewProps) => (
+      <ReviewCard
+        key={review.id}
+        userName={review.user.nickname}
+        avatarSrc={review.user.profileImageUrl}
+        date={new Date(review.createdAt).toLocaleDateString('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })}
+        reviewText={review.content}
+      />
+    ));
+  }, [reviewData?.reviews]);
+
   if (isLoading) {
     return <p className='mt-4 text-gray-500'>리뷰를 불러오는 중입니다...</p>;
   }
@@ -66,21 +82,7 @@ export default function ReviewSection({
       <ReviewTitle reviewCount={reviewCount} rating={rating} />
 
       <div className='relative min-h-350'>
-        <div className={user ? '' : 'blur-sm'}>
-          {reviewData.reviews.map((review: ReviewProps) => (
-            <ReviewCard
-              key={review.id}
-              userName={review.user.nickname}
-              avatarSrc={review.user.profileImageUrl}
-              date={new Date(review.createdAt).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              })}
-              reviewText={review.content}
-            />
-          ))}
-        </div>
+        <div className={user ? '' : 'blur-sm'}>{ReviewComponent()}</div>
 
         {!user && (
           <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
