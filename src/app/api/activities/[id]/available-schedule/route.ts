@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface ErrorResponse {

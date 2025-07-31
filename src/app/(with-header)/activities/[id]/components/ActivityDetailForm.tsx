@@ -7,7 +7,7 @@ import BookingInterface from '@/components/FloatingBox/BookingInterface';
 import LocationMap from '@/components/LocationMap';
 import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import useUserStore from '@/stores/authStore';
 import { padMonth } from '../utils/MonthFormatChange';
 import ReviewSection from './ReviewSection';
