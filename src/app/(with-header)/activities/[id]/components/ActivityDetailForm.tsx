@@ -12,6 +12,8 @@ import useUserStore from '@/stores/authStore';
 import { padMonth } from '../utils/MonthFormatChange';
 import ReviewSection from './ReviewSection';
 
+import ActivityDetailSkeleton from './ActivityDetailSkeleton';
+
 export default function ActivityDetailForm() {
   const [year, setYear] = useState(2025);
   const [month, setMonth] = useState(7);
@@ -72,7 +74,7 @@ export default function ActivityDetailForm() {
   });
 
   if (isLoading || !activityData) {
-    return <div>로딩 중...</div>;
+    return <ActivityDetailSkeleton isOwner={isOwner} />;
   }
 
   const subImageUrls = activityData.subImages.map(

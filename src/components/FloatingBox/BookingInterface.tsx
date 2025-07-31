@@ -8,7 +8,6 @@ import TimeSelector from './TimeSelector';
 import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
-import Button from '../Button';
 import { SchedulesProps } from '@/types/activityDetailType';
 import { privateInstance } from '@/apis/privateInstance';
 import { useParams } from 'next/navigation';
@@ -141,14 +140,9 @@ export default function BookingInterface({
               )}
             </div>
             <BookingModal schedules={schedules} price={price} />
-            <Button
-              variant='primary'
-              disabled={!isBookable}
-              className='py-20'
-              onClick={handleBooking}
-            >
+            <BookingButton disabled={!isBookable} onClick={handleBooking}>
               예약하기
-            </Button>
+            </BookingButton>
           </div>
         </div>
       </div>
