@@ -12,6 +12,7 @@ import { ClassValue } from 'clsx';
  * @property placeholder - 선택되지 않았을 때 표시되는 텍스트
  * @property className - 컴포넌트에 적용할 CSS 클래스 (크기, 위치 등)
  * @property disabled - 비활성화 여부
+ * @property disableScroll - 스크롤 비활성화 여부
  */
 export interface DropdownProps<T extends string> {
   options: readonly T[];
@@ -20,4 +21,5 @@ export interface DropdownProps<T extends string> {
   placeholder?: string;
   className?: ClassValue;
   disabled?: boolean;
+  disableScroll?: boolean;
 }

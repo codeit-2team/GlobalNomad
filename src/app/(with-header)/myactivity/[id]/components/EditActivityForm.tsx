@@ -22,7 +22,7 @@ export default function EditActivityForm() {
     subImages,
     dates,
     isLoading,
-    error,
+    isError,
     setTitle,
     setCategory,
     setPrice,
@@ -39,7 +39,7 @@ export default function EditActivityForm() {
   } = useEditActivityForm();
 
   if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>오류가 발생했습니다: {error.message}</div>;
+  if (isError) return <div>오류가 발생했습니다: {isError}</div>;
 
   return (
     <div className='min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8'>

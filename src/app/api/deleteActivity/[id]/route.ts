@@ -9,25 +9,27 @@ interface ErrorResponse {
   error?: string;
 }
 
-export async function PATCH(
+export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const cookieStore = await cookies();
 
   try {
-    const body = await req.json();
     const resolvedParams = await params;
     const id = resolvedParams.id;
     const accessToken = cookieStore.get('accessToken')?.value;
 
     if (!accessToken) {
-      return NextResponse.json({ message: '엑세스토큰 없음' }, { status: 401 });
+      return NextResponse.json(
+        { message: '액세스 토큰 없음' },
+        { status: 401 },
+      );
     }
 
-    const response = await axios.patch(
+    const response = await axios.delete(
       `${BACKEND_BASE_URL}/my-activities/${id}`,
-      body,
+
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -38,13 +40,13 @@ export async function PATCH(
 
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: unknown) {
-    console.error('체험 수정 에러:', error);
+    console.error('체험 삭제 에러:', error);
 
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError<ErrorResponse>;
       const status = axiosError.response?.status || 500;
       const detail = axiosError.response?.data;
-      const errorMessage = detail?.message || detail?.error || '체험 수정 실패';
+      const errorMessage = detail?.message || detail?.error || '체험 삭제 실패';
 
       return NextResponse.json({ message: errorMessage }, { status });
     }
