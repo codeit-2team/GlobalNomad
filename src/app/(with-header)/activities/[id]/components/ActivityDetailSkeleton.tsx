@@ -1,15 +1,17 @@
 'use client';
 
 import SkeletonBookingInterface from './Skeletons/BookingInterfaceSkeleton';
+import useUserStore from '@/stores/authStore';
 
-export default function ActivityDetailSkeleton({
-  isOwner,
-}: {
-  isOwner: boolean;
-}) {
+export default function ActivityDetailSkeleton({ userId }: { userId: number }) {
+  const currentUserId = useUserStore((state) => state.user?.id);
+  const isOwner = currentUserId && userId && currentUserId === userId;
+
+  console.log(isOwner);
   return (
     <div className='mx-auto max-w-1200 animate-pulse p-4 sm:px-20 lg:p-8'>
       {/* 타이틀부분 */}
+
       <div className='mb-6 flex items-start justify-between'>
         <div className='flex w-full flex-col gap-10'>
           <div className='h-16 w-24 rounded bg-gray-300' />

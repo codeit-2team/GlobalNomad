@@ -14,27 +14,16 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
-  if (!accessToken) {
-    return NextResponse.json(
-      { message: '인증 토큰이 없습니다.' },
-      { status: 401 },
-    );
-  }
 
   try {
     const body = await req.json();
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: '액세스 토큰 없음' },
-        { status: 401 },
-      );
-    }
-
     const resolvedParams = await params;
     const id = resolvedParams.id;
+    const accessToken = cookieStore.get('accessToken')?.value;
+
+    if (!accessToken) {
+      return NextResponse.json({ message: '엑세스토큰 없음' }, { status: 401 });
+    }
 
     const response = await axios.patch(
       `${BACKEND_BASE_URL}/my-activities/${id}`,

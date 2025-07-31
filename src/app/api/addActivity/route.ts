@@ -11,13 +11,16 @@ interface ErrorResponse {
 
 export async function POST(req: NextRequest) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
-  if (!accessToken) {
-    return NextResponse.json({ message: '액세스 토큰 없음' }, { status: 401 });
-  }
 
   try {
+    const accessToken = cookieStore.get('accessToken')?.value;
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: '액세스 토큰 없음' },
+        { status: 401 },
+      );
+    }
     const body = await req.json();
     const {
       title,

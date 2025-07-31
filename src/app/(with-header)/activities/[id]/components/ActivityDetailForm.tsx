@@ -17,7 +17,6 @@ import ActivityDetailSkeleton from './ActivityDetailSkeleton';
 export default function ActivityDetailForm() {
   const [year, setYear] = useState(2025);
   const [month, setMonth] = useState(7);
-  const [isOwner, setIsOwner] = useState(false);
 
   const { id } = useParams();
 
@@ -30,20 +29,11 @@ export default function ActivityDetailForm() {
     enabled: !!id,
   });
 
-  const userId = activityData?.userId;
-
   const currentUserId = useUserStore((state) =>
     state.user ? state.user.id : null,
   );
-
-  useEffect(() => {
-    if (currentUserId && currentUserId === userId) {
-      setIsOwner(true);
-      console.log('니가 작성한 체험임');
-    } else {
-      setIsOwner(false);
-    }
-  }, [currentUserId, userId]);
+  const userId = activityData?.userId;
+  const isOwner = currentUserId && userId && currentUserId === userId;
 
   const { data: schedulesData } = useQuery({
     queryKey: ['available-schedule', id, year, month],
@@ -77,11 +67,11 @@ export default function ActivityDetailForm() {
     setTimeout(() => {
       setYear(year);
       setMonth(month);
-    }, 0);
+    });
   }, []);
 
   if (isLoading || !activityData) {
-    return <ActivityDetailSkeleton isOwner={isOwner} />;
+    return <ActivityDetailSkeleton userId={activityData?.userId} />;
   }
 
   const subImageUrls = activityData.subImages.map(

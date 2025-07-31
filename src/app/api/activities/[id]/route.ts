@@ -8,17 +8,10 @@ export const GET = async (
   { params }: { params: Promise<{ id: string }> },
 ) => {
   const { id } = await params;
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/activities/${id}`,
-      {
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
-        },
-      },
     );
 
     return NextResponse.json(response.data);

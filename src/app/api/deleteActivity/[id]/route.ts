@@ -14,11 +14,11 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
     const resolvedParams = await params;
     const id = resolvedParams.id;
+    const accessToken = cookieStore.get('accessToken')?.value;
 
     if (!accessToken) {
       return NextResponse.json(
@@ -26,6 +26,7 @@ export async function DELETE(
         { status: 401 },
       );
     }
+
     const response = await axios.delete(
       `${BACKEND_BASE_URL}/my-activities/${id}`,
 
