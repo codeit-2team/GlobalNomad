@@ -8,11 +8,11 @@ import TimeSelector from './TimeSelector';
 import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
-import Button from '../Button';
 import { SchedulesProps } from '@/types/activityDetailType';
 import { privateInstance } from '@/apis/privateInstance';
 import { useParams } from 'next/navigation';
 import { AxiosError } from 'axios';
+import useUserStore from '@/stores/authStore';
 
 export default function BookingInterface({
   schedules,
@@ -25,6 +25,8 @@ export default function BookingInterface({
   isOwner: boolean;
   price: number;
 }) {
+  const { user } = useUserStore();
+
   const handleBooking = async () => {
     try {
       await privateInstance.post(`/activities/${id}/reservation`, {
@@ -56,12 +58,20 @@ export default function BookingInterface({
     useBookingStore();
   const { id } = useParams();
 
+  const isLoggedIn = !!user;
   const isBookable =
     !!selectedDate &&
     !!selectedTime &&
     !!selectedTimeId &&
     !!participants &&
-    !isOwner;
+    !isOwner &&
+    isLoggedIn;
+
+  const buttonText = !isLoggedIn
+    ? '로그인이 필요한 기능입니다'
+    : isOwner
+      ? '본인이 등록한 체험입니다'
+      : '예약하기';
 
   return (
     <div className='w-full max-w-sm'>
@@ -75,7 +85,7 @@ export default function BookingInterface({
           <TimeSelector />
           <ParticipantsSelector />
           <BookingButton disabled={!isBookable} onClick={handleBooking}>
-            {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
+            {buttonText}
           </BookingButton>
           <TotalPriceDisplay price={price} />
         </div>
@@ -108,7 +118,7 @@ export default function BookingInterface({
             <BookingModal schedules={schedules} price={price} />
 
             <BookingButton disabled={!isBookable} onClick={handleBooking}>
-              {isOwner ? '본인이 등록한 체험입니다' : '예약하기'}
+              {buttonText}
             </BookingButton>
             <TotalPriceDisplay price={price} />
           </div>
@@ -141,14 +151,9 @@ export default function BookingInterface({
               )}
             </div>
             <BookingModal schedules={schedules} price={price} />
-            <Button
-              variant='primary'
-              disabled={!isBookable}
-              className='py-20'
-              onClick={handleBooking}
-            >
-              예약하기
-            </Button>
+            <BookingButton disabled={!isBookable} onClick={handleBooking}>
+              {buttonText}
+            </BookingButton>
           </div>
         </div>
       </div>

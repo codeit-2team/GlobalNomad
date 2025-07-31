@@ -8,6 +8,7 @@ export interface ReviewCardProps {
   date: string;
   reviewText: string;
   avatarSrc: string;
+  isBlured?: boolean;
 }
 
 export interface TitleProps {
