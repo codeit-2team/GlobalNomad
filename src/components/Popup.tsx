@@ -90,14 +90,14 @@ export default function Popup({
               className={cn('w-80 rounded-md')}
               onClick={onClose}
             >
-              아니오
+              아니요
             </Button>
             <Button
               variant='primary'
               className={cn('w-80 rounded-md')}
               onClick={onConfirm}
             >
-              취소하기
+              예
             </Button>
           </div>
         </div>

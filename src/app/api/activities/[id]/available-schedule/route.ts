@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface ErrorResponse {
@@ -8,9 +7,6 @@ interface ErrorResponse {
 }
 
 export async function GET(request: NextRequest) {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
   const { searchParams, pathname } = request.nextUrl;
 
   const year = searchParams.get('year');
@@ -29,11 +25,6 @@ export async function GET(request: NextRequest) {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/activities/${id}/available-schedule?year=${year}&month=${month}`,
-      {
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
-        },
-      },
     );
     return NextResponse.json(response.data);
   } catch (err) {

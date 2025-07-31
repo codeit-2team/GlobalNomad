@@ -6,6 +6,7 @@ export default function ReviewCard({
   date,
   reviewText,
   avatarSrc,
+  isBlured = false,
 }: ReviewCardProps) {
   return (
     <div className='flex max-w-md justify-start gap-6 p-6 text-black md:max-w-2xl'>
@@ -16,7 +17,11 @@ export default function ReviewCard({
           <p className='text-black'>|</p>
           <p className='text-gray-600'>{date}</p>
         </div>
-        <p className='text-sm leading-relaxed text-black md:text-lg'>
+        <p
+          className={`text-sm leading-relaxed md:text-lg ${
+            isBlured ? 'text-gray-300 select-none' : 'text-black'
+          }`}
+        >
           {reviewText}
         </p>
       </div>
