@@ -24,8 +24,10 @@ export default function DatePicker({
   schedules: SchedulesProps;
   onMonthChange?: (year: number, month: number) => void;
 }) {
-  const { selectedDate, setSelectedDate, setAvailableDates, availableDates } =
-    useBookingStore();
+  const selectedDate = useBookingStore((state) => state.selectedDate);
+  const setSelectedDate = useBookingStore((state) => state.setSelectedDate);
+  const setAvailableDates = useBookingStore((state) => state.setAvailableDates);
+  const availableDates = useBookingStore((state) => state.availableDates);
 
   const today = dayjs();
 

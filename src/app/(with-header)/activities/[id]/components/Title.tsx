@@ -21,7 +21,7 @@ interface TitleProps {
   isOwner: boolean;
 }
 
-export default function Title({
+function Title({
   title,
   category,
   rating,
@@ -90,3 +90,5 @@ export default function Title({
     </>
   );
 }
+
+export default React.memo(Title);

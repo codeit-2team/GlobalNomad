@@ -1,6 +1,6 @@
 'use client';
 
-import SkeletonBookingInterface from './Skeletons/BookingInterfaceSkeleton';
+import SkeletonBookingInterface from './BookingInterfaceSkeleton';
 import useUserStore from '@/stores/authStore';
 
 export default function ActivityDetailSkeleton({ userId }: { userId: number }) {

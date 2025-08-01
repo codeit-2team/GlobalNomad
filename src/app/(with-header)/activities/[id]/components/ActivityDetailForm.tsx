@@ -11,16 +11,23 @@ import { useState, useCallback } from 'react';
 import useUserStore from '@/stores/authStore';
 import { padMonth } from '../utils/MonthFormatChange';
 import ReviewSection from './ReviewSection';
+import { AxiosError } from 'axios';
+import { notFound } from 'next/navigation';
 
-import ActivityDetailSkeleton from './ActivityDetailSkeleton';
+import ActivityDetailSkeleton from './Skeletons/ActivityDetailSkeleton';
 
 export default function ActivityDetailForm() {
-  const [year, setYear] = useState(2025);
-  const [month, setMonth] = useState(7);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
   const { id } = useParams();
 
-  const { data: activityData, isLoading } = useQuery({
+  const {
+    data: activityData,
+    isLoading,
+    status,
+    error,
+  } = useQuery({
     queryKey: ['activity', id],
     queryFn: async () => {
       return privateInstance.get(`/activities/${id}`);
@@ -28,6 +35,16 @@ export default function ActivityDetailForm() {
     select: (response) => response.data,
     enabled: !!id,
   });
+
+  if (status === 'error') {
+    const axiosError = error as AxiosError;
+    const httpStatus = axiosError.response?.status;
+
+    if (httpStatus === 404) {
+      console.log('404 에러임');
+      notFound();
+    }
+  }
 
   const currentUserId = useUserStore((state) =>
     state.user ? state.user.id : null,
