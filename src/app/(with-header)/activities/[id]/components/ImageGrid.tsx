@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { ImageGridProps } from '@/types/activityDetailType';
 
 function ImageGrid({ mainImage, subImages }: ImageGridProps) {
