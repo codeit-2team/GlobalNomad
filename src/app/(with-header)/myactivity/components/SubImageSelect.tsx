@@ -19,7 +19,7 @@ export function SubImageSelect({
   };
 
   return (
-    <div>
+    <div className='pt-24'>
       <h3 className='mb-3 text-2xl font-bold text-black'>소개 이미지</h3>
       <p className='mb-4 text-sm text-gray-600'>
         체험의 상세한 모습을 보여주는 이미지들을 등록해주세요.

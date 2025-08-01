@@ -15,7 +15,7 @@ export function MainImageSelect({
   onImageRemove,
 }: MainImageSelectProps) {
   return (
-    <div>
+    <div className='pt-24'>
       <h3 className='mb-3 text-2xl font-bold text-black'>배너 이미지</h3>
       <p className='mb-4 text-sm text-gray-600'>
         체험을 대표하는 메인 이미지를 등록해주세요.

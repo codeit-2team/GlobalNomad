@@ -43,10 +43,10 @@ export function ImagePreview({
       <button
         type='button'
         onClick={onRemove}
-        className='absolute top-2 right-2 rounded-full bg-gray-600 p-1 text-white transition-colors hover:bg-gray-700'
+        className='absolute -top-12 -right-12 w-24 h-24 rounded-full text-white transition-colors bg-[rgba(27,27,27,0.8)]'
         aria-label='이미지 삭제'
       >
-        <IconClose />
+        <IconClose className='h-12 w-12 m-auto' fill='currentColor'  alt='삭제 아이콘' />
       </button>
     </div>
   );

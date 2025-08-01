@@ -19,6 +19,7 @@ export default function Input({
   error,
   className,
   focusColor,
+  variant,
   ...props
 }: InputProps) {
   const [visibility, setVisibility] = useState(false);
@@ -30,6 +31,8 @@ export default function Input({
   const handleVisibility = () => {
     setVisibility((prev) => !prev);
   };
+
+  const isCompact = variant === 'compact';
 
   return (
     <div className='font-regular flex flex-col text-lg text-black'>
@@ -43,7 +46,8 @@ export default function Input({
           id={id}
           type={inputType}
           className={cn(
-            'w-full rounded-md border bg-white py-15 pr-50 pl-20 placeholder-gray-600 focus:outline-none',
+            'w-full rounded-md border bg-white py-15 pr-50 pl-20 placeholder:text-gray-600 focus:outline-none',
+            isCompact ? 'py-10 px-12 text-md' : 'py-15 pr-50 pl-20',
             focusColor,
             error ? 'border-red-300' : 'border-gray-800',
           )}

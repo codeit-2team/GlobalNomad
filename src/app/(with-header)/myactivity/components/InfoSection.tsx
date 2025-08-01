@@ -3,6 +3,7 @@
 import Input from '@/components/Input';
 import AddressInput from './AddressInput';
 import CategoryInput from './CategoryInput';
+import Textarea from '@/components/Textarea';
 
 interface InfoSectionProps {
   title?: string;
@@ -30,55 +31,53 @@ export function InfoSection({
   onAddressChange,
 }: InfoSectionProps) {
   return (
-    <section className='space-y-6'>
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-        <div className='sm:col-span-2'>
-          <Input
-            label='제목'
-            id='title'
-            type='text'
-            placeholder='체험의 제목을 입력해주세요'
-            className='w-full'
-            value={title}
-            onChange={(e) => onTitleChange(e.target.value)}
-          />
-        </div>
+    <section className='flex flex-col gap-24 space-y-6 pt-24'>
+      <div>
+        <Input
+          id='title'
+          type='text'
+          placeholder='제목'
+          className='w-full'
+          value={title}
+          onChange={(e) => onTitleChange(e.target.value)}
+        />
 
+      </div>
+          
+      <div>
         <CategoryInput
           category={category}
           onCategoryChange={onCategoryChange}
         />
-
-        <div>
-          <div className='relative'>
-            <Input
-              label='가격'
-              type='number'
-              placeholder='0'
-              className='w-full appearance-none'
-              value={price}
-              onChange={(e) => onPriceChange(e.target.value)}
-            />
-            <span className='absolute top-1/2 right-4 -translate-y-1/2 transform text-gray-500'>
-              원
-            </span>
-          </div>
-        </div>
       </div>
 
       <div>
-        <Input
-          label='설명'
-          type='textarea'
-          placeholder='체험에 대한 자세한 설명을 입력해주세요'
+        <Textarea
+          placeholder='설명'
           className='w-full'
+          rows={10}
           value={description}
           onChange={(e) => onDescriptionChange(e.target.value)}
         />
       </div>
 
-      <div>
-        <AddressInput onAddressChange={onAddressChange} address={address} />
+      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+        <p>가격</p>
+        <Input
+          type='number'
+          placeholder='가격'
+          className='w-full appearance-none'
+          value={price}
+          onChange={(e) => onPriceChange(e.target.value)}
+        />
+      </div>
+
+      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+        <p>주소</p>
+        <AddressInput
+          onAddressChange={onAddressChange}
+          address={address}
+        />
       </div>
     </section>
   );
