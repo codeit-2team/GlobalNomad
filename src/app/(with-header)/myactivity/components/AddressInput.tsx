@@ -48,8 +48,8 @@ export default function AddressInput({
   return (
     <div>
       <Input
-        label='주소'
         id='address'
+        placeholder='주소를 입력해주세요'
         value={address}
         onClick={() => setIsOpen(true)}
         readOnly
