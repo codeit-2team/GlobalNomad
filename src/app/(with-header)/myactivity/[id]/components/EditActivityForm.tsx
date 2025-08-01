@@ -47,13 +47,15 @@ export default function EditActivityForm() {
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='mb-8 flex items-center justify-between'>
             <h1 className='text-3xl font-bold text-black'>내 체험 수정</h1>
-            <Button
-              variant='primary'
-              type='submit'
-              className='w-full px-32 py-11 rounded-[4px] text-lg bg-nomad'
-            >
-              수정하기
-            </Button>
+            <div className='border-none'>
+              <Button
+                variant='primary'
+                type='submit'
+                className='w-full px-32 py-11 rounded-[4px] text-lg bg-nomad'
+              >
+                수정하기
+              </Button>
+            </div>
           </div>
 
           <InfoSection
