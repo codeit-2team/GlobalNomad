@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMyActivities } from '@/hooks/useDashboardQueries';
 import { useActivityOptions } from '@/hooks/useActivityOptions';
 import Dropdown from '@/components/Dropdown';
@@ -18,6 +18,18 @@ export default function MyDashboardPage() {
   // 내 체험 리스트 조회
   const { data: activitiesData, isLoading, error } = useMyActivities();
   const { activityOptions, uniqueTitles } = useActivityOptions(activitiesData);
+
+  // 페이지 로드 시 첫 번째 체험 자동 선택
+  useEffect(() => {
+    if (
+      activitiesData?.activities &&
+      activitiesData.activities.length > 0 &&
+      !selectedActivityId
+    ) {
+      const firstActivity = activitiesData.activities[0];
+      setSelectedActivityId(firstActivity.id);
+    }
+  }, [activitiesData, selectedActivityId]);
 
   // 체험 선택 -> 제목으로 ID 찾기
   const handleActivityChange = (selectedTitle: string) => {
@@ -76,17 +88,6 @@ export default function MyDashboardPage() {
           예약 현황
         </h1>
 
-        {/* 드롭다운 */}
-        <div className='mb-48 w-full max-w-792'>
-          <Dropdown
-            options={uniqueTitles}
-            value={selectedActivityTitle}
-            onChange={handleActivityChange}
-            placeholder='체험을 선택하세요'
-            className='h-56'
-          />
-        </div>
-
         {/* 에러 메시지 */}
         <div className='text-center text-red-500'>
           <p>예약 현황을 불러오는데 실패했습니다.</p>
@@ -96,6 +97,21 @@ export default function MyDashboardPage() {
     );
   }
 
+  // 등록한 체험이 없을경우 EmptyDashboard만 표시(드롭다운 x)
+  if (!activitiesData?.activities || activitiesData.activities.length === 0) {
+    return (
+      <div className='w-full'>
+        {/* 제목 */}
+        <h1 className='text-nomad mb-32 text-3xl leading-42 font-bold'>
+          예약 현황
+        </h1>
+
+        <EmptyDashboard />
+      </div>
+    );
+  }
+
+  // 등록한 체험이 존재할 경우
   return (
     <>
       <div className='w-full'>
@@ -116,25 +132,25 @@ export default function MyDashboardPage() {
         </div>
 
         {/* 컨텐츠 영역 */}
-        {!selectedActivityId ? (
-          <EmptyDashboard />
-        ) : (
-          <div className='relative'>
-            <ReservationDashboardCalendar
-              activityId={selectedActivityId}
-              onDateClick={handleDateClick}
-            />
-            {/* 예약 정보 모달 */}
-            {isModalOpen && (
-              <ReservationInfoModal
-                isOpen={isModalOpen}
-                onClose={handleModalClose}
+        <div className='relative'>
+          {selectedActivityId && (
+            <>
+              <ReservationDashboardCalendar
                 activityId={selectedActivityId}
-                date={selectedDate}
+                onDateClick={handleDateClick}
               />
-            )}
-          </div>
-        )}
+              {/* 예약 정보 모달 */}
+              {isModalOpen && (
+                <ReservationInfoModal
+                  isOpen={isModalOpen}
+                  onClose={handleModalClose}
+                  activityId={selectedActivityId}
+                  date={selectedDate}
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );
