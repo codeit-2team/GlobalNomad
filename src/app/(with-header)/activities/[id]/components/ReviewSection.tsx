@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useState, useCallback } from 'react';
 import ReviewCard from './ReviewCard';
 import Pagination from '@/components/Pagination';
@@ -24,7 +25,7 @@ interface ReviewProps {
   content: string;
 }
 
-export default function ReviewSection({
+function ReviewSection({
   activityId,
   reviewCount,
   rating,
@@ -103,3 +104,5 @@ export default function ReviewSection({
     </div>
   );
 }
+
+export default React.memo(ReviewSection);

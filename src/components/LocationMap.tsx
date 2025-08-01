@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import Location from '@assets/svg/location';
+import React from 'react';
 
 interface LocationMapProps {
   address: string;
@@ -108,4 +109,4 @@ const LocationMap = ({ address }: LocationMapProps) => {
   );
 };
 
-export default LocationMap;
+export default React.memo(LocationMap);

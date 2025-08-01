@@ -14,11 +14,11 @@ import ReviewSection from './ReviewSection';
 import { AxiosError } from 'axios';
 import { notFound } from 'next/navigation';
 
-import ActivityDetailSkeleton from './ActivityDetailSkeleton';
+import ActivityDetailSkeleton from './Skeletons/ActivityDetailSkeleton';
 
 export default function ActivityDetailForm() {
-  const [year, setYear] = useState(2025);
-  const [month, setMonth] = useState(7);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
   const { id } = useParams();
 

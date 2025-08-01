@@ -152,9 +152,11 @@ export default function BookingInterface({
               )}
             </div>
             <BookingModal schedules={schedules} price={price} />
-            <BookingButton disabled={!isBookable} onClick={handleBooking}>
-              {buttonText}
-            </BookingButton>
+            <div className='flex justify-center'>
+              <BookingButton disabled={!isBookable} onClick={handleBooking}>
+                {buttonText}
+              </BookingButton>
+            </div>
           </div>
         </div>
       </div>

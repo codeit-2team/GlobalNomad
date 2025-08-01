@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { shallow } from 'zustand/shallow';
 import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import isoWeek from 'dayjs/plugin/isoWeek';
@@ -11,6 +12,7 @@ import CalendarHeader from './CalendarHeader';
 import CalendarBody from './CalendarBody';
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import { SchedulesProps } from '@/types/activityDetailType';
+import { BookingState } from '@/types/bookingStoreTypes';
 
 dayjs.extend(weekday);
 dayjs.extend(isoWeek);
@@ -24,9 +26,11 @@ export default function DatePicker({
   schedules: SchedulesProps;
   onMonthChange?: (year: number, month: number) => void;
 }) {
-  const { selectedDate, setSelectedDate, setAvailableDates, availableDates } =
-    useBookingStore();
-
+  const selectedDate = useBookingStore((state) => state.selectedDate);
+  const setSelectedDate = useBookingStore((state) => state.setSelectedDate);
+  const setAvailableDates = useBookingStore((state) => state.setAvailableDates);
+  const availableDates = useBookingStore((state) => state.availableDates);
+  
   const today = dayjs();
 
   const [viewDate, setViewDate] = useState(() =>
