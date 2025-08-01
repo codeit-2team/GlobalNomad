@@ -7,6 +7,7 @@ import useUserStore from '@/stores/authStore';
 import { useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import useLogout from '@/hooks/useLogout';
+import { toast } from 'sonner';
 
 export default function Header() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function Header() {
       setUser(null);
       router.push('/');
     } catch {
-      alert('로그아웃 실패'); //토스트 예정
+      toast.error('로그아웃 실패');
     }
   };
 
