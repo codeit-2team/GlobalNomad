@@ -3,6 +3,7 @@
 import Input from '@/components/Input';
 import AddressInput from './AddressInput';
 import CategoryInput from './CategoryInput';
+import Textarea from '@/components/Textarea';
 
 interface InfoSectionProps {
   title?: string;
@@ -51,10 +52,10 @@ export function InfoSection({
       </div>
 
       <div>
-        <Input
-          type='textarea'
-          placeholder='체험에 대한 자세한 설명을 입력해주세요'
+        <Textarea
+          placeholder='설명'
           className='w-full'
+          rows={10}
           value={description}
           onChange={(e) => onDescriptionChange(e.target.value)}
         />
