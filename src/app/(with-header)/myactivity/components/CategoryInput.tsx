@@ -13,14 +13,16 @@ export default function CategoryInput({
       {/* <label className='font-regular flex flex-col text-lg text-black'>
         카테고리
       </label> */}
-      <div>
+      <div className='w-full'>
         <select
           className='w-full rounded-md border border-gray-800 bg-white px-20 py-17 text-gray-700 placeholder:text-gray-700'
           id='category'
           value={category}
           onChange={(e) => onCategoryChange(e.target.value)}
         >
-          <option value=''>카테고리</option>
+          <option value='' disabled hidden>
+            카테고리
+          </option>
           <option value='문화 · 예술'>문화 · 예술</option>
           <option value='식음료'>식음료</option>
           <option value='스포츠'>스포츠</option>

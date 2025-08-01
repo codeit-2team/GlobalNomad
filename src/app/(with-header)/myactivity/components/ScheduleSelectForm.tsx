@@ -23,7 +23,7 @@ export function ScheduleSelectForm({
   return (
     <div className='space-y-4 pt-24'>
       <div className='flex flex-row items-center justify-between gap-5'>
-        <p className='text-2lg text-black'>예약 가능한 시간대</p>
+        <p className='text-xl text-black font-bold'>예약 가능한 시간대</p>
         <div>
           <button
             type='button'

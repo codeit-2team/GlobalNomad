@@ -30,19 +30,20 @@ export function InfoSection({
   onAddressChange,
 }: InfoSectionProps) {
   return (
-    <section className='flex flex-col gap-24 space-y-6'>
-      <div className='grid gap-24 sm:grid-cols-2'>
-        <div className='sm:col-span-2'>
-          <Input
-            id='title'
-            type='text'
-            placeholder='제목'
-            className='w-full'
-            value={title}
-            onChange={(e) => onTitleChange(e.target.value)}
-          />
-        </div>
+    <section className='flex flex-col gap-24 space-y-6 pt-24'>
+      <div>
+        <Input
+          id='title'
+          type='text'
+          placeholder='제목'
+          className='w-full'
+          value={title}
+          onChange={(e) => onTitleChange(e.target.value)}
+        />
 
+      </div>
+          
+      <div>
         <CategoryInput
           category={category}
           onCategoryChange={onCategoryChange}
@@ -59,8 +60,8 @@ export function InfoSection({
         />
       </div>
 
-      <div className='relative'>
-        <p></p>
+      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+        <p>가격</p>
         <Input
           type='number'
           placeholder='가격'
@@ -70,7 +71,8 @@ export function InfoSection({
         />
       </div>
 
-      <div>
+      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+        <p>주소</p>
         <AddressInput
           onAddressChange={onAddressChange}
           address={address}
