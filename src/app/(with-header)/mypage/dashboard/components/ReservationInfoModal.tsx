@@ -68,7 +68,7 @@ export default function ReservationInfoModal({
         reservationId,
         data: { status },
       });
-    } catch (_error) {
+    } catch {
       alert('예약 처리에 실패했습니다.');
     }
   };

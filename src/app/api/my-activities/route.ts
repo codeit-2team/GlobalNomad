@@ -9,7 +9,7 @@ const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
  * GET /api/my-activities
  */
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get('accessToken')?.value;
