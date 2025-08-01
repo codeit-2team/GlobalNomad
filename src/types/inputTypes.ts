@@ -12,4 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   /** 포커스 시 적용할 테두리 색상  */
   focusColor?: string;
+
+  /** 커스텀 클래스 이름 'compact' 사용 시 작은 인풋 사이즈로 변경 */
+  variant?: 'compact' | 'default';
 }

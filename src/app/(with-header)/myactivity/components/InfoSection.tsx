@@ -30,14 +30,13 @@ export function InfoSection({
   onAddressChange,
 }: InfoSectionProps) {
   return (
-    <section className='space-y-6'>
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
+    <section className='flex flex-col gap-24 space-y-6'>
+      <div className='grid gap-24 sm:grid-cols-2'>
         <div className='sm:col-span-2'>
           <Input
-            label='제목'
             id='title'
             type='text'
-            placeholder='체험의 제목을 입력해주세요'
+            placeholder='제목'
             className='w-full'
             value={title}
             onChange={(e) => onTitleChange(e.target.value)}
@@ -48,27 +47,10 @@ export function InfoSection({
           category={category}
           onCategoryChange={onCategoryChange}
         />
-
-        <div>
-          <div className='relative'>
-            <Input
-              label='가격'
-              type='number'
-              placeholder='0'
-              className='w-full appearance-none'
-              value={price}
-              onChange={(e) => onPriceChange(e.target.value)}
-            />
-            <span className='absolute top-1/2 right-4 -translate-y-1/2 transform text-gray-500'>
-              원
-            </span>
-          </div>
-        </div>
       </div>
 
       <div>
         <Input
-          label='설명'
           type='textarea'
           placeholder='체험에 대한 자세한 설명을 입력해주세요'
           className='w-full'
@@ -77,8 +59,22 @@ export function InfoSection({
         />
       </div>
 
+      <div className='relative'>
+        <p></p>
+        <Input
+          type='number'
+          placeholder='가격'
+          className='w-full appearance-none'
+          value={price}
+          onChange={(e) => onPriceChange(e.target.value)}
+        />
+      </div>
+
       <div>
-        <AddressInput onAddressChange={onAddressChange} address={address} />
+        <AddressInput
+          onAddressChange={onAddressChange}
+          address={address}
+        />
       </div>
     </section>
   );

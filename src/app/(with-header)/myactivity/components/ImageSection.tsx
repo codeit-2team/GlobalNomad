@@ -17,7 +17,7 @@ export function ImageSection({
   subImage,
   onMainImageSelect,
   onMainImageRemove,
-  onSubImageAdd,
+  onSubImageAdd, 
   onSubImageRemove,
 }: ImagesSectionProps) {
   return (

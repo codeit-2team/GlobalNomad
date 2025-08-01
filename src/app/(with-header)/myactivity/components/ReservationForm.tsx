@@ -131,20 +131,20 @@ export default function ReservationForm() {
     }
   };
   return (
-    <div className='min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8'>
+    <div className='min-h-screen bg-gray-white px-16 py-24 md:py-0 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='mb-8 flex items-center justify-between'>
-            <h1 className='mb-2 text-3xl font-bold text-gray-900'>
-              내 체험 등록
+            <h1 className='text-3xl font-bold text-black'>
+              내 체험 등록 
             </h1>
-            <div className='border-t border-gray-200 pt-6'>
+            <div className='border-none'>
               <Button
                 variant='primary'
                 type='submit'
-                className='w-full px-5 py-10'
+                className='w-full px-32 py-11 rounded-[4px] text-lg bg-nomad'
               >
-                체험 등록하기
+                등록하기
               </Button>
             </div>
           </div>

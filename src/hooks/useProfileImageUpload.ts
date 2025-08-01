@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useUploadProfileImage } from './useMyPageQueries';
+import useUserStore from '@/stores/authStore'; // authStore import
 
 /**
  * 프로필 이미지 업로드를 위한 커스텀 훅
