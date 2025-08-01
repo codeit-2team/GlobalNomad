@@ -111,11 +111,12 @@ jobs:
             rm -f .env
             touch .env
             echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
-            echo "NEXT_PUBLIC_TEAM_ID=${{ secrets.NEXT_PUBLIC_TEAM_ID }}" >> .env
             echo "NEXT_PUBLIC_API_SERVER_URL=${{ secrets.NEXT_PUBLIC_API_SERVER_URL }}" >> .env
             echo "NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}" >> .env
             echo "NEXT_PUBLIC_KAKAO_APP_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_APP_JS_KEY }}" >> .env
             echo "NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}" >> .env
+            echo "NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL=${{ secrets.NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL }}" >> .env
+            echo "NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL=${{ secrets.NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL }}" >> .env
             
             # 최신 코드 가져오기
             echo "🔄 Pulling latest code..."
