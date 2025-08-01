@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+
+import Dropdown from '@/components/Dropdown';
 import { useMyActivities } from '@/hooks/useDashboardQueries';
 import { useActivityOptions } from '@/hooks/useActivityOptions';
-import Dropdown from '@/components/Dropdown';
+
+import EmptyDashboard from './components/EmptyDashboard';
 import ReservationDashboardCalendar from './components/ReservationDashboardCalendar';
 import ReservationInfoModal from './components/ReservationInfoModal';
-import EmptyDashboard from './components/EmptyDashboard';
 
 export default function MyDashboardPage() {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
