@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
 import PopularCard from '@/app/(with-header)/components/PopularCard';
-import { getPopularExperiences } from '../../api/experiences/getPopularExperiences';
+import { getPopularExperiences } from '@/app/api/experiences/getPopularExperiences';
 
 export default function PopularExperiences() {
   const sliderRef = useRef<HTMLDivElement>(null);

@@ -1,21 +1,19 @@
 import { instance } from '@/apis/instance';
 import { Experience } from '@/types/experienceListTypes';
 
-interface ResponseData {
-  cursorId: number;
-  totalCount: number;
+interface PopularExperiencesResponse {
   activities: Experience[];
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER_URL;
 const url = `${baseUrl}/activities`;
 
-export const getPopularExperiences = async (): Promise<ResponseData> => {
-  const res = await instance.get<ResponseData>(url, {
+export const getPopularExperiences = async (): Promise<PopularExperiencesResponse> => {
+  const res = await instance.get<PopularExperiencesResponse>(url, {
     params: {
-      method: 'offset',
+      method: 'cursor',
       sort: 'most_reviewed',
-      size: 10,
+      size: 12,
     },
   });
 
