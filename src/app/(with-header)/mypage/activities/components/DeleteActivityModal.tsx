@@ -4,25 +4,25 @@ import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import CheckIcon from '@assets/svg/check';
 
-interface CancelReservationModalProps {
+interface DeleteActivityModalProps {
   isOpen: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   isLoading?: boolean;
 }
 
-export default function CancelReservationModal({
+export default function DeleteActivityModal({
   isOpen,
   onCancel,
   onConfirm,
   isLoading = false,
-}: CancelReservationModalProps) {
+}: DeleteActivityModalProps) {
   return (
     <Modal isOpen={isOpen} onOpenChange={(open) => !open && onCancel()}>
       <Modal.Content
         className='!h-184 !w-298 !max-w-none !min-w-0 !rounded-xl !p-0'
         zIndex={999}
-        backdropClassName='!z-[999]'
+        backdropClassName='!z-999'
       >
         <div className='flex h-full w-full flex-col items-center justify-center gap-24 rounded-xl bg-white p-16 shadow-[0px_4px_16px_0px_rgba(17,34,17,0.05)]'>
           {/* 체크 아이콘 */}
@@ -32,7 +32,7 @@ export default function CancelReservationModal({
 
           {/* 메시지 */}
           <p className='text-nomad text-center text-lg font-medium'>
-            예약을 취소하시겠어요?
+            체험을 삭제하시겠어요?
           </p>
 
           {/* 버튼 */}
@@ -51,7 +51,7 @@ export default function CancelReservationModal({
               onClick={onConfirm}
               disabled={isLoading}
             >
-              {isLoading ? '취소 중...' : '취소하기'}
+              {isLoading ? '삭제 중...' : '삭제하기'}
             </Button>
           </div>
         </div>
