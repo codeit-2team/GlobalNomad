@@ -83,6 +83,7 @@ export const useUpdateProfile = () => {
     setUser,
     setLoading,
     setError,
+    setGlobalUser, // [추가] 헤더 상태(authStore)도 동기화
   ]);
 
   return mutation;
