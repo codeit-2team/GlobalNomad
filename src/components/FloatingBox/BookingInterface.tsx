@@ -154,7 +154,7 @@ export default function BookingInterface({
         <div className='mb-6 flex items-start justify-between'>
           <div className='flex-1'>
             <div className='mb-1 text-xl font-bold text-gray-900'>
-              ₩ 10,000{' '}
+              ₩{price}
               <span className='text-sm font-normal text-gray-600'>
                 / 총 {participants}인
               </span>

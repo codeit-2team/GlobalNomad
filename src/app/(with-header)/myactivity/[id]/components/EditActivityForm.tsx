@@ -73,7 +73,7 @@ export default function EditActivityForm() {
             address={address}
             onTitleChange={setTitle}
             onCategoryChange={setCategory}
-            onPriceChange={(price) => setPrice(Number(price))}
+            onPriceChange={setPrice}
             onDescriptionChange={setDescription}
             onAddressChange={setAddress}
           />

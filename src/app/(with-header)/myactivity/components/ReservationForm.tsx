@@ -11,6 +11,7 @@ import Button from '@/components/Button';
 import { uploadImage } from '../utils/uploadImage';
 import { privateInstance } from '@/apis/privateInstance';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 interface DateSlot {
   date: string;
@@ -26,9 +27,11 @@ export default function ReservationForm() {
   const [subImage, setSubImage] = useState<(File | string)[]>([]);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
+
+  const router = useRouter();
 
   const handleAddDate = () => {
     setDates([...dates, { date: '', startTime: '', endTime: '' }]);
@@ -100,13 +103,17 @@ export default function ReservationForm() {
       toast.error('모든 필드를 입력해주세요.'); //추후 토스트나 팝업으로 대체
       return;
     }
-
+    const parsedPrice = parseInt(price, 10);
+    if (isNaN(parsedPrice) || parsedPrice <= 0) {
+      toast.error('유효한 가격을 입력해주세요.');
+      return;
+    }
     const payload = {
       title,
       category,
       description,
       address,
-      price,
+      price: parsedPrice,
       schedules: dates,
       bannerImageUrl: mainImage,
       subImageUrls: subImage,
@@ -115,7 +122,8 @@ export default function ReservationForm() {
     try {
       const response = await privateInstance.post('/addActivity', payload);
       console.log('등록 성공:', response.data);
-      toast.success('체험이 성공적으로 등록되었습니다!'); //추후 토스트나 팝업으로 대체
+      router.push(`/activities/${response.data.id}`);
+      toast.success('체험이 성공적으로 등록되었습니다!');
     } catch (err) {
       console.error('체험 등록 실패:', err);
 
@@ -155,7 +163,7 @@ export default function ReservationForm() {
             address={address}
             onTitleChange={setTitle}
             onCategoryChange={setCategory}
-            onPriceChange={(value) => setPrice(Number(value))}
+            onPriceChange={setPrice}
             onDescriptionChange={setDescription}
             onAddressChange={setAddress}
           />

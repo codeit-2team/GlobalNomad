@@ -8,6 +8,7 @@ import { uploadImage } from '../../utils/uploadImage';
 import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
+import { parse } from 'path';
 
 interface SubImageType {
   id?: number;
@@ -21,7 +22,7 @@ export const useEditActivityForm = () => {
 
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
   const [mainImage, setMainImage] = useState<File | string | null>(null);
@@ -45,7 +46,7 @@ export const useEditActivityForm = () => {
     if (data) {
       setTitle(data.title);
       setCategory(data.category);
-      setPrice(data.price);
+      setPrice(data.price.toString());
       setDescription(data.description);
       setAddress(data.address);
       setMainImage(data.bannerImageUrl);
@@ -137,12 +138,18 @@ export const useEditActivityForm = () => {
         .map((d) => d.id)
         .filter((id): id is number => id !== undefined);
 
+      const parsedPrice = parseInt(price, 10);
+
+      if (isNaN(parsedPrice) || parsedPrice <= 0) {
+        toast.error('유효한 가격을 입력해주세요.');
+        return;
+      }
       const payload = {
         title,
         category,
         description,
         address,
-        price,
+        price: parsedPrice,
         bannerImageUrl,
         subImageIdsToRemove,
         subImageUrlsToAdd,
