@@ -1,6 +1,6 @@
 export default function ReviewCardSkeleton() {
   return (
-    <div className='bg-white p-6'>
+    <div className='mb-20 bg-white p-6'>
       <div className='space-y-6'>
         <div className='flex items-start gap-3'>
           <div className='h-40 w-40 flex-shrink-0 animate-pulse rounded-full bg-gray-300' />

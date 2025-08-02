@@ -2,6 +2,7 @@
 
 import SkeletonBookingInterface from './BookingInterfaceSkeleton';
 import useUserStore from '@/stores/authStore';
+import ReviewCardSkeleton from './ReviewCardSkeleton';
 
 export default function ActivityDetailSkeleton({ userId }: { userId: number }) {
   const currentUserId = useUserStore((state) => state.user?.id);
@@ -60,29 +61,26 @@ export default function ActivityDetailSkeleton({ userId }: { userId: number }) {
           className={`${isOwner ? 'md:col-span-4' : 'md:col-span-2'} space-y-8`}
         >
           {/* 장소 */}
-          <div>
+          <div className='mb-40'>
             <div className='mb-10 h-34 w-90 rounded bg-gray-300' />
             <div className='h-[480px] w-full rounded-lg bg-gray-400 shadow-md' />
             <div className='mt-8 flex items-center space-x-3'>
               <div className='h-6 w-6 rounded-full bg-gray-300' />
-              <div className='h-5 w-1/2 rounded bg-gray-300' />
+              <div className='h-20 w-1/2 rounded bg-gray-300' />
             </div>
           </div>
 
           {/* 리뷰 */}
           <div>
-            <div className='mb-2 h-6 w-24 rounded bg-gray-300' />
-            <div className='mb-4 h-8 w-20 rounded bg-gray-200' />
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className='mb-4 flex gap-4'>
-                <div className='h-10 w-10 rounded-full bg-gray-300' />
-                <div className='flex-1 space-y-2'>
-                  <div className='h-4 w-24 rounded bg-gray-200' />
-                  <div className='h-4 w-full rounded bg-gray-200' />
-                  <div className='h-4 w-3/4 rounded bg-gray-200' />
-                </div>
+            <div className='mt-10 flex flex-col space-y-8'>
+              <div className='mb-10 h-34 w-50 rounded bg-gray-300' />
+              <div className='mb-5 h-50 w-120 rounded bg-gray-300' />
+              <div className='relative min-h-450 flex-col gap-30'>
+                {[...Array(3)].map((_, index) => (
+                  <ReviewCardSkeleton key={index} />
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
