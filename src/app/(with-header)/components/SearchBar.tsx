@@ -2,20 +2,29 @@
 
 import Button from '@components/Button';
 import Input from '@components/Input';
-import { FormEvent,useState } from 'react';
+import { useRouter } from 'next/navigation'; // ✅ App Router에서 import
+import { FormEvent, useState, useEffect } from 'react';
 
 interface SearchBarProps {
-  onSearch: (keyword: string) => void;
+  keyword: string;
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState('');
+export default function SearchBar({ keyword }: SearchBarProps) {
+  const [searchValue, setSearchValue] = useState(keyword);
+  const router = useRouter(); // useRouter는 반드시 클라이언트에서 선언되어야 함
 
+  // ✅ 검색 버튼 클릭 시 쿼리 파라미터 변경
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    onSearch(searchValue);       // 부모(HomePage)로 검색어 전달
-    setSearchValue('');          // 선택 사항: 검색어 초기화
+    const trimmed = searchValue.trim();
+    if (!trimmed) return;
+    router.push(`/?q=${encodeURIComponent(trimmed)}`);
   };
+
+  // 외부에서 keyword prop이 바뀌면 input도 동기화
+  useEffect(() => {
+    setSearchValue(keyword);
+  }, [keyword]);
 
   return (
     <section className='flex lg:w-full lg:max-w-1200 lg:ml-auto lg:mr-auto justify-center px-16 lg:px-0'>

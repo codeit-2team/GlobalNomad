@@ -34,7 +34,7 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
         page: currentPage,
         sort: sortOption,
         category: selectedCategory,
-        keyword,
+        keyword: keyword || undefined, // 빈 문자열이면 undefined로 처리
       });
 
       setExperiences(res.experiences);

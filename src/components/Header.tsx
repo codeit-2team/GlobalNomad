@@ -1,16 +1,21 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import IconLogo from '@assets/svg/logo';
 import IconBell from '@assets/svg/bell';
 import useUserStore from '@/stores/authStore';
-import { useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, hasHydrated, setUser } = useUserStore();
   const isLoggedIn = !!user;
+
+  const handleLogoClick = () => {
+    router.push('/'); // ✅ 쿼리 제거됨 → 검색어 초기화됨
+  };
 
   const handleLogout = () => {
     setUser(null);
@@ -24,6 +29,7 @@ export default function Header() {
         <div className='mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
           {/* 로고는 항상 표시 */}
           <Link
+            onClick={handleLogoClick}
             href='/'
             className='flex items-center gap-2 text-xl font-bold text-gray-800'
           >

@@ -1,19 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import BannerSection from '@/app/(with-header)/components/BannerSection';
 import PopularExperiences from '@/app/(with-header)/components/PopularExperiences';
 import ExperienceList from '@/app/(with-header)/components/ExperienceList';
 
 export default function HomePage() {
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get('q') ?? '';
+  const isSearchMode = Boolean(keyword.trim());
 
   return (
     <main>
-      <BannerSection onSearch={setSearchKeyword} />
-
-      {searchKeyword ? (
-        <ExperienceList keyword={searchKeyword} isSearchMode />
+      <BannerSection keyword={keyword} />
+      {isSearchMode ? (
+        <ExperienceList keyword={keyword} isSearchMode />
       ) : (
         <>
           <PopularExperiences />

@@ -3,10 +3,10 @@ import Image from 'next/image';
 import SearchBar from '@/app/(with-header)/components/SearchBar';
 
 interface BannerSectionProps {
-  onSearch: (keyword: string) => void;
+  keyword: string;
 }
 
-export default function BannerSection({ onSearch }: BannerSectionProps) {
+export default function BannerSection({ keyword }: BannerSectionProps) {
   return (
     <section className='relative w-full h-240 md:h-550 mb-93'>
       {/* 배경 이미지 */}
@@ -32,7 +32,7 @@ export default function BannerSection({ onSearch }: BannerSectionProps) {
         </p>
       </div>
       <div className='absolute -bottom-100 left-0 right-0'>
-        <SearchBar onSearch={onSearch} />
+        <SearchBar keyword={keyword} />
       </div>
     </section>
   );
