@@ -2,7 +2,7 @@
 
 import Button from '@components/Button';
 import Input from '@components/Input';
-import { useRouter } from 'next/navigation'; // ✅ App Router에서 import
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState, useEffect } from 'react';
 
 interface SearchBarProps {
@@ -13,7 +13,7 @@ export default function SearchBar({ keyword }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState(keyword);
   const router = useRouter(); // useRouter는 반드시 클라이언트에서 선언되어야 함
 
-  // ✅ 검색 버튼 클릭 시 쿼리 파라미터 변경
+  // 검색 버튼 클릭 시 쿼리 파라미터 변경
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const trimmed = searchValue.trim();

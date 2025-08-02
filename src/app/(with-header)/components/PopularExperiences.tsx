@@ -66,8 +66,8 @@ export default function PopularExperiences() {
           <div key={exp.id} className='flex-shrink-0 card'>
             <Link
               key={exp.id}
-              href={`/activities/${exp.id}`} // ✅ 상세페이지로 이동
-              className='flex-shrink-0 card' // ✅ 여기에 card 클래스 유지
+              href={`/activities/${exp.id}`} // 상세페이지로 이동
+              className='flex-shrink-0 card' // 여기에 card 클래스 유지
             >
               <PopularCard
                 imageUrl={exp.bannerImageUrl}

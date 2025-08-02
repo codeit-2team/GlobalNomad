@@ -15,7 +15,7 @@ export default function BannerSection({ keyword }: BannerSectionProps) {
         priority
         alt='스트릿 댄스'
         className='object-cover'
-        src='/test/image1.png'
+        src='/assets/img/main-banner.jpg'
       />
 
       {/* 어두운 오버레이 */}
@@ -24,11 +24,11 @@ export default function BannerSection({ keyword }: BannerSectionProps) {
       {/* 텍스트 콘텐츠 */}
       <div className='relative z-10 flex flex-col items-start w-220 max-w-1200 md:w-440 lg:w-full pl-24 pt-74 md:pl-32 lg:pl-0 md:pt-144 lg:pt-159 lg:ml-auto lg:mr-auto gap-8 lg:gap-20 h-full text-white font-bold break-keep'>
         <h2 className='text-2xl md:text-[54px] md:leading-[64px] lg:text-[68px] lg:leading-[78px]'>
-          함께 배우면 즐거운<br />
-          스트릿 댄스
+          오로라와 함께하는<br />
+          여름의 북극 감성 체험
         </h2>
         <p className='text-md md:text-xl lg:text-2xl'>
-          1월의 인기 경험 BEST 🔥
+          자연 속에서 즐기는 이색 액티비티 추천 ❤️
         </p>
       </div>
       <div className='absolute -bottom-100 left-0 right-0'>

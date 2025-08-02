@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import IconLogo from '@assets/svg/logo';
 import IconBell from '@assets/svg/bell';
 import useUserStore from '@/stores/authStore';
@@ -9,12 +9,11 @@ import ProfileDropdown from '@/components/ProfileDropdown';
 
 export default function Header() {
   const router = useRouter();
-  const pathname = usePathname();
   const { user, hasHydrated, setUser } = useUserStore();
   const isLoggedIn = !!user;
 
   const handleLogoClick = () => {
-    router.push('/'); // ✅ 쿼리 제거됨 → 검색어 초기화됨
+    router.push('/'); // 쿼리 제거됨 → 검색어 초기화됨
   };
 
   const handleLogout = () => {

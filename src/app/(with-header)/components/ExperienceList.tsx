@@ -55,7 +55,7 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
   const totalPage = Math.ceil(totalCount / 8);
 
   return (
-    <section className='max-w-1200 m-auto px-24 md:px-0 pb-83'>
+    <section className='max-w-1200 m-auto px-24 lg:px-0 pb-83'>
 
       {/* 🔍 검색 모드일 때 문구 표시 */}
       {isSearchMode && keyword && (
