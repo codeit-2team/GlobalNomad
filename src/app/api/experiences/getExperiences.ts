@@ -8,17 +8,29 @@ interface Params {
   keyword?: string;
 }
 
+// 서버 응답 원본 타입
 interface ExperienceResponse {
   activities: Experience[];
   totalCount: number;
   cursorId: number;
 }
 
+// 프론트에서 사용할 최종 반환 타입 (useQuery의 제네릭으로도 사용됨)
+export interface ExperienceListResult {
+  experiences: Experience[];
+  totalCount: number;
+}
+
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER_URL;
 const url = `${baseUrl}/activities`;
 const validSorts = ['price_asc', 'price_desc'];
 
-export const getExperiences = async ({ page, category, sort, keyword }: Params) => {
+export const getExperiences = async ({
+  page,
+  category,
+  sort,
+  keyword,
+}: Params): Promise<ExperienceListResult> => {
   const isAllCategory = category === '전체';
 
   const res = await instance.get<ExperienceResponse>(url, {
@@ -33,7 +45,7 @@ export const getExperiences = async ({ page, category, sort, keyword }: Params) 
   });
 
   return {
-    experiences: res.data.activities, // 이름 변환
+    experiences: res.data.activities,
     totalCount: res.data.totalCount,
   };
 };
