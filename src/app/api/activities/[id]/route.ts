@@ -2,13 +2,19 @@ import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 import { ServerErrorResponse } from '@/types/apiErrorResponseType';
 
-export const GET = async (
-  request: NextRequest,
+export async function GET(
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
-) => {
-  const { id } = await params;
-
+) {
   try {
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+    if (!id) {
+      return NextResponse.json(
+        { error: '유효하지 않은 요청입니다.' },
+        { status: 400 },
+      );
+    }
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/activities/${id}`,
     );
@@ -21,4 +27,4 @@ export const GET = async (
 
     return NextResponse.json({ error: message }, { status });
   }
-};
+}

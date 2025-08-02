@@ -6,23 +6,24 @@ interface ErrorResponse {
   message?: string;
 }
 
-export async function GET(request: NextRequest) {
-  const { searchParams, pathname } = request.nextUrl;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { searchParams } = req.nextUrl;
 
   const year = searchParams.get('year');
   const month = searchParams.get('month');
 
-  const segments = pathname.split('/');
-  const id = segments[segments.indexOf('activities') + 1];
-
-  if (!id) {
-    return NextResponse.json(
-      { error: '유효하지 않은 요청입니다.' },
-      { status: 400 },
-    );
-  }
-
   try {
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+    if (!id) {
+      return NextResponse.json(
+        { error: '유효하지 않은 요청입니다.' },
+        { status: 400 },
+      );
+    }
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/activities/${id}/available-schedule?year=${year}&month=${month}`,
     );
