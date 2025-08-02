@@ -2,7 +2,7 @@
 
 export default function Loading() {
   return (
-    <div className='flex min-h-screen items-center justify-center'>
+    <div className='flex items-center justify-center'>
       <div
         className='animate-loader-spin aspect-square w-80 rounded-full bg-green-300 p-2'
         style={{
