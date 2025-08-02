@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query';
  * @returns {Promise<Notification>} 알림 목록, 전체 개수 및 커서 정보를 포함한 객체 반환
  *
  * @example
- * const data = await getMyNotifications({ size: 10, cursorId: 100 });
+ * const data = await getMyNotifications({ size: 10 });
  * console.log(data.notifications); // 알림 목록 출력
  */
 export const getMyNotifications = async (
@@ -50,5 +50,6 @@ export const useNotifications = (params: NotificationParams) => {
       const data = await getMyNotifications(params);
       return data || { notifications: [], totalCount: 0 };
     },
+    refetchInterval: 10000,
   });
 };
