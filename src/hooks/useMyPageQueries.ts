@@ -9,6 +9,7 @@ import {
 import { UpdateProfileRequest } from '@/types/mypageTypes';
 import useMyPageStore from '@/stores/MyPage/useMyPageStore';
 import { useEffect } from 'react';
+import useUserStore from '@/stores/authStore';
 
 export const QUERY_KEYS = {
   PROFILE: ['mypage', 'profile'] as const,
@@ -47,6 +48,7 @@ export const useMyProfile = () => {
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
   const { setUser, setLoading, setError } = useMyPageStore();
+  const setGlobalUser = useUserStore((state) => state.setUser); // 헤더 상태 갱신 함수
 
   const mutation = useMutation({
     mutationFn: (data: UpdateProfileRequest) => updateMyProfile(data),
@@ -91,6 +93,8 @@ export const useUploadProfileImage = () => {
   const queryClient = useQueryClient();
   const { setUser, setLoading, setError } = useMyPageStore();
 
+  const setGlobalUser = useUserStore((state) => state.setUser); // 헤더 상태 갱신 함수
+
   const mutation = useMutation({
     mutationFn: async (file: File) => {
       // 이미지 업로드
@@ -122,6 +126,11 @@ export const useUploadProfileImage = () => {
       queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
 
       setLoading(false);
+      setGlobalUser(updatedUser); // [추가] 헤더 상태(authStore)도 동기화
+
+      queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
+
+      setLoading(false);
       alert('프로필 이미지가 성공적으로 업로드되었습니다!');
     }
 
@@ -138,6 +147,7 @@ export const useUploadProfileImage = () => {
     mutation.error,
     queryClient,
     setUser,
+    setGlobalUser, // [추가] 의존성에 포함
     setLoading,
     setError,
   ]);
