@@ -9,6 +9,8 @@ import { privateInstance } from '@/apis/privateInstance';
 import ReviewTitle from './ReviewTitle';
 import useUserStore from '@/stores/authStore';
 
+import ReviewCardSkeleton from './Skeletons/ReviewCardSkeleton';
+
 interface ReviewSectionProps {
   activityId: string;
   reviewCount: number;
@@ -67,11 +69,32 @@ function ReviewSection({
   }, [reviewData?.reviews]);
 
   if (isLoading) {
-    return <p className='mt-4 text-gray-500'>리뷰를 불러오는 중입니다...</p>;
+    return (
+      <div className='mt-10 flex flex-col space-y-8'>
+        <div className='relative min-h-350 flex-col'>
+          <ReviewTitle reviewCount={reviewCount} rating={rating} />
+          {[...Array(3)].map((_, index) => (
+            <ReviewCardSkeleton key={index} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (!reviewData || reviewData.reviews.length === 0) {
-    return <p className='mt-4 text-gray-500'>작성된 리뷰가 없습니다.</p>;
+    return (
+      <div className='mt-10 flex flex-col space-y-8'>
+        <div className='relative min-h-350'>
+          <ReviewTitle reviewCount={reviewCount} rating={rating} />
+
+          <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
+            <div className='flex items-center justify-center font-bold'>
+              <p>작성된 리뷰가 없습니다</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
