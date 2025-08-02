@@ -5,6 +5,7 @@ import { InfoSection } from '../../components/InfoSection';
 import { ScheduleSelectForm } from '../../components/ScheduleSelectForm';
 import { ImageSection } from '../../components/ImageSection';
 import { useEditActivityForm } from '../hooks/useEditActivityForm';
+import EditActivityFormSkeleton from '../../loading';
 
 interface SubImageType {
   id?: number;
@@ -38,11 +39,17 @@ export default function EditActivityForm() {
     handleSubmit,
   } = useEditActivityForm();
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <EditActivityFormSkeleton />
+      </div>
+    );
+
   if (isError) return <div>오류가 발생했습니다: {isError}</div>;
 
   return (
-    <div className='min-h-screen bg-gray-white px-16 py-24 md:py-0 sm:px-6 lg:px-8'>
+    <div className='bg-gray-white min-h-screen px-16 py-24 sm:px-6 md:py-0 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='mb-8 flex items-center justify-between'>
@@ -51,7 +58,7 @@ export default function EditActivityForm() {
               <Button
                 variant='primary'
                 type='submit'
-                className='w-full px-32 py-11 rounded-[4px] text-lg bg-nomad'
+                className='bg-nomad w-full rounded-[4px] px-32 py-11 text-lg'
               >
                 수정하기
               </Button>

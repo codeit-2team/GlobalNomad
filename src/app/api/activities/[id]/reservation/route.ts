@@ -7,24 +7,31 @@ interface ErrorResponse {
   message?: string;
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
-  const { selectedTimeId, participants } = await request.json();
-
-  const pathname = request.nextUrl.pathname;
-  const segments = pathname.split('/');
-  const id = segments[segments.indexOf('activities') + 1];
-
-  if (!id) {
-    return NextResponse.json(
-      { error: '유효하지 않은 요청입니다.' },
-      { status: 400 },
-    );
-  }
+  const { selectedTimeId, participants } = await req.json();
 
   try {
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
+    if (!id) {
+      return NextResponse.json(
+        { error: '유효하지 않은 요청입니다.' },
+        { status: 400 },
+      );
+    }
+    if (!accessToken) {
+      return NextResponse.json(
+        { error: '액세스 토큰이 없습니다' },
+        { status: 401 },
+      );
+    }
+
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/activities/${id}/reservations`,
       {

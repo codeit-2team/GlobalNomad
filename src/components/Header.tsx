@@ -6,19 +6,33 @@ import IconLogo from '@assets/svg/logo';
 import IconBell from '@assets/svg/bell';
 import useUserStore from '@/stores/authStore';
 import ProfileDropdown from '@/components/ProfileDropdown';
+import useLogout from '@/hooks/useLogout';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import NotificationDropdown from './Notification/NotificationDropdown';
 
 export default function Header() {
   const router = useRouter();
   const { user, hasHydrated, setUser } = useUserStore();
   const isLoggedIn = !!user;
+  const logout = useLogout();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   const handleLogoClick = () => {
     router.push('/'); // 쿼리 제거됨 → 검색어 초기화됨
   };
 
-  const handleLogout = () => {
-    setUser(null);
-    router.push('/');
+  // 로그아웃 처리
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+      router.push('/');
+    } catch {
+      toast.error('로그아웃 실패');
+    }
   };
 
   // hydration 되기 전엔 skeleton 헤더 렌더링
@@ -47,7 +61,7 @@ export default function Header() {
 
   return (
     <header className='fixed z-100 w-full border-b border-gray-300 bg-white'>
-      <div className='mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
+      <div className='relative mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
         {/* 로고 */}
         <Link
           href='/'
@@ -57,13 +71,24 @@ export default function Header() {
         </Link>
 
         {/* 우측 메뉴 */}
-        <div className='text-md relative flex items-center gap-24 text-black'>
+        <div className='text-md flex items-center gap-24 text-black'>
           {isLoggedIn ? (
             <>
               {/* 알림 아이콘 */}
-              <button aria-label='알림' className='hover:text-primary'>
+              <button
+                aria-label='알림'
+                onClick={toggleOpen}
+                className='hover:text-primary'
+              >
                 <IconBell />
               </button>
+
+              {isOpen && (
+                <NotificationDropdown
+                  className='md:right- fixed inset-0 md:absolute md:top-90 md:left-800'
+                  onClose={() => setIsOpen(false)}
+                />
+              )}
 
               {/* 구분선 */}
               <div className='mx-12 h-22 w-px bg-gray-300' />

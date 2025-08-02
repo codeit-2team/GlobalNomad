@@ -14,6 +14,7 @@ import { useParams } from 'next/navigation';
 import { AxiosError } from 'axios';
 import useUserStore from '@/stores/authStore';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function BookingInterface({
   schedules,
@@ -26,9 +27,23 @@ export default function BookingInterface({
   isOwner: boolean;
   price: number;
 }) {
+  const [onBooking, setOnBooking] = useState(false);
   const { user } = useUserStore();
+  const setIsOpen = useBookingStore((state) => state.setIsOpen);
+  const {
+    selectedDate,
+    setSelectedDate,
+    selectedTime,
+    setSelectedTime,
+    participants,
+    selectedTimeId,
+    setSelectedTimeId,
+  } = useBookingStore();
+
+  const { id } = useParams();
 
   const handleBooking = async () => {
+    setOnBooking(true);
     try {
       await privateInstance.post(`/activities/${id}/reservation`, {
         selectedTimeId,
@@ -36,10 +51,12 @@ export default function BookingInterface({
       });
 
       toast.success('예약되었습니다!');
+      setSelectedDate(null);
+      setSelectedTimeId(null);
+      setSelectedTime('');
       setIsOpen(false);
     } catch (err) {
       const error = err as AxiosError;
-
       const responseData = error.response?.data as
         | { error?: string; message?: string }
         | undefined;
@@ -52,12 +69,10 @@ export default function BookingInterface({
           error.message ||
           '예약에 실패했습니다.',
       );
+    } finally {
+      setOnBooking(false);
     }
   };
-  const setIsOpen = useBookingStore((state) => state.setIsOpen);
-  const { selectedDate, selectedTime, participants, selectedTimeId } =
-    useBookingStore();
-  const { id } = useParams();
 
   const isLoggedIn = !!user;
   const isBookable =
@@ -85,7 +100,11 @@ export default function BookingInterface({
           </div>
           <TimeSelector />
           <ParticipantsSelector />
-          <BookingButton disabled={!isBookable} onClick={handleBooking}>
+          <BookingButton
+            onBooking={onBooking}
+            disabled={!isBookable}
+            onClick={handleBooking}
+          >
             {buttonText}
           </BookingButton>
           <TotalPriceDisplay price={price} />
@@ -118,7 +137,11 @@ export default function BookingInterface({
             <ParticipantsSelector />
             <BookingModal schedules={schedules} price={price} />
 
-            <BookingButton disabled={!isBookable} onClick={handleBooking}>
+            <BookingButton
+              onBooking={onBooking}
+              disabled={!isBookable}
+              onClick={handleBooking}
+            >
               {buttonText}
             </BookingButton>
             <TotalPriceDisplay price={price} />
@@ -153,7 +176,11 @@ export default function BookingInterface({
             </div>
             <BookingModal schedules={schedules} price={price} />
             <div className='flex justify-center'>
-              <BookingButton disabled={!isBookable} onClick={handleBooking}>
+              <BookingButton
+                onBooking={onBooking}
+                disabled={!isBookable}
+                onClick={handleBooking}
+              >
                 {buttonText}
               </BookingButton>
             </div>
