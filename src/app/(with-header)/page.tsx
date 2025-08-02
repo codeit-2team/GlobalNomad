@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import BannerSection from '@/app/(with-header)/components/BannerSection';
 import PopularExperiences from '@/app/(with-header)/components/PopularExperiences';
 import ExperienceList from '@/app/(with-header)/components/ExperienceList';
