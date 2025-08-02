@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import useLogout from '@/hooks/useLogout';
 import { toast } from 'sonner';
+import { useState } from 'react';
+import NotificationDropdown from './Notification/NotificationDropdown';
 
 export default function Header() {
   const router = useRouter();
@@ -15,6 +17,9 @@ export default function Header() {
   const setUser = useUserStore((state) => state.setUser);
   const isLoggedIn = !!user;
   const logout = useLogout();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   // 로그아웃 처리
   const handleLogout = async () => {
@@ -29,7 +34,7 @@ export default function Header() {
 
   return (
     <header className='fixed z-100 w-full border-b border-gray-300 bg-white'>
-      <div className='mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
+      <div className='relative mx-auto flex min-h-70 max-w-1200 items-center justify-between px-20 py-20'>
         {/* 로고 */}
         <Link
           href='/'
@@ -39,13 +44,24 @@ export default function Header() {
         </Link>
 
         {/* 우측 메뉴 */}
-        <div className='text-md relative flex items-center gap-24 text-black'>
+        <div className='text-md flex items-center gap-24 text-black'>
           {isLoggedIn ? (
             <>
               {/* 알림 아이콘 */}
-              <button aria-label='알림' className='hover:text-primary'>
+              <button
+                aria-label='알림'
+                onClick={toggleOpen}
+                className='hover:text-primary'
+              >
                 <IconBell />
               </button>
+
+              {isOpen && (
+                <NotificationDropdown
+                  className='md:right- fixed inset-0 md:absolute md:top-90 md:left-800'
+                  onClose={() => setIsOpen(false)}
+                />
+              )}
 
               {/* 구분선 */}
               <div className='mx-12 h-22 w-px bg-gray-300' />
