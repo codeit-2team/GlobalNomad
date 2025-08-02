@@ -4,16 +4,15 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { ImageGridProps } from '@/types/activityDetailType';
 
-export default function ImageGrid({ mainImage, subImages }: ImageGridProps) {
+function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   const images = [mainImage, ...subImages];
-  const [currentIndex, setCurrentIndex] = useState(0); //캐러셀 구현용 state
 
-  //  첫번째 이미지면 마지막 이미지로 아니면 -1
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // 현재 마지막 이미지면 첫 이미지로 아니면 +1
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
@@ -24,24 +23,24 @@ export default function ImageGrid({ mainImage, subImages }: ImageGridProps) {
       <div className='relative block aspect-square h-[300px] w-full overflow-hidden rounded-lg md:hidden'>
         <Image
           src={images[currentIndex]}
-          alt={`${currentIndex + 1}`}
+          alt={`슬라이드 이미지 ${currentIndex + 1}`}
           fill
           className='object-cover hover:animate-pulse'
         />
-
         <button
           onClick={prevSlide}
+          aria-label='이전 이미지'
           className='absolute top-1/2 left-2 -translate-y-1/2 rounded-full bg-black/50 px-6 py-10 text-white'
         >
           ‹
         </button>
         <button
           onClick={nextSlide}
+          aria-label='다음 이미지'
           className='absolute top-1/2 right-2 -translate-y-1/2 rounded-full bg-black/50 px-6 py-10 text-white'
         >
           ›
         </button>
-
         <div className='absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1'>
           {images.map((_, i) => (
             <div
@@ -81,3 +80,5 @@ export default function ImageGrid({ mainImage, subImages }: ImageGridProps) {
     </>
   );
 }
+
+export default React.memo(ImageGrid);

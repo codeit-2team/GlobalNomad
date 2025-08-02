@@ -13,6 +13,7 @@ import { privateInstance } from '@/apis/privateInstance';
 import { useParams } from 'next/navigation';
 import { AxiosError } from 'axios';
 import useUserStore from '@/stores/authStore';
+import { toast } from 'sonner';
 
 export default function BookingInterface({
   schedules,
@@ -34,7 +35,7 @@ export default function BookingInterface({
         participants,
       });
 
-      alert('예약이 완료되었습니다!');
+      toast.success('예약되었습니다!');
       setIsOpen(false);
     } catch (err) {
       const error = err as AxiosError;
@@ -45,7 +46,7 @@ export default function BookingInterface({
 
       console.error('전체 에러:', error);
 
-      alert(
+      toast.error(
         responseData?.error ||
           responseData?.message ||
           error.message ||
@@ -151,9 +152,11 @@ export default function BookingInterface({
               )}
             </div>
             <BookingModal schedules={schedules} price={price} />
-            <BookingButton disabled={!isBookable} onClick={handleBooking}>
-              {buttonText}
-            </BookingButton>
+            <div className='flex justify-center'>
+              <BookingButton disabled={!isBookable} onClick={handleBooking}>
+                {buttonText}
+              </BookingButton>
+            </div>
           </div>
         </div>
       </div>

@@ -29,44 +29,42 @@ export function ScheduleSelect({
   endTime,
 }: ScheduleSelectProps) {
   return (
-    <div className='rounded-lg bg-gray-50 p-4'>
-      <div className='grid grid-cols-1 items-center gap-10 sm:grid-cols-4'>
-        <div className='sm:col-span-1'>
+    <div className='pt-5 w-full'>
+      <div className='flex flex-row items-end gap-5'>
+        <div className='flex flex-col gap-10 w-full'>
           <Input
             className='w-full'
-            label='날짜'
             type='date'
             value={date}
             onChange={(e) => onDateChange(index, e.target.value)}
+            variant='compact'
           />
         </div>
-
-        <div className='sm:col-span-1'>
+        <div className='flex flex-col gap-10 w-full max-w-1/4'>
           <Input
             className='w-full'
-            label='시작시간'
             type='time'
             value={startTime}
             onChange={(e) => onStartTimeChange(index, e.target.value)}
+            variant='compact'
           />
         </div>
-
-        <div className='sm:col-span-1'>
+        <div className='flex flex-col gap-10 w-full max-w-1/4'>
           <Input
             className='w-full'
-            label='종료시간'
             type='time'
             value={endTime}
             onChange={(e) => onEndTimeChange(index, e.target.value)}
+            variant='compact'
           />
         </div>
 
-        <div className='flex sm:col-span-1'>
+        <div className='flex'>
           {isRemovable && (
             <button
               type='button'
               onClick={() => onRemove(index)}
-              className='mt-6 rounded-full p-2 text-red-600 transition-colors hover:bg-red-50 hover:text-red-800'
+              className='w-44 h-46 border border-gray-300 rounded-[10px] flex items-center justify-center hover:bg-gray-100'
             >
               <IconClose />
             </button>
