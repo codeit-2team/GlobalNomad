@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import { uploadImage } from '../../utils/uploadImage';
 import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
-import { parse } from 'path';
 
 interface SubImageType {
   id?: number;
@@ -102,10 +101,8 @@ export const useEditActivityForm = () => {
     setMainImage(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
+  const mutation = useMutation({
+    mutationFn: async () => {
       let bannerImageUrl = '';
       if (typeof mainImage === 'string') {
         bannerImageUrl = mainImage;
@@ -119,7 +116,6 @@ export const useEditActivityForm = () => {
         .filter((id): id is number => id !== undefined);
 
       const subImageUrlsToAdd: string[] = [];
-
       for (const img of subImages) {
         if (!img.id) {
           if (img.url instanceof File) {
@@ -132,18 +128,16 @@ export const useEditActivityForm = () => {
       }
 
       const newSchedules = dates.filter((d) => !d.id);
-
       const scheduleIdsToRemove = originalSchedules
         .filter((orig) => !dates.some((d) => d.id === orig.id))
         .map((d) => d.id)
         .filter((id): id is number => id !== undefined);
 
       const parsedPrice = parseInt(price, 10);
-
       if (isNaN(parsedPrice) || parsedPrice <= 0) {
-        toast.error('유효한 가격을 입력해주세요.');
-        return;
+        throw new Error('유효한 가격을 입력해주세요.');
       }
+
       const payload = {
         title,
         category,
@@ -157,26 +151,32 @@ export const useEditActivityForm = () => {
         scheduleIdsToRemove,
       };
 
-      await privateInstance.patch(`/editActivity/${id}`, payload);
-
-      toast.success('수정되었습니다!'); //토스트로 대체
+      return await privateInstance.patch(`/editActivity/${id}`, payload);
+    },
+    onSuccess: () => {
+      toast.success('수정되었습니다!');
       queryClient.invalidateQueries({ queryKey: ['activity', id] });
       router.push(`/activities/${id}`);
-    } catch (err) {
+    },
+    onError: (err: unknown) => {
       const error = err as AxiosError;
       const responseData = error.response?.data as
         | { error?: string; message?: string }
         | undefined;
-
-      console.error('전체 에러:', error);
-
       toast.error(
         responseData?.error ||
           responseData?.message ||
           error.message ||
           '수정에 실패했습니다.',
       );
-    }
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await mutation.mutateAsync();
+    } catch (error) {}
   };
 
   return {
@@ -190,6 +190,7 @@ export const useEditActivityForm = () => {
     dates,
     isLoading,
     isError,
+    editLoading: mutation.isPending,
     setTitle,
     setCategory,
     setPrice,
