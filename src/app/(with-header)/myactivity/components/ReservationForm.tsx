@@ -10,6 +10,7 @@ import { ImageSection } from './ImageSection';
 import Button from '@/components/Button';
 import { uploadImage } from '../utils/uploadImage';
 import { privateInstance } from '@/apis/privateInstance';
+import { toast } from 'sonner';
 
 interface DateSlot {
   date: string;
@@ -54,7 +55,7 @@ export default function ReservationForm() {
       setMainImage(url);
     } catch (err) {
       console.error(err);
-      alert('메인 이미지 업로드에 실패했습니다.');
+      toast.error('메인 이미지 업로드에 실패했습니다.');
     }
   };
 
@@ -72,7 +73,7 @@ export default function ReservationForm() {
       setSubImage([...subImage, ...uploadedUrls]);
     } catch (err) {
       console.error('서브 이미지 업로드 실패', err);
-      alert('서브 이미지 업로드 중 문제가 발생.');
+      toast.error('서브 이미지 업로드 중 문제가 발생.');
     }
   };
 
@@ -84,7 +85,7 @@ export default function ReservationForm() {
     e.preventDefault();
 
     if (!mainImage) {
-      alert('메인 이미지를 업로드해주세요.'); //추후 토스트나 팝업으로 대체
+      toast.error('메인 이미지를 업로드해주세요.'); //추후 토스트나 팝업으로 대체
       return;
     }
 
@@ -96,7 +97,7 @@ export default function ReservationForm() {
       !price ||
       dates.length === 0
     ) {
-      alert('모든 필드를 입력해주세요.'); //추후 토스트나 팝업으로 대체
+      toast.error('모든 필드를 입력해주세요.'); //추후 토스트나 팝업으로 대체
       return;
     }
 
@@ -114,7 +115,7 @@ export default function ReservationForm() {
     try {
       const response = await privateInstance.post('/addActivity', payload);
       console.log('등록 성공:', response.data);
-      alert('체험이 성공적으로 등록되었습니다!'); //추후 토스트나 팝업으로 대체
+      toast.success('체험이 성공적으로 등록되었습니다!'); //추후 토스트나 팝업으로 대체
     } catch (err) {
       console.error('체험 등록 실패:', err);
 
@@ -124,25 +125,23 @@ export default function ReservationForm() {
           err.response?.data?.message ||
           '체험 등록 중 오류가 발생했습니다.';
 
-        alert(detailMessage); //추후 토스트나 팝업으로 대체
+        toast.error(detailMessage); //추후 토스트나 팝업으로 대체
       } else {
-        alert('알 수 없는 오류가 발생했습니다.'); //추후 토스트나 팝업으로 대체
+        toast.error('알 수 없는 오류가 발생했습니다.'); //추후 토스트나 팝업으로 대체
       }
     }
   };
   return (
-    <div className='min-h-screen bg-gray-white px-16 py-24 md:py-0 sm:px-6 lg:px-8'>
+    <div className='bg-gray-white min-h-screen px-16 py-24 sm:px-6 md:py-0 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='mb-8 flex items-center justify-between'>
-            <h1 className='text-3xl font-bold text-black'>
-              내 체험 등록 
-            </h1>
+            <h1 className='text-3xl font-bold text-black'>내 체험 등록</h1>
             <div className='border-none'>
               <Button
                 variant='primary'
                 type='submit'
-                className='w-full px-32 py-11 rounded-[4px] text-lg bg-nomad'
+                className='bg-nomad w-full rounded-[4px] px-32 py-11 text-lg'
               >
                 등록하기
               </Button>
