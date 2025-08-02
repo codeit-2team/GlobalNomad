@@ -3,11 +3,17 @@ import axios, { AxiosError } from 'axios';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { notificationId: string } },
-) {
-  const id = Number(params.notificationId);
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const segments = url.pathname.split('/');
+  const id = Number(segments.pop());
+
+  if (isNaN(id)) {
+    return NextResponse.json(
+      { message: '유효하지 않은 알림 ID' },
+      { status: 400 },
+    );
+  }
 
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
