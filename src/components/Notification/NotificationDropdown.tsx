@@ -7,9 +7,11 @@ import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import Loading from '../Loading';
 import NotificationCardList from './NotificationCardList';
+import cn from '@/lib/cn';
 
 type NotificationDropdownProps = {
   onClose: () => void;
+  className?: string;
 };
 
 /**
@@ -29,6 +31,7 @@ type NotificationDropdownProps = {
  */
 export default function NotificationDropdown({
   onClose,
+  className,
 }: NotificationDropdownProps) {
   const dropdownRef = useRef(null);
   useOutsideClick(dropdownRef, onClose);
@@ -46,7 +49,10 @@ export default function NotificationDropdown({
   return (
     <div
       ref={dropdownRef}
-      className='z-50 flex h-full w-full flex-col gap-16 bg-[#ced8d5] px-20 py-40 md:h-494 md:w-368 md:rounded-[10px] md:border md:border-gray-400 md:py-24'
+      className={cn(
+        'z-150 flex h-full w-full flex-col gap-16 bg-[#ced8d5] px-20 py-40 md:h-494 md:w-368 md:rounded-[10px] md:border md:border-gray-400 md:py-24',
+        className,
+      )}
     >
       <div className='flex items-center justify-between'>
         <p className='text-xl text-black'>알림 {data?.totalCount ?? 0}개</p>
