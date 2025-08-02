@@ -7,7 +7,10 @@ interface ReviewTitleProps {
   reviewCount: number;
   rating: number;
 }
-export default function ReviewTitle({ reviewCount, rating }: ReviewTitleProps) {
+export default function ReviewTitle({
+  reviewCount = 0,
+  rating = 0,
+}: ReviewTitleProps) {
   const [summary, setSummary] = useState('');
 
   useEffect(() => {

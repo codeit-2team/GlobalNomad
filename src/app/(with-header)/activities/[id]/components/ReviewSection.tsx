@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import ReviewTitle from './ReviewTitle';
 import useUserStore from '@/stores/authStore';
+import Loading from '@/components/Loading';
 
 interface ReviewSectionProps {
   activityId: string;
@@ -67,11 +68,27 @@ function ReviewSection({
   }, [reviewData?.reviews]);
 
   if (isLoading) {
-    return <p className='mt-4 text-gray-500'>리뷰를 불러오는 중입니다...</p>;
+    return (
+      <div className='relative flex min-h-350'>
+        <div className='flex items-center justify-center'>
+          <Loading />
+        </div>
+      </div>
+    );
   }
 
   if (!reviewData || reviewData.reviews.length === 0) {
-    return <p className='mt-4 text-gray-500'>작성된 리뷰가 없습니다.</p>;
+    return (
+      <div className='relative min-h-350'>
+        <ReviewTitle reviewCount={reviewCount} rating={rating} />
+
+        <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
+          <div className='flex items-center justify-center font-bold'>
+            <p>작성된 리뷰가 없습니다</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
