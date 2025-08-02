@@ -19,16 +19,12 @@ export default function CancelReservationModal({
 }: CancelReservationModalProps) {
   return (
     <Modal isOpen={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <Modal.Content className='!h-184 !w-298 !max-w-none !min-w-0 !rounded-xl !p-0'>
-        <div
-          className='flex h-full w-full flex-col items-center justify-center gap-24 bg-white p-16'
-          style={{
-            borderRadius: '12px',
-            background: '#FFFFFF',
-            boxShadow: '0px 4px 16px 0px rgba(17, 34, 17, 0.05)',
-            overflow: 'hidden',
-          }}
-        >
+      <Modal.Content
+        className='!h-184 !w-298 !max-w-none !min-w-0 !rounded-xl !p-0'
+        zIndex={999}
+        backdropClassName='!z-[999]'
+      >
+        <div className='flex h-full w-full flex-col items-center justify-center gap-24 rounded-xl bg-white p-16 shadow-[0px_4px_16px_0px_rgba(17,34,17,0.05)]'>
           {/* 체크 아이콘 */}
           <div className='flex justify-center'>
             <CheckIcon size={24} />
