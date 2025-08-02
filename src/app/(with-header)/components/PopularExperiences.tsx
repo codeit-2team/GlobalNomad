@@ -9,6 +9,7 @@ import PopularCard from '@/app/(with-header)/components/PopularCard';
 import { Experience } from '@/types/experienceListTypes';
 
 import { getPopularExperiences } from '../../api/experiences/getPopularExperiences';
+import PopularCardSkeleton from '@/app/(with-header)/components/Skeletons/PopularCardSkeleton';
 
 export default function PopularExperiences() {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -62,7 +63,13 @@ export default function PopularExperiences() {
         ref={sliderRef}
         className='flex gap-16 md:gap-32 lg:gap-24 overflow-x-auto scroll-smooth no-scrollbar'
       >
-        {popularExperiences.map((exp) => (
+        {popularExperiences.length === 0
+          ? Array.from({ length: 4 }).map((_, idx) => (
+              <div key={idx} className="flex-shrink-0 card">
+                <PopularCardSkeleton />
+              </div>
+            ))
+          : popularExperiences.map((exp) => (
           <div key={exp.id} className='flex-shrink-0 card'>
             <Link
               key={exp.id}

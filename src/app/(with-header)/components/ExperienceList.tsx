@@ -15,6 +15,7 @@ import {
   SORT_LABEL_MAP,
 } from '@/constants/SortPrices';
 import { Experience } from '@/types/experienceListTypes';
+import ExperienceCardSkeleton from '@/app/(with-header)/components/Skeletons/ExperienceCardSkeleton';
 
 interface ExperienceListProps {
   keyword?: string;
@@ -107,7 +108,11 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
 
         {/* 체험 카드 목록 */}
         <div className='grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-3 lg:grid-cols-4 lg:grid-rows-2 gap-8 md:gap-16 lg:gap-24 mt-24'>
-          {experiences.map((exp) => (
+          {experiences.length === 0
+            ? Array.from({ length: 8 }).map((_, idx) => (
+                <ExperienceCardSkeleton key={idx} />
+              ))
+            : experiences.map((exp) => (
             <Link
               key={exp.id}
               href={`/activities/${exp.id}`} // 아이디 기반 라우팅
