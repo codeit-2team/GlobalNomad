@@ -51,6 +51,9 @@ export default function BookingInterface({
       });
 
       toast.success('예약되었습니다!');
+      setSelectedDate(null);
+      setSelectedTimeId(null);
+      setSelectedTime('');
       setIsOpen(false);
     } catch (err) {
       const error = err as AxiosError;
@@ -68,9 +71,6 @@ export default function BookingInterface({
       );
     } finally {
       setOnBooking(false);
-      setSelectedDate(null);
-      setSelectedTimeId(null);
-      setSelectedTime('');
     }
   };
 
