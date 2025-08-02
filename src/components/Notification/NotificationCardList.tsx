@@ -81,7 +81,7 @@ export default function NotificationCardList({
       if (data.cursorId === null) {
         setHasMore(false);
       }
-    } catch (err) {
+    } catch {
       toast.error('알림 추가 실패');
     } finally {
       setIsFetching(false);
