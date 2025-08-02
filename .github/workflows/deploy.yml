@@ -74,6 +74,10 @@ jobs:
           # 빌드할 플랫폼 지정
           platforms: linux/amd64
 
+          # 모든 환경 변수를 하나의 build-arg로 전달
+          build-args: |
+            BUILD_ENV_VARS=${{ format('NEXT_PUBLIC_API_URL={0} NEXT_PUBLIC_API_SERVER_URL={1} NEXT_PUBLIC_KAKAO_CLIENT_ID={2} NEXT_PUBLIC_KAKAO_APP_JS_KEY={3} NEXT_PUBLIC_SITE_URL={4} NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL={5} NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL={6}', secrets.NEXT_PUBLIC_API_URL, secrets.NEXT_PUBLIC_API_SERVER_URL, secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID, secrets.NEXT_PUBLIC_KAKAO_APP_JS_KEY, secrets.NEXT_PUBLIC_SITE_URL, secrets.NEXT_PUBLIC_KAKAO_SIGNIN_REDIRECT_URL, secrets.NEXT_PUBLIC_KAKAO_SIGNUP_REDIRECT_URL) }}
+
   # Job 2: OCI 서버에 배포
   deploy:
     name: Deploy to OCI Server

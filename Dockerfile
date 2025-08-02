@@ -28,6 +28,12 @@ RUN corepack prepare pnpm@latest --activate
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# 빌드 시점에 주입될 환경 변수 선언
+ARG BUILD_ENV_VARS
+
+# 전달받은 ARG 환경 변수를 .env.production 파일에 저장
+RUN echo "$BUILD_ENV_VARS" | tr ' ' '\n' > .env.production
+
 # Next.js 빌드
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN pnpm build
