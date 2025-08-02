@@ -19,7 +19,7 @@ export default function CancelReservationModal({
 }: CancelReservationModalProps) {
   return (
     <Modal isOpen={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <Modal.Content className='!w-298px !h-184 !max-w-none !min-w-0 !rounded-xl !p-0'>
+      <Modal.Content className='!h-184 !w-298 !max-w-none !min-w-0 !rounded-xl !p-0'>
         <div
           className='flex h-full w-full flex-col items-center justify-center gap-24 bg-white p-16'
           style={{
@@ -43,7 +43,7 @@ export default function CancelReservationModal({
           <div className='flex gap-12'>
             <Button
               variant='secondary'
-              className='text-md h-38px w-80px rounded-lg border border-gray-300 font-medium'
+              className='text-md h-38 w-80 rounded-lg border border-gray-300 font-medium'
               onClick={onCancel}
               disabled={isLoading}
             >
