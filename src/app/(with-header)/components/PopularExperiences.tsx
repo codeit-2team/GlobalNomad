@@ -37,7 +37,7 @@ export default function PopularExperiences() {
   };
 
   return (
-    <section className='pt-24 md:pt-34 pl-24 lg:pl-0 pb-40 lg:pb-33 lg:max-w-1200 lg:w-full mx-auto'>
+    <section className='pt-24 md:pt-34 pl-16 md:px-24 lg:pl-0 pb-40 lg:pb-33 lg:max-w-1200 lg:w-full mx-auto'>
       {/* 제목 + 버튼 */}
       <div className='flex justify-between items-center pb-16 md:pb-32 mb-6'>
         <h2 className='text-xl md:text-3xl font-bold'>🔥 인기 체험</h2>

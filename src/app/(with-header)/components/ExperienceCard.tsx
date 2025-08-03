@@ -32,7 +32,7 @@ export default function ExperienceCard({
         <span className='pb-10 text-lg text-black'>
           ⭐ {rating} <span className='text-gray-700 text-lg'>({reviews})</span>
         </span>
-        <p className='pb-15 text-2lg font-semibold text-black line-clamp-2'>
+        <p className='mb-15 text-2lg font-semibold text-black line-clamp-2-custom'>
           {title}
         </p>
         <p className='text-xl text-black font-bold'>

@@ -75,7 +75,7 @@ export default function Header() {
         </Link>
 
         {/* 우측 메뉴 */}
-        <div className='text-md flex items-center gap-24 text-black'>
+        <div className='text-md flex items-center gap-8 md:gap-24 text-black'>
           {isLoggedIn ? (
             <>
               {/* 알림 아이콘 */}
