@@ -10,6 +10,7 @@ import { UpdateProfileRequest } from '@/types/mypageTypes';
 import useMyPageStore from '@/stores/MyPage/useMyPageStore';
 import { useEffect } from 'react';
 import useUserStore from '@/stores/authStore';
+import { toast } from 'sonner';
 
 export const QUERY_KEYS = {
   PROFILE: ['mypage', 'profile'] as const,
@@ -65,13 +66,13 @@ export const useUpdateProfile = () => {
       setLoading(false);
       // 캐시 업데이트
       queryClient.setQueryData(QUERY_KEYS.PROFILE, mutation.data);
-      alert('프로필이 성공적으로 업데이트되었습니다!');
+      toast.success('프로필이 성공적으로 업데이트되었습니다!');
     }
 
     if (mutation.isError) {
       setError(mutation.error?.message || '프로필 업데이트에 실패했습니다.');
       setLoading(false);
-      alert(`프로필 업데이트 실패: ${mutation.error?.message}`);
+      toast.error(`프로필 업데이트 실패: ${mutation.error?.message}`);
     }
   }, [
     mutation.isPending,
@@ -132,13 +133,13 @@ export const useUploadProfileImage = () => {
       queryClient.setQueryData(QUERY_KEYS.PROFILE, updatedUser);
 
       setLoading(false);
-      alert('프로필 이미지가 성공적으로 업로드되었습니다!');
+      toast.success('프로필 이미지가 성공적으로 업로드되었습니다!');
     }
 
     if (mutation.isError) {
       setError(mutation.error?.message || '이미지 업로드에 실패했습니다.');
       setLoading(false);
-      alert(`이미지 업로드 실패: ${mutation.error?.message}`);
+      toast.error(`이미지 업로드 실패: ${mutation.error?.message}`);
     }
   }, [
     mutation.isPending,
