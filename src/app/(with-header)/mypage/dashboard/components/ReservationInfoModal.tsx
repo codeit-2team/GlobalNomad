@@ -18,6 +18,7 @@ import Dropdown from '@/components/Dropdown';
 import ReservationActionButtons from './ReservationActionButtons';
 import dayjs from 'dayjs';
 import CloseIcon from '@assets/svg/close';
+import { toast } from 'sonner';
 
 interface Props {
   isOpen: boolean;
@@ -85,7 +86,7 @@ export default function ReservationInfoModal({
         data: { status },
       });
     } catch {
-      alert('예약 처리에 실패했습니다.');
+      toast.error('예약 처리에 실패했습니다.');
     }
   };
 

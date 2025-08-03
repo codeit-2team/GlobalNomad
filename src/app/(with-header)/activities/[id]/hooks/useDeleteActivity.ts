@@ -2,6 +2,7 @@ import { privateInstance } from '@/apis/privateInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const deleteActivity = async (id: string) => {
   const response = await privateInstance.delete(`/deleteActivity/${id}`);
@@ -15,9 +16,12 @@ export const useDeleteActivity = () => {
   return useMutation({
     mutationFn: deleteActivity,
     onSuccess: (_data) => {
-      queryClient.invalidateQueries({ queryKey: ['activity'] });  // 내 체험 관리
-      queryClient.invalidateQueries({ queryKey: ['experiences'], exact: false }); // 모든 체험 리스트
-      queryClient.invalidateQueries({ queryKey: ['popularExperiences'] });   // 인기 체험
+      queryClient.invalidateQueries({ queryKey: ['activity'] });
+      queryClient.invalidateQueries({
+        queryKey: ['experiences'],
+        exact: false,
+      });
+      queryClient.invalidateQueries({ queryKey: ['popularExperiences'] });
       router.push(`/`);
     },
     onError: (error: AxiosError) => {
@@ -27,8 +31,7 @@ export const useDeleteActivity = () => {
 
       console.error('전체 에러:', error);
 
-      alert(
-        //토스트로 대체
+      toast.error(
         responseData?.error ||
           responseData?.message ||
           error.message ||

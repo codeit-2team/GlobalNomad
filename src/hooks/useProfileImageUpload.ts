@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useUploadProfileImage } from './useMyPageQueries';
+import { toast } from 'sonner';
 
 /**
  * 프로필 이미지 업로드를 위한 커스텀 훅
@@ -25,13 +26,13 @@ export const useProfileImageUpload = () => {
     if (file) {
       // 파일 타입 검증
       if (!file.type.startsWith('image/')) {
-        alert('이미지 파일만 업로드 가능합니다.');
+        toast.error('이미지 파일만 업로드 가능합니다.');
         return;
       }
 
       // 파일 크기 검증
       if (file.size > 5 * 1024 * 1024) {
-        alert('파일 크기는 5MB 이하여야 합니다.');
+        toast.error('파일 크기는 5MB 이하여야 합니다.');
         return;
       }
 

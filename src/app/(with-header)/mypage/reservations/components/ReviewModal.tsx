@@ -6,6 +6,7 @@ import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import Rating from '@/components/Rating';
 import Close from '@/../public/assets/svg/close';
+import { toast } from 'sonner';
 
 interface ReviewModalProps {
   isOpen: boolean;
@@ -37,11 +38,11 @@ export default function ReviewModal({
 
   const handleSubmit = () => {
     if (rating === 0) {
-      alert('별점을 선택해주세요.');
+      toast.error('별점을 선택해주세요.');
       return;
     }
     if (content.trim() === '') {
-      alert('후기를 작성해주세요.');
+      toast.error('후기를 작성해주세요.');
       return;
     }
     onConfirm(rating, content);
@@ -58,7 +59,7 @@ export default function ReviewModal({
       <Modal.Content
         zIndex={9999}
         backdropClassName='bg-black/50 max-sm:!items-start max-sm:!justify-start'
-        className='!h-750 !w-480 !max-w-none !min-w-0 !rounded-xl !p-0 !m-0 max-sm:!h-full max-sm:!w-full max-sm:!max-h-full max-sm:!rounded-none max-sm:!border-none'
+        className='!m-0 !h-750 !w-480 !max-w-none !min-w-0 !rounded-xl !p-0 max-sm:!h-full max-sm:!max-h-full max-sm:!w-full max-sm:!rounded-none max-sm:!border-none'
       >
         <div className='flex h-full w-full flex-col overflow-hidden rounded-xl bg-white shadow-lg max-sm:rounded-none'>
           {/* 헤더 */}

@@ -115,7 +115,6 @@ export default function MyReservationsPage() {
         },
         {
           onSuccess: () => {
-            alert('후기가 작성되었습니다.');
             setReviewModal({
               isOpen: false,
               reservationId: null,
@@ -127,9 +126,7 @@ export default function MyReservationsPage() {
               totalPrice: null,
             });
           },
-          onError: (error) => {
-            alert(`후기 작성 실패: ${error.message}`);
-          },
+          onError: (error) => {},
         },
       );
     }
