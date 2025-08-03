@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,6 +14,7 @@ import { getPopularExperiences } from '@/app/api/experiences/getPopularExperienc
 
 export default function PopularExperiences() {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [scrolling, setScrolling] = useState(false); // ✅ 스크롤 중 여부
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['popularExperiences'],
@@ -21,7 +22,7 @@ export default function PopularExperiences() {
   });
 
   const scrollByCard = (direction: 'left' | 'right') => {
-    if (!sliderRef.current) return;
+    if (!sliderRef.current || scrolling) return; // ✅ 스크롤 중이면 무시
 
     const card = sliderRef.current.querySelector('.card');
     if (!(card instanceof HTMLElement)) return;
@@ -34,10 +35,14 @@ export default function PopularExperiences() {
       left: direction === 'left' ? -distance : distance,
       behavior: 'smooth',
     });
+
+    // ✅ 스크롤 락 잠깐 걸기 (300ms 후 해제)
+    setScrolling(true);
+    setTimeout(() => setScrolling(false), 300);
   };
 
   return (
-    <section className='pt-24 md:pt-34 pl-16 md:px-24 lg:pl-0 pb-40 lg:pb-33 lg:max-w-1200 lg:w-full mx-auto'>
+    <section className='pt-24 md:pt-34 pl-16 md:pl-24 lg:pl-0 pb-40 lg:pb-33 lg:max-w-1200 lg:w-full mx-auto'>
       {/* 제목 + 버튼 */}
       <div className='flex justify-between items-center pb-16 md:pb-32 mb-6'>
         <h2 className='text-xl md:text-3xl font-bold'>🔥 인기 체험</h2>
@@ -50,7 +55,7 @@ export default function PopularExperiences() {
       {/* 카드 영역 */}
       <div
         ref={sliderRef}
-        className='flex gap-16 md:gap-32 lg:gap-24 overflow-x-auto scroll-smooth no-scrollbar'
+        className='flex gap-16 md:gap-32 lg:gap-24 overflow-x-auto scroll-smooth no-scrollbar select-none'
       >
         {error ? (
           <p className="text-red-500 text-sm">인기 체험을 불러오는 데 실패했습니다 😢</p>
