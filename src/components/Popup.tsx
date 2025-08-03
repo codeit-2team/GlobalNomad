@@ -67,6 +67,7 @@ export default function Popup({
               'text-md h-42 w-138 rounded-lg font-medium md:h-48 md:w-120 md:self-end md:text-lg',
             )}
             onClick={onClose}
+            autoFocus
           >
             확인
           </Button>
