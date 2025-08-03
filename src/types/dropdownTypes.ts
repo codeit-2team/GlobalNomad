@@ -22,4 +22,5 @@ export interface DropdownProps<T extends string> {
   className?: ClassValue;
   disabled?: boolean;
   disableScroll?: boolean;
+  truncateText?: boolean;
 }

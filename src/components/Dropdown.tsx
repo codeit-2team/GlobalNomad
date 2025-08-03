@@ -34,6 +34,7 @@ export default function Dropdown<T extends string>({
   className,
   disabled = false,
   disableScroll = false,
+  truncateText = false,
 }: DropdownProps<T>) {
   // 내부 상태 관리
   const [internalValue, setInternalValue] = useState<T | ''>('');
@@ -129,6 +130,7 @@ export default function Dropdown<T extends string>({
           'bg-white text-lg font-normal',
           'transition-all duration-200',
           'focus:border-green-300 focus:outline-none',
+          'overflow-hidden',
           disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
           isOpen && !disabled && 'border-green-300',
         )}
@@ -137,7 +139,11 @@ export default function Dropdown<T extends string>({
         aria-label={placeholder}
       >
         <span
-          className={cn('text-gray-900', !selectedValue && 'text-gray-500')}
+          className={cn(
+            'text-gray-900',
+            !selectedValue && 'text-gray-500',
+            truncateText && 'flex-1 truncate text-left',
+          )}
         >
           {selectedValue || placeholder}
         </span>

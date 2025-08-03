@@ -129,7 +129,8 @@ export default function MyDashboardPage() {
             value={selectedActivityTitle}
             onChange={handleActivityChange}
             placeholder='체험을 선택하세요'
-            className='h-56'
+            className='h-56 min-w-0'
+            truncateText={true}
           />
         </div>
 
