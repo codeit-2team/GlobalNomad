@@ -32,12 +32,10 @@ export default function BookingInterface({
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
   const {
     selectedDate,
-    setSelectedDate,
     selectedTime,
-    setSelectedTime,
     participants,
     selectedTimeId,
-    setSelectedTimeId,
+    setToInitial,
   } = useBookingStore();
 
   const { id } = useParams();
@@ -51,10 +49,7 @@ export default function BookingInterface({
       });
 
       toast.success('예약되었습니다!');
-      setSelectedDate(null);
-      setSelectedTimeId(null);
-      setSelectedTime('');
-      setIsOpen(false);
+      setToInitial();
     } catch (err) {
       const error = err as AxiosError;
       const responseData = error.response?.data as
