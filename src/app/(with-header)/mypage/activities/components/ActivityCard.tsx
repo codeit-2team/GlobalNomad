@@ -31,33 +31,37 @@ export default function ActivityCard({
   };
 
   return (
-    <div className='flex h-204 w-792 rounded-3xl border border-gray-300 bg-white'>
+    <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
       {/* 이미지 영역 */}
-      <div className='relative h-204 w-204 flex-shrink-0 overflow-hidden rounded-l-xl'>
+      <div className='relative h-full w-128 flex-shrink-0 overflow-hidden rounded-l-3xl sm:w-156 lg:w-204'>
         <Image src={bannerImageUrl} alt={title} fill className='object-cover' />
       </div>
 
       {/* 콘텐츠 영역 */}
-      <div className='flex flex-1 flex-col justify-start px-24 py-14'>
+      <div className='flex w-0 flex-grow flex-col justify-start px-12 py-10 sm:px-16 sm:py-12 lg:px-24 lg:py-14'>
         {/* 별점 및 리뷰 */}
         <div className='flex items-center gap-6'>
           <div className='flex items-center gap-2'>
             <Star size={19} />
-            <span className='font-base font-normal text-black'>{rating}</span>
-            <span className='font-base font-normal text-black'>
+            <span className='text-sm font-normal text-black sm:text-base'>
+              {rating}
+            </span>
+            <span className='text-sm font-normal text-black sm:text-base'>
               ({reviewCount})
             </span>
           </div>
         </div>
 
         {/* 제목 */}
-        <div className='mt-6'>
-          <h3 className='text-nomad text-xl font-bold'>{title}</h3>
+        <div className='mt-2 sm:mt-4 lg:mt-6'>
+          <h3 className='text-nomad truncate text-sm font-bold sm:text-lg lg:text-xl'>
+            {title}
+          </h3>
         </div>
 
         <div className='mt-auto flex items-center justify-between'>
           {/* 가격 */}
-          <p className='text-2xl font-medium text-gray-900'>
+          <p className='text-base font-medium text-gray-900 sm:text-xl lg:text-2xl'>
             ₩{price.toLocaleString()} / 인
           </p>
 
@@ -76,18 +80,17 @@ export default function ActivityCard({
                   className='fixed inset-0 z-40'
                   onClick={() => setIsMenuOpen(false)}
                 />
-
                 {/* 드롭다운 메뉴 */}
-                <div className='absolute top-full right-0 z-50 w-160 rounded-md border border-gray-300 bg-white shadow-lg'>
+                <div className='absolute top-full right-0 z-50 w-120 rounded-md border border-gray-300 bg-white shadow-lg sm:w-160'>
                   <button
                     onClick={handleEdit}
-                    className='flex h-62 w-full items-center justify-center border-b border-gray-300 px-46 py-18 text-center text-lg font-medium text-gray-900 hover:bg-gray-50'
+                    className='flex h-50 w-full items-center justify-center border-b border-gray-300 px-4 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-50 sm:h-62 sm:px-46 sm:py-18 sm:text-lg'
                   >
                     수정하기
                   </button>
                   <button
                     onClick={handleDelete}
-                    className='flex h-62 w-full items-center justify-center px-46 py-18 text-center text-lg font-medium text-gray-900 hover:bg-gray-50'
+                    className='flex h-50 w-full items-center justify-center px-4 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-50 sm:h-62 sm:px-46 sm:py-18 sm:text-lg'
                   >
                     삭제하기
                   </button>
