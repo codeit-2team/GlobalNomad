@@ -36,9 +36,11 @@ export default function ReservationCard({
   } = reservation;
 
   const isCompleted = isExperienceCompleted(date, endTime);
-  const showCancelButton = status === 'pending';
-  const showReviewButton = isCompleted && !reviewSubmitted;
-  const showReviewCompleted = isCompleted && reviewSubmitted;
+
+  const showCancelButton = status === 'pending' && !isCompleted;
+  const showReviewButton = status === 'completed' && !reviewSubmitted;
+  const showReviewCompleted = status === 'completed' && reviewSubmitted;
+  const showExpiredStatus = status === 'pending' && isCompleted;
 
   return (
     <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
@@ -110,6 +112,11 @@ export default function ReservationCard({
             {showReviewCompleted && (
               <div className='text-sm font-bold text-gray-500 sm:text-lg'>
                 후기 완료
+              </div>
+            )}
+            {showExpiredStatus && (
+              <div className='text-sm font-bold text-gray-500 sm:text-lg'>
+                예약 만료
               </div>
             )}
           </div>
