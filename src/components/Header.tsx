@@ -10,6 +10,7 @@ import useLogout from '@/hooks/useLogout';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import NotificationDropdown from './Notification/NotificationDropdown';
+import { useNotifications } from '@/hooks/useNotification';
 
 export default function Header() {
   const router = useRouter();
@@ -20,6 +21,9 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
+
+  const { data } = useNotifications({ size: 10 });
+  const hasNotification = (data?.totalCount ?? 0) > 0;
 
   // 로그아웃 처리
   const handleLogout = async () => {
@@ -51,9 +55,14 @@ export default function Header() {
               <button
                 aria-label='알림'
                 onClick={toggleOpen}
-                className='hover:text-primary'
+                className='hover:text-primary relative'
               >
                 <IconBell />
+                {hasNotification && (
+                  <span className='font-regular absolute top-[-11px] right-[-3px] text-[10px] text-red-500'>
+                    {data?.totalCount}
+                  </span>
+                )}
               </button>
 
               {isOpen && (
