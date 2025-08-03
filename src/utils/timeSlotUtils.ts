@@ -1,7 +1,25 @@
-import { ReservedSchedule } from '@/types/dashboardTypes';
+import {
+  ReservedSchedule,
+  DashboardFilterOption,
+} from '@/types/dashboardTypes';
 
 export const createTimeSlotOptions = (schedules: ReservedSchedule[] = []) => {
   return schedules.map(
+    (schedule) => `${schedule.startTime} - ${schedule.endTime}`,
+  );
+};
+
+// 탭별로 필터링된 시간대 옵션 생성
+export const createFilteredTimeSlotOptions = (
+  schedules: ReservedSchedule[] = [],
+  activeTab: DashboardFilterOption,
+) => {
+  const filteredSchedules = schedules.filter((schedule) => {
+    // 해당 탭의 상태에 예약이 있는 시간대만 필터링
+    return schedule.count[activeTab] > 0;
+  });
+
+  return filteredSchedules.map(
     (schedule) => `${schedule.startTime} - ${schedule.endTime}`,
   );
 };
