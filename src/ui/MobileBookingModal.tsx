@@ -9,6 +9,7 @@ import BookingButton from '@/components/FloatingBox/BookingButton';
 import ParticipantsSelector from '@/components/FloatingBox/ParticipantSelector';
 import TotalPriceDisplay from '@/components/FloatingBox/TotalPriceDisplay';
 import { SchedulesProps } from '@/types/activityDetailType';
+import { toast } from 'sonner';
 
 export default function MobileModal({
   schedules,
@@ -27,11 +28,21 @@ export default function MobileModal({
   );
 
   const next = () => {
+    if (step === 'date-time' && !selectedTime) {
+      toast.error('시간을 선택해주세요.');
+      return;
+    }
+
     setStep((prev) => (prev === 'date-time' ? 'participants' : 'confirm'));
   };
 
   const prev = () => {
     setStep((prev) => (prev === 'confirm' ? 'participants' : 'date-time'));
+  };
+
+  const handleConfirm = () => {
+    setIsOpen(false);
+    setStep('date-time');
   };
 
   // const handleBooking = () => {
@@ -42,7 +53,7 @@ export default function MobileModal({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Modal.Content zIndex={300}>
+      <Modal.Content zIndex={9999}>
         <Modal.Header>
           <Modal.Title>예약하기</Modal.Title>
           <Modal.Close />
@@ -99,7 +110,7 @@ export default function MobileModal({
                 다음
               </button>
             ) : (
-              <BookingButton onClick={() => setIsOpen(false)}>
+              <BookingButton onClick={() => handleConfirm()}>
                 확인
               </BookingButton>
             )}

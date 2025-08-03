@@ -110,8 +110,8 @@ function ReviewSection({
 
         {!user && (
           <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
-            <div className='rounded-md bg-white/70 px-4 py-2 shadow-md'>
-              <p className='text-sm font-semibold text-gray-700'>
+            <div className='flex rounded-md bg-white/70 px-10 py-10 shadow-xl'>
+              <p className='flex items-center justify-center p-20 text-sm font-semibold text-gray-700'>
                 로그인 후 리뷰 전체 내용을 확인할 수 있어요
               </p>
             </div>
