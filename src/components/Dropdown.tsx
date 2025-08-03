@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import cn from '@lib/cn';
 import useOutsideClick from '@hooks/useOutsideClick';
 import ChevronIcon from '@assets/svg/chevron';
-import CheckIcon from '@assets/svg/check';
 import { DropdownProps } from '@/types/dropdownTypes';
+// import CheckIcon from '@assets/svg/check';
 
 /**
  * 드롭다운 컴포넌트입니다.
