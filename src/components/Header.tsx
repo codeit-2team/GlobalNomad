@@ -10,6 +10,7 @@ import useLogout from '@/hooks/useLogout';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import NotificationDropdown from './Notification/NotificationDropdown';
+import { useNotifications } from '@/hooks/useNotification';
 
 export default function Header() {
   const router = useRouter();
@@ -19,6 +20,9 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
+
+  const { data } = useNotifications({ size: 10 });
+  const hasNotification = (data?.totalCount ?? 0) > 0;
 
   const handleLogoClick = () => {
     router.push('/'); // 쿼리 제거됨 → 검색어 초기화됨
@@ -51,8 +55,8 @@ export default function Header() {
 
           {/* 우측 placeholder (스켈레톤 박스) */}
           <div className='flex gap-24'>
-            <div className='h-32 w-32 rounded-full bg-gray-200 animate-pulse' />
-            <div className='h-32 w-80 rounded-md bg-gray-200 animate-pulse' />
+            <div className='h-32 w-32 animate-pulse rounded-full bg-gray-200' />
+            <div className='h-32 w-80 animate-pulse rounded-md bg-gray-200' />
           </div>
         </div>
       </header>
@@ -78,9 +82,14 @@ export default function Header() {
               <button
                 aria-label='알림'
                 onClick={toggleOpen}
-                className='hover:text-primary'
+                className='hover:text-primary relative'
               >
                 <IconBell />
+                {hasNotification && (
+                  <span className='font-regular absolute top-[-11px] right-[-3px] text-[10px] text-red-500'>
+                    {data?.totalCount}
+                  </span>
+                )}
               </button>
 
               {isOpen && (
