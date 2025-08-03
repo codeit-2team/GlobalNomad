@@ -11,7 +11,7 @@ import PopularCard from '@/app/(with-header)/components/PopularCard';
 import PopularCardSkeleton from '@/app/(with-header)/components/Skeletons/PopularCardSkeleton';
 
 import { getPopularExperiences } from '@/app/api/experiences/getPopularExperiences';
-import { ExperienceResponse } from '@/types/experienceListTypes'; // 여기로 타입 통일
+import { ExperienceResponse } from '@/types/experienceListTypes';
 
 export default function PopularExperiences() {
   const sliderRef = useRef<HTMLDivElement>(null);
