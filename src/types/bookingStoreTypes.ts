@@ -20,4 +20,5 @@ export interface BookingState {
 
   setIsOpen: (open: boolean) => void;
   setAvailableDates: (data: BookingState['availableDates']) => void;
+  setToInitial: () => void;
 }
