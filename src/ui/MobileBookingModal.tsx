@@ -42,7 +42,7 @@ export default function MobileModal({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Modal.Content>
+      <Modal.Content zIndex={300}>
         <Modal.Header>
           <Modal.Title>예약하기</Modal.Title>
           <Modal.Close />
