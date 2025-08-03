@@ -37,7 +37,7 @@ export default function MyPageLayout({
               </div>
             </div>
             {/* 메인 스켈레톤 */}
-            <div className='flex-grow animate-pulse rounded bg-gray-200'></div>
+            <div className='flex-grow min-w-0 animate-pulse rounded bg-gray-200'></div>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function MyPageLayout({
           <ProfileNavigation />
 
           {/* 우측 메인 콘텐츠 섹션 */}
-          <div className='flex-grow'>{children}</div>
+          <div className='flex-grow min-w-0'>{children}</div>
         </div>
       </div>
     </div>
