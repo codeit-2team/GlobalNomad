@@ -1,136 +1,37 @@
 'use client';
 
-import { useState } from 'react';
-import axios from 'axios';
-
-import type React from 'react';
+import { useCreateActivityForm } from '../hooks/useCreateActivityForm';
 import { InfoSection } from './InfoSection';
 import { ScheduleSelectForm } from './ScheduleSelectForm';
 import { ImageSection } from './ImageSection';
 import Button from '@/components/Button';
-import { uploadImage } from '../utils/uploadImage';
-import { privateInstance } from '@/apis/privateInstance';
-import { toast } from 'sonner';
-
-interface DateSlot {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
 
 export default function ReservationForm() {
-  const [dates, setDates] = useState<DateSlot[]>([
-    { date: '', startTime: '', endTime: '' },
-  ]);
-  const [mainImage, setMainImage] = useState<File | string | null>(null);
-  const [subImage, setSubImage] = useState<(File | string)[]>([]);
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState('');
-  const [address, setAddress] = useState('');
+  const {
+    title,
+    category,
+    price,
+    description,
+    address,
+    dates,
+    mainImage,
+    subImage,
+    setTitle,
+    setCategory,
+    setPrice,
+    setDescription,
+    setAddress,
+    handleAddDate,
+    handleRemoveDate,
+    handleDateChange,
+    handleMainImageSelect,
+    handleMainImageRemove,
+    handleSubImagesAdd,
+    handleSubImageRemove,
+    handleSubmit,
+    isLoading,
+  } = useCreateActivityForm();
 
-  const handleAddDate = () => {
-    setDates([...dates, { date: '', startTime: '', endTime: '' }]);
-  };
-
-  const handleRemoveDate = (index: number) => {
-    setDates(dates.filter((_, i) => i !== index));
-  };
-
-  const handleDateChange = (
-    index: number,
-    field: keyof DateSlot,
-    value: string,
-  ) => {
-    const updatedDates = dates.map((date, i) =>
-      i === index ? { ...date, [field]: value } : date,
-    );
-    setDates(updatedDates);
-  };
-
-  const handleMainImageSelect = async (file: File) => {
-    try {
-      const url = await uploadImage(file);
-      setMainImage(url);
-    } catch (err) {
-      console.error(err);
-      toast.error('메인 이미지 업로드에 실패했습니다.');
-    }
-  };
-
-  const handleMainImageRemove = () => {
-    setMainImage(null);
-  };
-
-  const handleSubImagesAdd = async (newFiles: File[]) => {
-    const remainingSlots = 4 - subImage.length;
-    const filesToAdd = newFiles.slice(0, remainingSlots);
-
-    try {
-      const uploadPromises = filesToAdd.map((file) => uploadImage(file));
-      const uploadedUrls = await Promise.all(uploadPromises);
-      setSubImage([...subImage, ...uploadedUrls]);
-    } catch (err) {
-      console.error('서브 이미지 업로드 실패', err);
-      toast.error('서브 이미지 업로드 중 문제가 발생.');
-    }
-  };
-
-  const handleSubImageRemove = (index: number) => {
-    setSubImage(subImage.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!mainImage) {
-      toast.error('메인 이미지를 업로드해주세요.'); //추후 토스트나 팝업으로 대체
-      return;
-    }
-
-    if (
-      !title ||
-      !category ||
-      !description ||
-      !address ||
-      !price ||
-      dates.length === 0
-    ) {
-      toast.error('모든 필드를 입력해주세요.'); //추후 토스트나 팝업으로 대체
-      return;
-    }
-
-    const payload = {
-      title,
-      category,
-      description,
-      address,
-      price,
-      schedules: dates,
-      bannerImageUrl: mainImage,
-      subImageUrls: subImage,
-    };
-
-    try {
-      const response = await privateInstance.post('/addActivity', payload);
-      console.log('등록 성공:', response.data);
-      toast.success('체험이 성공적으로 등록되었습니다!'); //추후 토스트나 팝업으로 대체
-    } catch (err) {
-      console.error('체험 등록 실패:', err);
-
-      if (axios.isAxiosError(err)) {
-        const detailMessage =
-          err.response?.data?.detail?.message ||
-          err.response?.data?.message ||
-          '체험 등록 중 오류가 발생했습니다.';
-
-        toast.error(detailMessage); //추후 토스트나 팝업으로 대체
-      } else {
-        toast.error('알 수 없는 오류가 발생했습니다.'); //추후 토스트나 팝업으로 대체
-      }
-    }
-  };
   return (
     <div className='bg-gray-white min-h-screen px-16 py-24 sm:px-6 md:py-0 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
@@ -141,12 +42,14 @@ export default function ReservationForm() {
               <Button
                 variant='primary'
                 type='submit'
+                isLoading={isLoading}
                 className='bg-nomad w-full rounded-[4px] px-32 py-11 text-lg'
               >
                 등록하기
               </Button>
             </div>
           </div>
+
           <InfoSection
             title={title}
             category={category}
@@ -155,7 +58,7 @@ export default function ReservationForm() {
             address={address}
             onTitleChange={setTitle}
             onCategoryChange={setCategory}
-            onPriceChange={(value) => setPrice(Number(value))}
+            onPriceChange={setPrice}
             onDescriptionChange={setDescription}
             onAddressChange={setAddress}
           />

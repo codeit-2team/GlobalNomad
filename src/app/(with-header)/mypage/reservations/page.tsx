@@ -157,7 +157,7 @@ export default function MyReservationsPage() {
   if (isLoading) {
     return (
       <div className='w-full max-w-none lg:max-w-792'>
-        <div className='mb-24 flex items-center justify-between'>
+        <div className='mb-48 flex items-center justify-between'>
           <h1 className='text-nomad text-3xl leading-42 font-bold'>
             예약 내역
           </h1>
@@ -179,7 +179,7 @@ export default function MyReservationsPage() {
   if (error) {
     return (
       <div className='w-full max-w-none lg:max-w-792'>
-        <div className='mb-24 flex items-center justify-between'>
+        <div className='mb-48 flex items-center justify-between'>
           <h1 className='text-nomad text-3xl leading-42 font-bold'>
             예약 내역
           </h1>

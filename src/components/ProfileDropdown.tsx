@@ -42,7 +42,7 @@ export default function ProfileDropdown({ nickname, profileImageUrl, onLogout }:
             alt='프로필 이미지'
             width={32}
             height={32}
-            className='rounded-full border border-gray-300'
+            className='w-32 h-32 rounded-full border border-gray-300 object-cover'
           />
         ) : (
           <div className='size-32 rounded-full border border-gray-300 overflow-hidden'>

@@ -1,25 +1,7 @@
-'use client';
+export const dynamic = 'force-dynamic';
 
-import { useState } from 'react';
-import BannerSection from '@/app/(with-header)/components/BannerSection';
-import PopularExperiences from '@/app/(with-header)/components/PopularExperiences';
-import ExperienceList from '@/app/(with-header)/components/ExperienceList';
+import BasePage from '@/app/(with-header)/components/BasePage';
 
-export default function HomePage() {
-  const [searchKeyword, setSearchKeyword] = useState('');
-
-  return (
-    <main>
-      <BannerSection onSearch={setSearchKeyword} />
-
-      {searchKeyword ? (
-        <ExperienceList keyword={searchKeyword} isSearchMode />
-      ) : (
-        <>
-          <PopularExperiences />
-          <ExperienceList />
-        </>
-      )}
-    </main>
-  );
+export default function Page() {
+  return <BasePage />;
 }

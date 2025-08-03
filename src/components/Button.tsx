@@ -21,6 +21,7 @@ export default function Button({
   children,
   variant,
   selected,
+  isLoading = false,
   ...props
 }: ButtonProps) {
   const variantClass: Record<ButtonProps['variant'], string> = {
@@ -35,15 +36,16 @@ export default function Button({
   return (
     <button
       type={type}
+      disabled={isLoading || props.disabled}
       className={cn(
-        'w-full disabled:border-none disabled:bg-gray-600 disabled:text-white',
+        'flex w-full items-center justify-center disabled:border-none disabled:bg-gray-600 disabled:text-white',
         variantClass[variant],
         selectedClass,
         className,
       )}
       {...props}
     >
-      {children}
+      {isLoading ? <span className='animate-pulse'>로딩중...</span> : children}
     </button>
   );
 }

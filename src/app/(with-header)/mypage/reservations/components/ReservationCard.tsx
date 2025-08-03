@@ -41,9 +41,9 @@ export default function ReservationCard({
   const showReviewCompleted = isCompleted && reviewSubmitted;
 
   return (
-    <div className='rounded-24 flex h-204 w-792 overflow-hidden border border-gray-300 bg-white'>
+    <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
       {/* 이미지 영역 */}
-      <div className='relative h-204 w-204 flex-shrink-0'>
+      <div className='relative h-full w-128 flex-shrink-0 overflow-hidden rounded-l-3xl sm:w-156 lg:w-204'>
         <Image
           src={activity.bannerImageUrl}
           alt={activity.title}
@@ -53,39 +53,46 @@ export default function ReservationCard({
       </div>
 
       {/* 콘텐츠 영역 */}
-      <div className='flex flex-1 flex-col justify-start py-21 pr-24 pl-24'>
+      <div className='flex w-0 flex-grow flex-col justify-start px-12 py-10 sm:px-16 sm:py-12 lg:px-24 lg:py-14'>
         {/* 상태 라벨 */}
         <div>
-          <span className={cn('text-lg font-bold', STATUS_COLORS[status])}>
+          <span
+            className={cn(
+              'text-sm font-bold sm:text-lg',
+              STATUS_COLORS[status],
+            )}
+          >
             {STATUS_LABELS[status]}
           </span>
         </div>
 
         {/* 제목 */}
-        <div className='mt-8'>
-          <h3 className='text-nomad text-xl font-bold'>{activity.title}</h3>
+        <div className='mt-4 sm:mt-6 lg:mt-8'>
+          <h3 className='text-nomad truncate text-sm font-bold sm:text-lg lg:text-xl'>
+            {activity.title}
+          </h3>
         </div>
 
         {/* 날짜 및 인원 정보 */}
-        <div className='mt-12'>
-          <p className='text-2lg text-nomad'>
+        <div className='mt-6 sm:mt-8 lg:mt-12'>
+          <p className='text-nomad lg:text-2lg text-xs sm:text-sm'>
             {date} · {startTime} - {endTime} · {headCount}명
           </p>
         </div>
 
         {/* 가격 + 버튼  */}
-        <div className='mt-21 flex items-center justify-between'>
+        <div className='mt-auto flex items-center justify-between pt-4 sm:pt-6 lg:pt-8'>
           {/* 가격 */}
-          <p className='text-2xl font-bold text-black'>
+          <p className='text-base font-bold text-black sm:text-xl lg:text-2xl'>
             ₩{totalPrice.toLocaleString()}
           </p>
 
           {/* 버튼/상태 */}
-          <div className='flex h-43 w-144 items-center justify-center'>
+          <div className='flex h-32 w-80 items-center justify-center sm:h-40 sm:w-112 lg:h-43 lg:w-144'>
             {showCancelButton && (
               <Button
                 variant='secondary'
-                className='h-43 w-144 rounded-md text-lg font-bold'
+                className='h-32 w-80 rounded-md text-sm font-bold sm:h-40 sm:w-112 sm:text-lg lg:h-43 lg:w-144'
                 onClick={() => onCancel?.(id)}
               >
                 예약 취소
@@ -94,14 +101,16 @@ export default function ReservationCard({
             {showReviewButton && (
               <Button
                 variant='primary'
-                className='bg-nomad h-43 w-144 rounded-md text-lg font-bold'
+                className='bg-nomad h-32 w-80 rounded-md text-sm font-bold sm:h-40 sm:w-112 sm:text-lg lg:h-43 lg:w-144'
                 onClick={() => onReview?.(id)}
               >
                 후기 작성
               </Button>
             )}
             {showReviewCompleted && (
-              <div className='text-lg font-bold text-gray-500'>후기 완료</div>
+              <div className='text-sm font-bold text-gray-500 sm:text-lg'>
+                후기 완료
+              </div>
             )}
           </div>
         </div>
