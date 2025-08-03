@@ -55,18 +55,18 @@ export default function ProfileDropdown({ nickname, profileImageUrl, onLogout }:
       {/* 드롭다운 메뉴 */}
       {isOpen && (
         <div
-          className='absolute top-50 right-0 z-50 mt-12 w-140 rounded-md border border-gray-200 bg-white shadow-md'
+          className='absolute top-50 right-0 z-50 mt-12 w-120 rounded-md border border-gray-200 bg-white shadow-md'
           onClick={(e) => e.stopPropagation()}
         >
           <Link
             href='/mypage'
-            className='block w-full px-16 py-12 text-left hover:bg-gray-50'
+            className='block w-full px-16 py-12 hover:bg-gray-50 rounded-[15px] text-center'
           >
             마이페이지
           </Link>
           <button
             onClick={onLogout}
-            className='w-full px-16 py-12 text-left hover:bg-gray-50'
+            className='w-full px-16 py-12 hover:bg-gray-50 rounded-[15px]'
           >
             로그아웃
           </button>

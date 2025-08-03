@@ -71,8 +71,8 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
           />
           {/* <div className=''> */}
             <Dropdown
-              className='absolute right-0'
-              buttonClassName='flex flex-row items-center justify-center gap-0 border-nomad border rounded-[15px] text-md py-9 px-15'
+              className='absolute right-0 md:w-130'
+              buttonClassName='flex flex-row items-center justify-between gap-0 border-nomad border rounded-[15px] text-md py-9 px-15'
               listboxClassName='px-0 py-0'
               optionClassName='pl-10 pr-0 py-9 text-md'
               placeholder='가격'

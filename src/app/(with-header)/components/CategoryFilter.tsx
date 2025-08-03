@@ -85,7 +85,7 @@ export default function CategoryFilter({
 
         {/* 그라데이션: 처음만 보이고 상호작용하면 사라짐 */}
         {!hasInteracted && (
-          <div className='pointer-events-none absolute top-0 right-0 h-full w-[100px] bg-gradient-to-l from-white to-transparent z-10 transition-opacity duration-300' />
+          <div className='md:hidden pointer-events-none absolute top-0 right-0 h-full w-[100px] bg-gradient-to-l from-white to-transparent z-10 transition-opacity duration-300' />
         )}
       </div>
     </div>
