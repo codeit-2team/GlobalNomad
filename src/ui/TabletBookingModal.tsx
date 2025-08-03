@@ -18,7 +18,7 @@ export default function TabletModal({
   if (!isOpen) return null;
 
   return (
-    <div className='absolute right-0 bottom-0 z-200 flex min-h-480 w-500 flex-col bg-white p-8 px-10 shadow-2xl inset-shadow-sm inset-shadow-gray-300'>
+    <div className='absolute right-0 bottom-0 z-200 flex min-h-480 w-500 flex-col rounded-md bg-white p-8 px-10 shadow-2xl inset-shadow-sm inset-shadow-gray-300'>
       <div className='mb-4 flex w-full items-center justify-between'>
         <h2 className='text-lg font-bold'>날짜</h2>
         <button onClick={() => setIsOpen(false)}>

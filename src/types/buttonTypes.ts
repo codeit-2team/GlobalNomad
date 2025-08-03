@@ -20,4 +20,5 @@ type Variant = 'primary' | 'secondary' | 'category';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: Variant;
   selected?: boolean;
+  isLoading?: boolean;
 }

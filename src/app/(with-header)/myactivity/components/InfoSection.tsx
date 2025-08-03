@@ -8,7 +8,7 @@ import Textarea from '@/components/Textarea';
 interface InfoSectionProps {
   title?: string;
   category?: string;
-  price?: number;
+  price?: string;
   description?: string;
   address?: string;
   onTitleChange: (value: string) => void;
@@ -21,7 +21,7 @@ interface InfoSectionProps {
 export function InfoSection({
   title = '',
   category = '',
-  price = 0,
+  price = '',
   description = '',
   address = '',
   onTitleChange,
@@ -41,9 +41,8 @@ export function InfoSection({
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
         />
-
       </div>
-          
+
       <div>
         <CategoryInput
           category={category}
@@ -61,7 +60,7 @@ export function InfoSection({
         />
       </div>
 
-      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+      <div className='relative flex flex-col gap-12 text-xl font-bold text-black'>
         <p>가격</p>
         <Input
           type='number'
@@ -72,12 +71,9 @@ export function InfoSection({
         />
       </div>
 
-      <div className='relative flex flex-col gap-12 text-xl text-black font-bold'>
+      <div className='relative flex flex-col gap-12 text-xl font-bold text-black'>
         <p>주소</p>
-        <AddressInput
-          onAddressChange={onAddressChange}
-          address={address}
-        />
+        <AddressInput onAddressChange={onAddressChange} address={address} />
       </div>
     </section>
   );
