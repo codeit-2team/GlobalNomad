@@ -176,7 +176,9 @@ export const useEditActivityForm = () => {
     e.preventDefault();
     try {
       await mutation.mutateAsync();
-    } catch (error) {}
+    } catch (error) {
+      console.log('에러발생', error);
+    }
   };
 
   return {
