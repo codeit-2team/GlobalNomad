@@ -24,6 +24,7 @@ export default function EditActivityForm() {
     dates,
     isLoading,
     isError,
+    editLoading,
     setTitle,
     setCategory,
     setPrice,
@@ -58,6 +59,7 @@ export default function EditActivityForm() {
               <Button
                 variant='primary'
                 type='submit'
+                isLoading={editLoading}
                 className='bg-nomad w-full rounded-[4px] px-32 py-11 text-lg'
               >
                 수정하기
@@ -73,7 +75,7 @@ export default function EditActivityForm() {
             address={address}
             onTitleChange={setTitle}
             onCategoryChange={setCategory}
-            onPriceChange={(price) => setPrice(Number(price))}
+            onPriceChange={setPrice}
             onDescriptionChange={setDescription}
             onAddressChange={setAddress}
           />
