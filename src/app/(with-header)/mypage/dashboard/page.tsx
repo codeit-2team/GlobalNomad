@@ -20,7 +20,11 @@ export default function MyDashboardPage() {
 
   // 내 체험 리스트 조회
   const { data: activitiesData, isLoading, error } = useMyActivities();
-  const { activityOptions, uniqueTitles } = useActivityOptions(activitiesData);
+  const { activityOptions, uniqueTitles, handleActivityChange } =
+    useActivityOptions(activitiesData, (activityId) => {
+      setSelectedActivityId(activityId);
+      setSelectedDate('');
+    });
 
   // 페이지 로드 시 첫 번째 체험 자동 선택
   useEffect(() => {
@@ -33,18 +37,6 @@ export default function MyDashboardPage() {
       setSelectedActivityId(firstActivity.id);
     }
   }, [activitiesData, selectedActivityId]);
-
-  // 체험 선택 -> 제목으로 ID 찾기
-  const handleActivityChange = (selectedTitle: string) => {
-    const selectedOption = activityOptions.find(
-      (option) => option.label === selectedTitle,
-    );
-
-    if (selectedOption) {
-      setSelectedActivityId(parseInt(selectedOption.value));
-      setSelectedDate('');
-    }
-  };
 
   // 현재 선택된 체험의 제목 찾기
   const selectedActivityTitle =
