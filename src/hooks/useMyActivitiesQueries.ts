@@ -9,6 +9,7 @@ import {
   getMyActivitiesWithPagination,
   deleteMyActivity,
 } from '@/apis/myActivities';
+import { toast } from 'sonner';
 
 export const MY_ACTIVITIES_QUERY_KEYS = {
   ALL: ['my-activities'] as const,
@@ -40,10 +41,20 @@ export const useDeleteMyActivity = () => {
       queryClient.invalidateQueries({
         queryKey: MY_ACTIVITIES_QUERY_KEYS.ALL,
       });
-      alert('체험이 삭제되었습니다.');
+
+      // 홈페이지 체험 리스트 쿼리들 무효화
+      queryClient.invalidateQueries({
+        queryKey: ['popularExperiences'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['experiences'],
+        exact: false,
+      });
+
+      toast.success('체험이 삭제되었습니다.');
     },
     onError: (error) => {
-      alert(`체험 삭제 실패: ${error.message}`);
+      toast.error(`체험 삭제 실패: ${error.message}`);
     },
   });
 };
