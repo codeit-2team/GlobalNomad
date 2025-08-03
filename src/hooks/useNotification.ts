@@ -43,13 +43,17 @@ export const getMyNotifications = async (
  * @example
  * const { data, isLoading } = useNotifications({ size: 10 });
  */
-export const useNotifications = (params: NotificationParams) => {
+export const useNotifications = (
+  params: NotificationParams,
+  isEnabled: boolean = true,
+) => {
   return useQuery<Notification>({
     queryKey: ['notifications', params],
     queryFn: async () => {
       const data = await getMyNotifications(params);
       return data || { notifications: [], totalCount: 0 };
     },
-    refetchInterval: 10000,
+    refetchInterval: isEnabled ? 10000 : false,
+    enabled: isEnabled,
   });
 };
