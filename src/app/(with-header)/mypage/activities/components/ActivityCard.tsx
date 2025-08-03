@@ -21,6 +21,10 @@ export default function ActivityCard({
 
   const { id, title, price, bannerImageUrl, rating, reviewCount } = activity;
 
+  const handleCardClick = () => {
+    router.push(`/activities/${id}`);
+  };
+
   const handleEdit = () => {
     router.push(`/myactivity/${id}`);
   };
@@ -31,7 +35,10 @@ export default function ActivityCard({
   };
 
   return (
-    <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
+    <div
+      className='flex h-128 w-full max-w-792 cursor-pointer flex-row rounded-3xl border border-gray-300 bg-white transition-shadow hover:shadow-md sm:h-156 lg:h-204'
+      onClick={handleCardClick}
+    >
       {/* 이미지 영역 */}
       <div className='relative h-full w-128 flex-shrink-0 overflow-hidden rounded-l-3xl sm:w-156 lg:w-204'>
         <Image src={bannerImageUrl} alt={title} fill className='object-cover' />
@@ -68,7 +75,10 @@ export default function ActivityCard({
           {/* 더보기 옵션 */}
           <div className='relative'>
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
               className='flex h-40 w-40 items-center justify-center rounded-full hover:bg-gray-100'
             >
               <MoreOptionsIcon size={40} />
@@ -78,18 +88,27 @@ export default function ActivityCard({
               <>
                 <div
                   className='fixed inset-0 z-40'
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMenuOpen(false);
+                  }}
                 />
                 {/* 드롭다운 메뉴 */}
                 <div className='absolute top-full right-0 z-50 w-120 rounded-md border border-gray-300 bg-white shadow-lg sm:w-160'>
                   <button
-                    onClick={handleEdit}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit();
+                    }}
                     className='flex h-50 w-full items-center justify-center border-b border-gray-300 px-4 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-50 sm:h-62 sm:px-46 sm:py-18 sm:text-lg'
                   >
                     수정하기
                   </button>
                   <button
-                    onClick={handleDelete}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete();
+                    }}
                     className='flex h-50 w-full items-center justify-center px-4 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-50 sm:h-62 sm:px-46 sm:py-18 sm:text-lg'
                   >
                     삭제하기
