@@ -9,6 +9,7 @@ import { useActivityOptions } from '@/hooks/useActivityOptions';
 import EmptyDashboard from './components/EmptyDashboard';
 import ReservationDashboardCalendar from './components/ReservationDashboardCalendar';
 import ReservationInfoModal from './components/ReservationInfoModal';
+import CalendarSkeleton from './components/CalendarSkeleton';
 
 export default function MyDashboardPage() {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
@@ -76,7 +77,7 @@ export default function MyDashboardPage() {
         <div className='mb-48 h-56 w-full max-w-792 animate-pulse rounded-md bg-gray-200' />
 
         {/* 달력 스켈레톤 */}
-        <div className='rounded-24 h-600 w-full animate-pulse bg-gray-200' />
+        <CalendarSkeleton calendarWeeksLength={6} />
       </div>
     );
   }

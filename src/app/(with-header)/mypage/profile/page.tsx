@@ -9,11 +9,12 @@ import {
   validatePassword,
   validatePasswordConfirmation,
 } from '@/utils/validateInput';
-import { useUpdateProfile } from '@/hooks/useMyPageQueries';
+import { useUpdateProfile, useMyProfile } from '@/hooks/useMyPageQueries';
 import { UpdateProfileRequest } from '@/types/mypageTypes';
 
 export default function ProfilePage() {
   const { user } = useMyPageStore();
+  const { isLoading, error } = useMyProfile();
 
   const updateProfileMutation = useUpdateProfile();
 
@@ -154,13 +155,76 @@ export default function ProfilePage() {
     updateProfileMutation.mutate(updateData);
   };
 
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className='w-full max-w-none lg:max-w-792'>
+        {/* 제목과 저장하기 버튼 */}
+        <div className='mb-24 flex items-center justify-between'>
+          <div className='h-42 w-24 animate-pulse rounded bg-gray-200' />
+          <div className='h-56 w-100 animate-pulse rounded bg-gray-200 md:w-120' />
+        </div>
+
+        {/* 폼 섹션 스켈레톤 */}
+        <div className='space-y-32'>
+          {/* 닉네임 스켈레톤 */}
+          <div>
+            <div className='mb-16 h-32 w-16 animate-pulse rounded bg-gray-200' />
+            <div className='h-56 w-full animate-pulse rounded bg-gray-200' />
+          </div>
+
+          {/* 이메일 스켈레톤 */}
+          <div>
+            <div className='mb-16 h-32 w-16 animate-pulse rounded bg-gray-200' />
+            <div className='h-56 w-full animate-pulse rounded bg-gray-200' />
+          </div>
+
+          {/* 비밀번호 스켈레톤 */}
+          <div>
+            <div className='mb-16 h-32 w-20 animate-pulse rounded bg-gray-200' />
+            <div className='h-56 w-full animate-pulse rounded bg-gray-200' />
+          </div>
+
+          {/* 비밀번호 재입력 스켈레톤 */}
+          <div>
+            <div className='mb-16 h-32 w-28 animate-pulse rounded bg-gray-200' />
+            <div className='h-56 w-full animate-pulse rounded bg-gray-200' />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태
+  if (error) {
+    return (
+      <>
+        {/* 제목과 저장하기 버튼 */}
+        <div className='mb-24 flex items-center justify-between'>
+          <h1 className='text-nomad text-3xl leading-42 font-bold'>내 정보</h1>
+          <Button
+            variant='primary'
+            className='text-md h-56 w-100 rounded md:w-120 md:text-lg'
+            disabled
+          >
+            저장하기
+          </Button>
+        </div>
+
+        {/* 에러 메시지 */}
+        <div className='text-center text-red-500'>
+          <p>사용자 정보를 불러오는데 실패했습니다.</p>
+          <p className='mt-2 text-sm text-gray-600'>{error.message}</p>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className='w-full max-w-none lg:max-w-[792px]'>
+    <div className='w-full max-w-none lg:max-w-792'>
       {/* 제목과 저장하기 버튼 */}
       <div className='mb-24 flex items-center justify-between'>
-        <h1 className='text-nomad text-[32px] leading-[42px] font-bold'>
-          내 정보
-        </h1>
+        <h1 className='text-nomad text-3xl leading-42 font-bold'>내 정보</h1>
         <Button
           variant='primary'
           className='text-md h-56 w-100 rounded md:w-120 md:text-lg'
@@ -175,7 +239,7 @@ export default function ProfilePage() {
       <div className='space-y-32'>
         {/* 닉네임 */}
         <div>
-          <label className='mb-16 block text-[24px] leading-[32px] font-bold text-black'>
+          <label className='mb-16 block text-2xl leading-32 font-bold text-black'>
             닉네임
           </label>
           <Input
@@ -190,7 +254,7 @@ export default function ProfilePage() {
 
         {/* 이메일 */}
         <div>
-          <label className='mb-16 block text-[24px] leading-[32px] font-bold text-black'>
+          <label className='mb-16 block text-2xl leading-32 font-bold text-black'>
             이메일
           </label>
           <Input
@@ -204,7 +268,7 @@ export default function ProfilePage() {
 
         {/* 비밀번호 */}
         <div>
-          <label className='mb-16 block text-[24px] leading-[32px] font-bold text-black'>
+          <label className='mb-16 block text-2xl leading-32 font-bold text-black'>
             비밀번호
           </label>
           <Input
@@ -219,7 +283,7 @@ export default function ProfilePage() {
 
         {/* 비밀번호 재입력 */}
         <div>
-          <label className='mb-16 block text-[24px] leading-[32px] font-bold text-black'>
+          <label className='mb-16 block text-2xl leading-32 font-bold text-black'>
             비밀번호 재입력
           </label>
           <Input
