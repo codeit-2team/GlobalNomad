@@ -60,9 +60,23 @@ export default function SignupForm() {
     passwordConfirmation: '',
   });
 
-  const hasErrors = Object.values(errors).some((msg) => msg !== '');
-  const isAllFilled = email && nickname && password && passwordConfirmation;
-  const isDisabled = !isAllFilled || hasErrors;
+  const validateAll = () => ({
+    email: validateEmail(email),
+    nickname: validateNickname(nickname),
+    password: validatePassword(password),
+    passwordConfirmation: validatePasswordConfirmation(
+      passwordConfirmation,
+      password,
+    ),
+  });
+
+  const hasErrors = (errs: typeof errors) =>
+    Object.values(errs).some((msg) => msg !== '');
+
+  const isAllFilled = () =>
+    email && nickname && password && passwordConfirmation;
+
+  const disabled = !isAllFilled() || hasErrors(errors);
 
   const [errorPopupOpen, setErrorPopupOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -84,6 +98,22 @@ export default function SignupForm() {
       setErrorPopupOpen(true);
     }
   }, [state, setUser]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const newErrors = validateAll();
+    setErrors(newErrors);
+
+    if (!isAllFilled() || hasErrors(newErrors)) return;
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('nickname', nickname);
+    formData.append('password', password);
+
+    formAction(formData);
+  };
 
   /**
    * 카카오 회원가입 버튼 클릭 시 실행되는 함수입니다.
@@ -121,7 +151,7 @@ export default function SignupForm() {
           </Link>
         </div>
 
-        <form action={formAction}>
+        <form onSubmit={handleSubmit}>
           <div className='flex flex-col gap-28'>
             <Input
               required
@@ -192,7 +222,7 @@ export default function SignupForm() {
             <Button
               variant='primary'
               className='h-48 rounded-md'
-              disabled={isDisabled}
+              disabled={disabled}
               type='submit'
             >
               회원가입 하기
