@@ -30,8 +30,8 @@ export function ScheduleSelect({
 }: ScheduleSelectProps) {
   return (
     <div className='pt-5 w-full'>
-      <div className='flex flex-row items-end gap-5'>
-        <div className='flex flex-col gap-10 w-full'>
+      <div className='flex flex-wrap items-end gap-4 w-full'>
+        <div className='flex flex-col gap-10 flex-1 min-w-0'>
           <Input
             className='w-full'
             type='date'
@@ -40,7 +40,7 @@ export function ScheduleSelect({
             variant='compact'
           />
         </div>
-        <div className='flex flex-col gap-10 w-full max-w-1/4'>
+        <div className='flex flex-col gap-10 flex-1 min-w-0'>
           <Input
             className='w-full'
             type='time'
@@ -49,7 +49,7 @@ export function ScheduleSelect({
             variant='compact'
           />
         </div>
-        <div className='flex flex-col gap-10 w-full max-w-1/4'>
+        <div className='flex flex-col gap-10 flex-1 min-w-0'>
           <Input
             className='w-full'
             type='time'
@@ -59,15 +59,17 @@ export function ScheduleSelect({
           />
         </div>
 
-        <div className='flex'>
+        <div className='flex-shrink-0'>
           {isRemovable && (
-            <button
-              type='button'
-              onClick={() => onRemove(index)}
-              className='w-44 h-46 border border-gray-300 rounded-[10px] flex items-center justify-center hover:bg-gray-100'
-            >
-              <IconClose />
-            </button>
+            <div className="flex-shrink-0 w-44">
+              <button
+                type="button"
+                onClick={() => onRemove(index)}
+                className="w-full h-46 border border-gray-300 rounded-[10px] flex items-center justify-center hover:bg-gray-100"
+              >
+                <IconClose />
+              </button>
+            </div>
           )}
         </div>
       </div>
