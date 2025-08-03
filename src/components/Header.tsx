@@ -21,7 +21,7 @@ export default function Header() {
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
 
-  const { data } = useNotifications({ size: 10 });
+  const { data } = useNotifications({ size: 10 }, isLoggedIn);
   const hasNotification = (data?.totalCount ?? 0) > 0;
 
   const handleLogoClick = () => {
