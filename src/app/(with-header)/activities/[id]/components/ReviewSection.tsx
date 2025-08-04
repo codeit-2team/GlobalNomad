@@ -58,11 +58,7 @@ function ReviewSection({
         key={review.id}
         userName={review.user.nickname}
         avatarSrc={review.user.profileImageUrl}
-        date={new Date(review.createdAt).toLocaleDateString('ko-KR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })}
+        date={review.createdAt.slice(0, 10).replace(/-/g, '.')}
         reviewText={review.content}
       />
     ));
