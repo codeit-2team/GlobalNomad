@@ -80,7 +80,7 @@ export default function MobileModal({
             <div className='flex min-h-400 flex-col items-center justify-center gap-20'>
               <div>
                 <p className='font-bold'>
-                  날짜 및 시간 {selectedDate?.toLocaleDateString()}
+                  날짜 및 시간 {selectedDate?.toLocaleDateString()}/
                   {selectedTime}
                 </p>
               </div>
@@ -111,7 +111,10 @@ export default function MobileModal({
                 다음
               </button>
             ) : (
-              <BookingButton onClick={() => handleConfirm()}>
+              <BookingButton
+                className='flex-1 px-10 py-10'
+                onClick={() => handleConfirm()}
+              >
                 확인
               </BookingButton>
             )}
