@@ -39,6 +39,7 @@ export function InfoSection({
           placeholder='제목'
           className='w-full'
           value={title}
+          maxLength={20}
           onChange={(e) => onTitleChange(e.target.value)}
         />
       </div>
