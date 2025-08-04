@@ -73,7 +73,7 @@ export const useCreateReview = () => {
       reservationId: number;
       data: CreateReviewRequest;
     }) => createReview(reservationId, data),
-    onSuccess: (data, variables) => {
+    onSuccess: () => {
       // 기존 쿼리 무효화
       queryClient.invalidateQueries({
         queryKey: RESERVATION_QUERY_KEYS.RESERVATIONS,
