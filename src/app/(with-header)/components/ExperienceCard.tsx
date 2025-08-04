@@ -16,13 +16,13 @@ export default function ExperienceCard({
   price,
 }: Props) {
   return (
-    <div className='flex flex-col w-full gap-16'>
+    <div className='flex flex-col w-full gap-16 transition-all duration-300 hover:-translate-y-2'>
       {/* 썸네일 */}
       <div className='relative w-full h-168 md:h-221 lg:h-283 rounded-[20px] overflow-hidden'>
         <Image
           fill
           alt={title}
-          className='object-cover'
+          className='object-cover transition-transform duration-300 hover:scale-105'
           src={imageUrl}
         />
       </div>
@@ -32,7 +32,7 @@ export default function ExperienceCard({
         <span className='pb-10 text-lg text-black'>
           ⭐ {rating} <span className='text-gray-700 text-lg'>({reviews})</span>
         </span>
-        <p className='pb-15 text-2lg font-semibold text-black line-clamp-2'>
+        <p className='mb-15 text-2lg font-semibold text-black line-clamp-2-custom'>
           {title}
         </p>
         <p className='text-xl text-black font-bold'>
