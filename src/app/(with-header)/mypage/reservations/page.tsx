@@ -5,6 +5,7 @@ import {
   useMyReservations,
   useCancelReservation,
   useCreateReview,
+  useInvalidateActivityQueries,
 } from '@/hooks/useReservationQueries';
 import { FilterOption } from '@/constants/reservationConstants';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
@@ -54,6 +55,9 @@ export default function MyReservationsPage() {
   // 후기 작성 뮤테이션
   const createReviewMutation = useCreateReview();
 
+  // 쿼리 무효화 훅
+  const invalidateActivityQueries = useInvalidateActivityQueries();
+
   // 무한 스크롤 훅
   const { lastElementRef } = useInfiniteScroll({
     hasNextPage,
@@ -102,6 +106,10 @@ export default function MyReservationsPage() {
   // 후기 작성 확인
   const handleReviewConfirm = (rating: number, content: string) => {
     if (reviewModal.reservationId) {
+      const reservation = allReservations.find(
+        (r) => r.id === reviewModal.reservationId,
+      );
+
       createReviewMutation.mutate(
         {
           reservationId: reviewModal.reservationId,
@@ -109,16 +117,10 @@ export default function MyReservationsPage() {
         },
         {
           onSuccess: () => {
-            setReviewModal({
-              isOpen: false,
-              reservationId: null,
-              activityTitle: null,
-              activityImage: null,
-              activityDate: null,
-              activityTime: null,
-              headCount: null,
-              totalPrice: null,
-            });
+            // 성공 후 추가 쿼리 무효화
+            if (reservation?.activity.id) {
+              invalidateActivityQueries(reservation.activity.id);
+            }
           },
         },
       );

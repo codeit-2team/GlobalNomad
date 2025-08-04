@@ -10,6 +10,7 @@ import {
   deleteMyActivity,
 } from '@/apis/myActivities';
 import { toast } from 'sonner';
+import { AxiosError } from 'axios';
 
 export const MY_ACTIVITIES_QUERY_KEYS = {
   ALL: ['my-activities'] as const,
@@ -54,7 +55,25 @@ export const useDeleteMyActivity = () => {
       toast.success('체험이 삭제되었습니다.');
     },
     onError: (error) => {
-      toast.error(`체험 삭제 실패: ${error.message}`);
+      const axiosError = error as AxiosError;
+      const status = axiosError.response?.status;
+
+      switch (status) {
+        case 400:
+          toast.error('예약이 있는 체험은 삭제할 수 없습니다.');
+          break;
+        case 401:
+          toast.error('로그인이 필요합니다.');
+          break;
+        case 403:
+          toast.error('삭제 권한이 없습니다.');
+          break;
+        case 404:
+          toast.error('존재하지 않는 체험입니다.');
+          break;
+        default:
+          toast.error('체험 삭제에 실패했습니다. 다시 시도해주세요.');
+      }
     },
   });
 };
