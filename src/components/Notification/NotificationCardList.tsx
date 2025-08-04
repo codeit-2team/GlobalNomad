@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 
 type NotificationCardListProps = {
   notification: Notification['notifications'];
+  onCardClick?: () => void;
 };
 
 /**
@@ -26,6 +27,7 @@ type NotificationCardListProps = {
  */
 export default function NotificationCardList({
   notification,
+  onCardClick,
 }: NotificationCardListProps) {
   // 현재 화면에 표시할 알림 목록 상태
   const [currentNotifications, setCurrentNotifications] =
@@ -143,6 +145,7 @@ export default function NotificationCardList({
               prev.filter((item) => item.id !== id),
             )
           }
+          onCardClick={onCardClick}
         />
       ))}
 
