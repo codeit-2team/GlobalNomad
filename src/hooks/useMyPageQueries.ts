@@ -24,6 +24,8 @@ export const useMyProfile = () => {
     queryKey: QUERY_KEYS.PROFILE,
     queryFn: getMyProfile,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
   useEffect(() => {
