@@ -31,7 +31,7 @@ export default function PopularCard({
         {/* 별점 정보 */}
         <span className='text-md'>⭐ {rating} ({reviews})</span>
         {/* 체험명 (줄바꿈 포함, 반응형 크기) */}
-        <p className='text-2lg md:text-3xl font-semibold'>{title}</p>
+        <p className='text-2lg md:text-3xl font-semibold line-clamp-2-custom'>{title}</p>
         {/* 가격 정보 */}
         <p className='text-lg md:text-xl'>₩ {price.toLocaleString()} <span className='text-gray-600 text-md'>/ 인</span></p>
       </div>

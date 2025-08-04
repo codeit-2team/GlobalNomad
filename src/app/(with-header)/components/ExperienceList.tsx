@@ -44,14 +44,14 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
   const totalPage = Math.ceil(totalCount / 8);
 
   return (
-    <section className='max-w-1200 m-auto px-24 lg:px-0 pb-83'>
+    <section className='max-w-1200 m-auto px-16 md:px-24 lg:px-0 pb-83'>
       {/* 🔍 검색 모드일 때 문구 표시 */}
       {isSearchMode && keyword && (
         <>
-          <p className="text-left text-lg font-semibold ml-4 md:ml-0 mt-32">
-            <span className="text-primary font-bold">"{keyword}"</span> (으)로 검색한 결과입니다.
+          <p className="text-left pt-24 lg:pt-40 text-black text-2xl md:text-3xl">
+            <span className="text-primary font-bold">{keyword}</span>(으)로 검색한 결과입니다.
           </p>
-          <p className="text-left text-sm font-normal ml-4 md:ml-0 mt-8 mb-16">
+          <p className="text-left text-lg font-normal mt-8 mb-16">
             총 <span className="font-semibold">{totalCount}</span>개의 결과
           </p>
           {experiences.length === 0 && !isLoading && (
@@ -61,7 +61,7 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
       )}
 
       {!isSearchMode && (
-        <div className='flex justify-between items-center mb-40'>
+        <div className='relative flex justify-between items-center mb-40 pr-120'>
           <CategoryFilter
             selectedCategory={selectedCategory}
             onChange={(category) => {
@@ -69,21 +69,26 @@ export default function ExperienceList({ keyword, isSearchMode }: ExperienceList
               setCurrentPage(1);
             }}
           />
-          <Dropdown
-            className='w-200'
-            placeholder='가격'
-            options={SORT_OPTIONS}
-            value={sortOption && SORT_LABEL_MAP[sortOption as keyof typeof SORT_LABEL_MAP] || ''}
-            onChange={(label: keyof typeof SORT_VALUE_MAP) => {
-              const value = SORT_VALUE_MAP[label];
-              setSortOption(value);
-              setCurrentPage(1);
-            }}
-          />
+          {/* <div className=''> */}
+            <Dropdown
+              className='absolute right-0 md:w-130'
+              buttonClassName='flex flex-row items-center justify-between gap-0 border-nomad border rounded-[15px] text-md py-9 px-15'
+              listboxClassName='px-0 py-0'
+              optionClassName='pl-10 pr-0 py-9 text-md'
+              placeholder='가격'
+              options={SORT_OPTIONS}
+              value={sortOption && SORT_LABEL_MAP[sortOption as keyof typeof SORT_LABEL_MAP] || ''}
+              onChange={(label: keyof typeof SORT_VALUE_MAP) => {
+                const value = SORT_VALUE_MAP[label];
+                setSortOption(value);
+                setCurrentPage(1);
+              }}
+              />
+          {/* </div> */}
         </div>
       )}
 
-      <div className='m-0'>
+      <div className='m-0 pb-30 md:pb-150 lg:pb-100'>
         {!isSearchMode && (
           <h2 className='text-xl md:text-3xl font-bold'>🛼 모든 체험</h2>
         )}
