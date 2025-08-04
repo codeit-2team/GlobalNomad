@@ -5,7 +5,7 @@ import {
   useMyReservations,
   useCancelReservation,
   useCreateReview,
-  invalidateActivityQueries,
+  useInvalidateActivityQueries,
 } from '@/hooks/useReservationQueries';
 import { FilterOption } from '@/constants/reservationConstants';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
@@ -54,6 +54,9 @@ export default function MyReservationsPage() {
 
   // 후기 작성 뮤테이션
   const createReviewMutation = useCreateReview();
+
+  // 쿼리 무효화 훅
+  const invalidateActivityQueries = useInvalidateActivityQueries();
 
   // 무한 스크롤 훅
   const { lastElementRef } = useInfiniteScroll({

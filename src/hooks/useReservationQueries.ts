@@ -87,22 +87,24 @@ export const useCreateReview = () => {
   });
 };
 
-// 쿼리 무효화 함수
-export const invalidateActivityQueries = (activityId: number) => {
+// 쿼리 무효화 훅
+export const useInvalidateActivityQueries = () => {
   const queryClient = useQueryClient();
 
-  queryClient.invalidateQueries({
-    queryKey: ['popularExperiences'],
-  });
-  queryClient.invalidateQueries({
-    queryKey: ['experiences'],
-    exact: false,
-  });
-  queryClient.invalidateQueries({
-    queryKey: ['activity', activityId.toString()],
-  });
-  queryClient.invalidateQueries({
-    queryKey: ['reviews'],
-    exact: false,
-  });
+  return (activityId: number) => {
+    queryClient.invalidateQueries({
+      queryKey: ['popularExperiences'],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['experiences'],
+      exact: false,
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['activity', activityId.toString()],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['reviews'],
+      exact: false,
+    });
+  };
 };
