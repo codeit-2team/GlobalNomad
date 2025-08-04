@@ -114,10 +114,10 @@ export default function BookingInterface({
             <h3 className='mb-4 text-lg font-semibold text-gray-900'>날짜</h3>
             <button
               onClick={() => setIsOpen(true)}
-              className='w-full rounded-lg border border-gray-300 p-3 py-8 text-left text-black hover:bg-gray-50'
+              className='flex w-full items-center justify-center rounded-lg border border-gray-300 p-3 py-8 text-left text-black hover:bg-gray-50'
             >
               {selectedDate && selectedTime ? (
-                <h2>
+                <h2 className='animate-pulse'>
                   {selectedDate instanceof Date
                     ? selectedDate.toLocaleDateString()
                     : selectedDate}
@@ -145,18 +145,13 @@ export default function BookingInterface({
       </div>
 
       {/* 모바일 */}
-      <div className='fixed right-0 bottom-0 left-0 z-50 block border border-gray-200 bg-white p-6 md:hidden'>
+      <div className='fixed right-0 bottom-0 left-0 z-50 block h-150 border border-gray-200 bg-white px-20 md:hidden'>
         <div className='mb-6 flex items-start justify-between'>
           <div className='flex-1'>
-            <div className='mb-1 text-xl font-bold text-gray-900'>
-              ₩{price}
-              <span className='text-sm font-normal text-gray-600'>
-                / 총 {participants}인
-              </span>
-            </div>
+            <PriceDisplay price={price} />
             <div
               onClick={() => setIsOpen(true)}
-              className='mb-4 text-sm text-gray-600'
+              className='mb-4 animate-pulse cursor-pointer text-sm text-gray-600'
             >
               {selectedDate && selectedTime ? (
                 <h2>

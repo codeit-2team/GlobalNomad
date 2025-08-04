@@ -26,7 +26,7 @@ export default function BookingButton({
       {onBooking ? (
         <div className='flex items-center justify-center gap-2'>
           <span className='h-10 w-10 animate-spin rounded-full border-2 border-white border-t-transparent' />
-          <p>예약 중...</p>
+          <p>...</p>
         </div>
       ) : (
         children

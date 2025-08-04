@@ -9,7 +9,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   const images = [mainImage, ...subImages];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // 왼쪽(-1) 또는 오른쪽(1)
+  const [direction, setDirection] = useState(0);
 
   const prevSlide = () => {
     setDirection(-1);
@@ -56,7 +56,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
           >
             <Image
               src={images[currentIndex]}
-              alt={`슬라이드 이미지 ${currentIndex + 1}`}
+              alt={` ${currentIndex + 1}`}
               fill
               className='rounded-lg object-cover'
               priority

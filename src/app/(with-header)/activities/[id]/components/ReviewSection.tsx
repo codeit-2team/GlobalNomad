@@ -87,9 +87,11 @@ function ReviewSection({
         <div className='relative min-h-350'>
           <ReviewTitle reviewCount={reviewCount} rating={rating} />
 
-          <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
-            <div className='flex items-center justify-center font-bold'>
-              <p>작성된 리뷰가 없습니다</p>
+          <div className='pointer-events-none absolute inset-0 z-10 flex h-full items-center justify-center select-none'>
+            <div className='flex max-w-md items-center justify-center rounded-md bg-white px-20 py-20 shadow-2xl ring-1 ring-gray-200 select-none'>
+              <p className='text-md text-center font-bold text-gray-800'>
+                작성된 후기가 없습니다
+              </p>
             </div>
           </div>
         </div>
@@ -98,20 +100,20 @@ function ReviewSection({
   }
 
   if (isError) {
-    throw new Error('에러발생');
+    throw new Error('리뷰섹션에서 에러가 발생했습니다.');
   }
 
   return (
     <div className='mt-10 flex flex-col space-y-8'>
       <ReviewTitle reviewCount={reviewCount} rating={rating} />
 
-      <div className='relative min-h-350'>
+      <div className='pointer-events-none relative min-h-350 select-none'>
         <div className={user ? '' : 'blur-sm'}>{ReviewComponent()}</div>
 
         {!user && (
-          <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
-            <div className='flex rounded-md bg-white/70 px-10 py-10 shadow-xl'>
-              <p className='flex items-center justify-center p-20 text-sm font-semibold text-gray-700'>
+          <div className='pointer-events-none absolute inset-0 z-10 flex h-full items-center justify-center select-none'>
+            <div className='flex max-w-md items-center justify-center rounded-md bg-white px-20 py-20 shadow-2xl ring-1 ring-gray-200 select-none'>
+              <p className='text-md text-center font-bold text-gray-800'>
                 로그인 후 리뷰 전체 내용을 확인할 수 있어요
               </p>
             </div>

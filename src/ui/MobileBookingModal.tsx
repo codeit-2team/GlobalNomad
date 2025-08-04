@@ -78,22 +78,23 @@ export default function MobileModal({
           </div>
           <div className={step === 'confirm' ? 'block' : 'hidden'}>
             <div className='flex min-h-400 flex-col items-center justify-center gap-20'>
-              <h3 className='text-xl font-bold'>예약 내역 확인</h3>
               <div>
                 <p className='font-bold'>
-                  날짜 및 시간 {selectedDate?.toLocaleDateString()}{' '}
-                  {selectedTime}{' '}
+                  날짜 및 시간 {selectedDate?.toLocaleDateString()}
+                  {selectedTime}
                 </p>
               </div>
               <div>
                 <p className='font-bold'>인원 {participants}</p>
               </div>
-              <TotalPriceDisplay price={price} />
+              <div className='flex items-end justify-end'>
+                <TotalPriceDisplay price={price} />
+              </div>
             </div>
           </div>
         </Modal.Item>
         <Modal.Footer>
-          <div className='flex justify-between gap-10'>
+          <div className='flex justify-between gap-20'>
             {step !== 'date-time' && (
               <button
                 onClick={prev}
