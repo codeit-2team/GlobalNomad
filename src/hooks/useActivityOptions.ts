@@ -15,57 +15,43 @@ export const useActivityOptions = (
 ) => {
   const queryClient = useQueryClient();
 
-  const { activityOptions, uniqueTitles } = useMemo(() => {
+  const activityOptions = useMemo(() => {
     if (!activitiesData?.activities) {
-      return {
-        activityOptions: [] as ActivityOption[],
-        uniqueTitles: [] as string[],
-      };
+      return [] as ActivityOption[];
     }
 
-    const options: ActivityOption[] = activitiesData.activities.map(
+    return activitiesData.activities.map(
       (activity: { id: number; title: string }) => ({
         value: activity.id.toString(),
         label: activity.title,
       }),
     );
-
-    const uniqueTitles = options.map((option) => option.label);
-
-    return { activityOptions: options, uniqueTitles };
   }, [activitiesData]);
 
   // 체험 변경 시 쿼리 무효화 함수
-  const handleActivityChange = (selectedTitle: string): void => {
-    const selectedOption = activityOptions.find(
-      (option: ActivityOption) => option.label === selectedTitle,
-    );
+  const handleActivityChange = (selectedValue: string): void => {
+    const activityId = parseInt(selectedValue);
 
-    if (selectedOption) {
-      const activityId = parseInt(selectedOption.value);
+    // 관련 쿼리들 무효화
+    queryClient.invalidateQueries({
+      queryKey: ['reservedSchedules'],
+      exact: false,
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['activityReservations'],
+      exact: false,
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['monthlyReservationDashboard'],
+      exact: false,
+    });
 
-      // 관련 쿼리들 무효화
-      queryClient.invalidateQueries({
-        queryKey: ['reservedSchedules'],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['activityReservations'],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['monthlyReservationDashboard'],
-        exact: false,
-      });
-
-      // 콜백 호출
-      onActivityChange?.(activityId);
-    }
+    // 콜백 호출
+    onActivityChange?.(activityId);
   };
 
   return {
     activityOptions,
-    uniqueTitles,
     handleActivityChange,
   };
 };
