@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import cn from '@lib/cn';
 import useOutsideClick from '@hooks/useOutsideClick';
 import ChevronIcon from '@assets/svg/chevron';
-import { DropdownProps } from '@/types/dropdownTypes';
+import { DropdownProps, DropdownOption } from '@/types/dropdownTypes';
 // import CheckIcon from '@assets/svg/check';
 
 /**
@@ -28,6 +28,7 @@ import { DropdownProps } from '@/types/dropdownTypes';
  */
 export default function Dropdown<T extends string>({
   options,
+  optionData,
   value,
   onChange,
   placeholder,
@@ -47,9 +48,20 @@ export default function Dropdown<T extends string>({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // optionData가 제공되면 우선 사용, 없으면 options 사용
+  const useOptionData = !!optionData;
+  const finalOptions = useOptionData 
+    ? optionData! 
+    : options.map(opt => ({ value: opt, label: opt }));
+
   // 내/외부 상태 관리 판별
   const isControlled = value !== undefined;
   const selectedValue = isControlled ? value : internalValue;
+
+  // 선택된 값에 해당하는 표시 텍스트 찾기
+  const displayValue = useOptionData 
+    ? finalOptions.find(opt => opt.value === selectedValue)?.label || ''
+    : selectedValue;
 
   // 외부 클릭 감지
   useOutsideClick(dropdownRef, () => {
@@ -58,11 +70,12 @@ export default function Dropdown<T extends string>({
   });
 
   // 값 선택 핸들러
-  const handleSelect = (option: T) => {
+  const handleSelect = (optionData: DropdownOption) => {
+    const selectedValue = optionData.value as T;
     if (!isControlled) {
-      setInternalValue(option);
+      setInternalValue(selectedValue);
     }
-    onChange?.(option);
+    onChange?.(selectedValue);
     setIsOpen(false);
     setFocusedIndex(-1);
     buttonRef.current?.focus();
@@ -77,7 +90,7 @@ export default function Dropdown<T extends string>({
       case ' ':
         e.preventDefault();
         if (isOpen && focusedIndex >= 0) {
-          handleSelect(options[focusedIndex]);
+          handleSelect(finalOptions[focusedIndex]);
         } else {
           setIsOpen(!isOpen);
         }
@@ -88,7 +101,7 @@ export default function Dropdown<T extends string>({
         if (!isOpen) {
           setIsOpen(true);
         } else {
-          setFocusedIndex((prev) => (prev < options.length - 1 ? prev + 1 : 0));
+          setFocusedIndex((prev) => (prev < finalOptions.length - 1 ? prev + 1 : 0));
         }
         break;
 
@@ -97,7 +110,7 @@ export default function Dropdown<T extends string>({
         if (!isOpen) {
           setIsOpen(true);
         } else {
-          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : options.length - 1));
+          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : finalOptions.length - 1));
         }
         break;
 
@@ -149,7 +162,7 @@ export default function Dropdown<T extends string>({
             truncateText && 'flex-1 truncate text-left',
           )}
         >
-          {selectedValue || placeholder}
+          {displayValue || placeholder}
         </span>
         <ChevronIcon
           size={24}
@@ -179,13 +192,13 @@ export default function Dropdown<T extends string>({
                 listboxClassName,
               )}
             >
-              {options.map((option, index) => {
-                const isSelected = option === selectedValue;
+              {finalOptions.map((optionItem, index) => {
+                const isSelected = optionItem.value === selectedValue;
                 const isFocused = index === focusedIndex;
 
                 return (
                   <li
-                    key={option}
+                    key={`${optionItem.value}-${index}`}
                     id={`dropdown-option-${index}`}
                     role='option'
                     aria-selected={isSelected}
@@ -198,7 +211,7 @@ export default function Dropdown<T extends string>({
                         : 'hover:bg-gray-100',
                       optionClassName,
                     )}
-                    onClick={() => handleSelect(option)}
+                    onClick={() => handleSelect(optionItem)}
                     onMouseEnter={() => setFocusedIndex(index)}
                   >
                     {/* 아이콘 영역 */}
@@ -211,7 +224,7 @@ export default function Dropdown<T extends string>({
                         />
                       )}
                     </div> */}
-                    <span>{option}</span>
+                    <span>{optionItem.label}</span>
                   </li>
                 );
               })}

@@ -1,5 +1,10 @@
 import { ClassValue } from 'clsx';
 
+export interface DropdownOption {
+  value: string;
+  label: string;
+}
+
 /**
  * 범용 Dropdown 컴포넌트의 props 정의입니다.
  * 제네릭 타입 T를 사용하여 다양한 문자열 옵션 타입을 지원합니다.
@@ -16,6 +21,7 @@ import { ClassValue } from 'clsx';
  */
 export interface DropdownProps<T extends string> {
   options: readonly T[];
+  optionData?: readonly DropdownOption[];
   value?: T | '';
   onChange?: (value: T) => void;
   placeholder?: string;

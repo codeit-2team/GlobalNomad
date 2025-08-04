@@ -20,11 +20,13 @@ export default function MyDashboardPage() {
 
   // 내 체험 리스트 조회
   const { data: activitiesData, isLoading, error } = useMyActivities();
-  const { activityOptions, uniqueTitles, handleActivityChange } =
-    useActivityOptions(activitiesData, (activityId) => {
+  const { activityOptions, handleActivityChange } = useActivityOptions(
+    activitiesData,
+    (activityId) => {
       setSelectedActivityId(activityId);
       setSelectedDate('');
-    });
+    },
+  );
 
   // 페이지 로드 시 첫 번째 체험 자동 선택
   useEffect(() => {
@@ -38,11 +40,8 @@ export default function MyDashboardPage() {
     }
   }, [activitiesData, selectedActivityId]);
 
-  // 현재 선택된 체험의 제목 찾기
-  const selectedActivityTitle =
-    activityOptions.find(
-      (option) => parseInt(option.value) === selectedActivityId,
-    )?.label || '';
+  // 현재 선택된 체험의 ID를 문자열로 변환
+  const selectedActivityValue = selectedActivityId?.toString() || '';
 
   // 날짜 클릭 (모달 열기)
   const handleDateClick = (date: string) => {
@@ -118,8 +117,9 @@ export default function MyDashboardPage() {
         {/* 체험 선택 드롭다운 */}
         <div className='mb-48 w-full max-w-792'>
           <Dropdown
-            options={uniqueTitles}
-            value={selectedActivityTitle}
+            options={[]}
+            optionData={activityOptions}
+            value={selectedActivityValue}
             onChange={handleActivityChange}
             placeholder='체험을 선택하세요'
             className='h-56 min-w-0'
