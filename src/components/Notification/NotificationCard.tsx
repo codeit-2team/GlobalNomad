@@ -4,6 +4,8 @@ import { useDeleteNotification } from '@/hooks/useDeleteNotification';
 import cn from '@/lib/cn';
 import relativeTime from '@/utils/relativeTime';
 import IconClose from '@assets/svg/close';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type NotificationStatus = 'confirmed' | 'declined';
 
@@ -51,13 +53,14 @@ export default function NotificationCard({
   id,
   onDelete,
 }: NotificationCardProps) {
-  const { mutate: deleteNotification } = useDeleteNotification();
+  const { mutateAsync: deleteNotification } = useDeleteNotification();
+  const router = useRouter();
 
   const formattedContent = content.replace(/(\(\d{4}-\d{2}-\d{2})\s+/, '$1\n');
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await deleteNotification(id);
     onDelete(id);
-    deleteNotification(id);
   };
 
   const keywordMatch = Object.entries(statusKeywordMap).find(([k]) =>
@@ -66,8 +69,23 @@ export default function NotificationCard({
 
   const status = keywordMatch?.[1];
 
+  const handleCardClick = async () => {
+    try {
+      await deleteNotification(id);
+      onDelete(id);
+      router.push('/mypage/reservations');
+    } catch {
+      toast.error(
+        '알림 확인 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+      );
+    }
+  };
+
   return (
-    <div className='w-full rounded-[5px] border border-gray-400 bg-white px-12 py-16'>
+    <div
+      className='w-full cursor-pointer rounded-[5px] border border-gray-400 bg-white px-12 py-16'
+      onClick={handleCardClick}
+    >
       <div className='flex items-start justify-between'>
         {status && (
           <div
@@ -79,8 +97,8 @@ export default function NotificationCard({
         )}
         <button
           onClick={(e) => {
+            e.stopPropagation();
             setTimeout(() => {
-              e.stopPropagation();
               handleDelete();
             }, 0);
           }}
