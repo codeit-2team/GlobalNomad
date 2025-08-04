@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import useBookingStore from '@/stores/Booking/useBookingStore';
 import { toast } from 'sonner';
@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 
 export function useBookingMutation(onSuccessCallback?: () => void) {
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const {
     selectedTimeId,
     participants,
@@ -24,6 +25,12 @@ export function useBookingMutation(onSuccessCallback?: () => void) {
       });
     },
     onSuccess: () => {
+      // 예약 내역 쿼리 무효화
+      queryClient.invalidateQueries({
+        queryKey: ['reservations'],
+        exact: false,
+      });
+
       toast.success('예약되었습니다!');
       setSelectedDate(null);
       setSelectedTime('');
