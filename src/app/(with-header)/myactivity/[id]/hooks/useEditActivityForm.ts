@@ -141,10 +141,29 @@ export const useEditActivityForm = () => {
       }
 
       const newSchedules = dates.filter((d) => !d.id);
+
       const scheduleIdsToRemove = originalSchedules
         .filter((orig) => !dates.some((d) => d.id === orig.id))
-        .map((d) => d.id)
-        .filter((id): id is number => id !== undefined);
+        .map((d) => d.id!)
+        .filter(Boolean);
+
+      originalSchedules.forEach((orig) => {
+        const matched = dates.find((d) => d.id === orig.id);
+        if (
+          matched &&
+          (matched.date !== orig.date ||
+            matched.startTime !== orig.startTime ||
+            matched.endTime !== orig.endTime)
+        ) {
+          newSchedules.push({
+            date: matched.date,
+            startTime: matched.startTime,
+            endTime: matched.endTime,
+          });
+
+          scheduleIdsToRemove.push(orig.id!);
+        }
+      });
 
       const parsedPrice = parseInt(price, 10);
       if (isNaN(parsedPrice) || parsedPrice <= 0) {
