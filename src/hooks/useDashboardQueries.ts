@@ -29,6 +29,8 @@ export const useMyActivities = () => {
     queryKey: DASHBOARD_QUERY_KEYS.MY_ACTIVITIES,
     queryFn: getMyActivities,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 };
 
@@ -48,6 +50,8 @@ export const useMonthlyReservationDashboard = (
     queryFn: () => getMonthlyReservationDashboard(activityId, year, month),
     enabled: !!activityId,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 };
 
@@ -58,6 +62,8 @@ export const useReservedSchedules = (activityId: number, date: string) => {
     queryFn: () => getReservedSchedules(activityId, date),
     enabled: !!activityId && !!date,
     staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 };
 
@@ -89,6 +95,8 @@ export const useActivityReservations = (
     initialPageParam: 0,
     enabled: !!activityId && !!params.scheduleId,
     staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 };
 
