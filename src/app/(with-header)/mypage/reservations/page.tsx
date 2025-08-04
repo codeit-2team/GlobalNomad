@@ -120,7 +120,6 @@ export default function MyReservationsPage() {
               totalPrice: null,
             });
           },
-          onError: (error) => {},
         },
       );
     }
