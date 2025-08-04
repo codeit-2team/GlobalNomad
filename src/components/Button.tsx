@@ -45,7 +45,7 @@ export default function Button({
       )}
       {...props}
     >
-      {isLoading ? <span className='animate-pulse'>로딩중...</span> : children}
+      {isLoading ? <span className='animate-pulse'>...</span> : children}
     </button>
   );
 }
