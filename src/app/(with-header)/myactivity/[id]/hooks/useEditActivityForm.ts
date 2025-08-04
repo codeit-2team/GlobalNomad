@@ -9,6 +9,7 @@ import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 import { notFound } from 'next/navigation';
+import { validateSchedules } from '../../utils/dateValidatoin';
 
 interface SubImageType {
   id?: number;
@@ -208,6 +209,11 @@ export const useEditActivityForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const validationMessage = validateSchedules(dates);
+    if (validationMessage) {
+      toast.error(validationMessage);
+      return;
+    }
     try {
       await mutation.mutateAsync();
     } catch (error) {
