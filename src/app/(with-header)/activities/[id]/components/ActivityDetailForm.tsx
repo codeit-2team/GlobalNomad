@@ -96,7 +96,7 @@ export default function ActivityDetailForm() {
   );
 
   return (
-    <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
+    <div className='mx-auto mt-30 max-w-1200 p-4 px-20 sm:px-20 lg:p-8'>
       <Title
         title={activityData.title}
         category={activityData.category}

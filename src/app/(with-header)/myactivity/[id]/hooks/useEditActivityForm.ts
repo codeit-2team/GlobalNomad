@@ -8,6 +8,7 @@ import { uploadImage } from '../../utils/uploadImage';
 import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
+import { notFound } from 'next/navigation';
 
 interface SubImageType {
   id?: number;
@@ -32,7 +33,10 @@ export const useEditActivityForm = () => {
   const [originalSchedules, setOriginalSchedules] = useState<Schedule[]>([]);
   const [dates, setDates] = useState<Schedule[]>([]);
 
-  const { data, isLoading, isError } = useQuery<ActivityDetailEdit, Error>({
+  const { data, isLoading, status, isError, error } = useQuery<
+    ActivityDetailEdit,
+    Error
+  >({
     queryKey: ['edit-activity', id],
     queryFn: async () => {
       const res = await privateInstance.get(`/activities/${id}`);
@@ -40,6 +44,15 @@ export const useEditActivityForm = () => {
     },
     enabled: !!id,
   });
+  if (status === 'error') {
+    const axiosError = error as AxiosError;
+    const httpStatus = axiosError.response?.status;
+
+    if (httpStatus === 404) {
+      console.log('404 에러임');
+      notFound();
+    }
+  }
 
   useEffect(() => {
     if (data) {

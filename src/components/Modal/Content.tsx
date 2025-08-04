@@ -31,7 +31,7 @@ export default function ModalContent({
   const { isOpen } = useModalContext();
   const [isMounted, setIsMounted] = useState(false);
 
-  const zIndexClass = zIndex ? `z-[${zIndex}]` : 'z-50';
+  const zIndexClass = zIndex ? `z-[${zIndex}]` : 'z-999';
 
   useEffect(() => {
     setIsMounted(true);

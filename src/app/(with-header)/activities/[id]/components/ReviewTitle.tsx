@@ -15,6 +15,11 @@ export default function ReviewTitle({
 
   useEffect(() => {
     const handleSummary = () => {
+      if (reviewCount === 0) {
+        setSummary('작성된 후기가 없습니다');
+        return;
+      }
+
       if (rating >= 4.5) {
         setSummary('매우 만족');
       } else if (rating >= 3) {

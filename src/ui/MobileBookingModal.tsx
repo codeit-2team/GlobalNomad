@@ -9,6 +9,7 @@ import BookingButton from '@/components/FloatingBox/BookingButton';
 import ParticipantsSelector from '@/components/FloatingBox/ParticipantSelector';
 import TotalPriceDisplay from '@/components/FloatingBox/TotalPriceDisplay';
 import { SchedulesProps } from '@/types/activityDetailType';
+import { toast } from 'sonner';
 
 export default function MobileModal({
   schedules,
@@ -27,11 +28,21 @@ export default function MobileModal({
   );
 
   const next = () => {
+    if (step === 'date-time' && !selectedTime) {
+      toast.error('시간을 선택해주세요.');
+      return;
+    }
+
     setStep((prev) => (prev === 'date-time' ? 'participants' : 'confirm'));
   };
 
   const prev = () => {
     setStep((prev) => (prev === 'confirm' ? 'participants' : 'date-time'));
+  };
+
+  const handleConfirm = () => {
+    setIsOpen(false);
+    setStep('date-time');
   };
 
   // const handleBooking = () => {
@@ -42,7 +53,7 @@ export default function MobileModal({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Modal.Content zIndex={300}>
+      <Modal.Content zIndex={9999}>
         <Modal.Header>
           <Modal.Title>예약하기</Modal.Title>
           <Modal.Close />
@@ -67,22 +78,23 @@ export default function MobileModal({
           </div>
           <div className={step === 'confirm' ? 'block' : 'hidden'}>
             <div className='flex min-h-400 flex-col items-center justify-center gap-20'>
-              <h3 className='text-xl font-bold'>예약 내역 확인</h3>
               <div>
                 <p className='font-bold'>
-                  날짜 및 시간 {selectedDate?.toLocaleDateString()}{' '}
-                  {selectedTime}{' '}
+                  날짜 및 시간 {selectedDate?.toLocaleDateString()}/
+                  {selectedTime}
                 </p>
               </div>
               <div>
                 <p className='font-bold'>인원 {participants}</p>
               </div>
-              <TotalPriceDisplay price={price} />
+              <div className='flex items-end justify-end'>
+                <TotalPriceDisplay price={price} />
+              </div>
             </div>
           </div>
         </Modal.Item>
         <Modal.Footer>
-          <div className='flex justify-between gap-10'>
+          <div className='flex justify-between gap-20'>
             {step !== 'date-time' && (
               <button
                 onClick={prev}
@@ -99,7 +111,10 @@ export default function MobileModal({
                 다음
               </button>
             ) : (
-              <BookingButton onClick={() => setIsOpen(false)}>
+              <BookingButton
+                className='flex-1 px-10 py-10'
+                onClick={() => handleConfirm()}
+              >
                 확인
               </BookingButton>
             )}
