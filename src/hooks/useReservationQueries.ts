@@ -38,6 +38,8 @@ export const useMyReservations = (status?: ReservationStatus) => {
     },
     initialPageParam: 0,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 };
 
