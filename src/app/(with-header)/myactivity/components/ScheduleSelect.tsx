@@ -19,7 +19,6 @@ interface ScheduleSelectProps {
 export function ScheduleSelect({
   index,
   isRemovable,
-
   onRemove,
   onDateChange,
   onStartTimeChange,
@@ -29,9 +28,9 @@ export function ScheduleSelect({
   endTime,
 }: ScheduleSelectProps) {
   return (
-    <div className='pt-5 w-full'>
-      <div className='flex flex-wrap items-end gap-4 w-full'>
-        <div className='flex flex-col gap-10 flex-1 min-w-0'>
+    <div className='w-full pt-5'>
+      <div className='flex w-full flex-wrap items-end gap-4'>
+        <div className='flex min-w-0 flex-1 flex-col gap-10'>
           <Input
             className='w-full'
             type='date'
@@ -40,7 +39,7 @@ export function ScheduleSelect({
             variant='compact'
           />
         </div>
-        <div className='flex flex-col gap-10 flex-1 min-w-0'>
+        <div className='flex min-w-0 flex-1 flex-col gap-10'>
           <Input
             className='w-full'
             type='time'
@@ -49,7 +48,7 @@ export function ScheduleSelect({
             variant='compact'
           />
         </div>
-        <div className='flex flex-col gap-10 flex-1 min-w-0'>
+        <div className='flex min-w-0 flex-1 flex-col gap-10'>
           <Input
             className='w-full'
             type='time'
@@ -61,11 +60,11 @@ export function ScheduleSelect({
 
         <div className='flex-shrink-0'>
           {isRemovable && (
-            <div className="flex-shrink-0 w-44">
+            <div className='w-44 flex-shrink-0'>
               <button
-                type="button"
+                type='button'
                 onClick={() => onRemove(index)}
-                className="w-full h-46 border border-gray-300 rounded-[10px] flex items-center justify-center hover:bg-gray-100"
+                className='flex h-46 w-full items-center justify-center rounded-[10px] border border-gray-300 hover:bg-gray-100'
               >
                 <IconClose />
               </button>
