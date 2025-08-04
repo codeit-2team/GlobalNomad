@@ -121,6 +121,7 @@ export default function MyReservationsPage() {
             if (reservation?.activity.id) {
               invalidateActivityQueries(reservation.activity.id);
             }
+            handleReviewClose();
           },
         },
       );
