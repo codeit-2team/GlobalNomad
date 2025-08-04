@@ -73,15 +73,36 @@ export const useCreateReview = () => {
       reservationId: number;
       data: CreateReviewRequest;
     }) => createReview(reservationId, data),
-    onSuccess: () => {
-      // 예약 리스트 캐시 무효화하여 reviewSubmitted 상태 업데이트
+    onSuccess: (data, variables) => {
+      // 기존 쿼리 무효화
       queryClient.invalidateQueries({
         queryKey: RESERVATION_QUERY_KEYS.RESERVATIONS,
       });
+
       toast.success('후기가 작성되었습니다.');
     },
     onError: (error) => {
       toast.error(`후기 작성 실패: ${error.message}`);
     },
+  });
+};
+
+// 쿼리 무효화 함수
+export const invalidateActivityQueries = (activityId: number) => {
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries({
+    queryKey: ['popularExperiences'],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['experiences'],
+    exact: false,
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['activity', activityId.toString()],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['reviews'],
+    exact: false,
   });
 };
