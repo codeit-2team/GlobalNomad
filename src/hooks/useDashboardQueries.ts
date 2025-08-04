@@ -6,6 +6,7 @@ import {
   useQueryClient,
   useInfiniteQuery,
 } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import {
   getMyActivities,
   getMonthlyReservationDashboard,
@@ -127,17 +128,17 @@ export const useUpdateActivityReservationStatus = () => {
         ],
       });
 
-      // 성공 메시지
+      // 성공 토스트 메시지
       const statusText = {
         confirmed: '승인',
         declined: '거절',
         pending: '대기',
       };
-      alert(`예약이 ${statusText[variables.data.status]}되었습니다.`);
+      toast.success(`예약이 ${statusText[variables.data.status]}되었습니다.`);
     },
 
     onError: (error) => {
-      alert(`예약 상태 변경 실패: ${error.message}`);
+      toast.error(`예약 상태 변경 실패: ${error.message}`);
     },
   });
 };
@@ -182,10 +183,11 @@ export const useDeclineMultipleReservations = () => {
           variables.activityId,
         ],
       });
+      toast.success('선택한 예약이 거절되었습니다.');
     },
 
     onError: (error) => {
-      alert(`예약 거절 실패: ${error.message}`);
+      toast.error(`예약 거절 실패: ${error.message}`);
     },
   });
 };

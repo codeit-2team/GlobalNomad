@@ -5,8 +5,16 @@ import {
   useQueryClient,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { getMyReservations, updateMyReservation, createReview } from '@/apis/reservations';
-import { ReservationStatus, CreateReviewRequest } from '@/types/reservationTypes';
+import {
+  getMyReservations,
+  updateMyReservation,
+  createReview,
+} from '@/apis/reservations';
+import {
+  ReservationStatus,
+  CreateReviewRequest,
+} from '@/types/reservationTypes';
+import { toast } from 'sonner';
 
 export const RESERVATION_QUERY_KEYS = {
   RESERVATIONS: ['reservations'] as const,
@@ -45,10 +53,10 @@ export const useCancelReservation = () => {
       queryClient.invalidateQueries({
         queryKey: RESERVATION_QUERY_KEYS.RESERVATIONS,
       });
-      alert('예약이 취소되었습니다.');
+      toast.success('예약이 취소되었습니다.');
     },
     onError: (error) => {
-      alert(`예약 취소 실패: ${error.message}`);
+      toast.error(`예약 취소 실패: ${error.message}`);
     },
   });
 };
@@ -58,13 +66,22 @@ export const useCreateReview = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ reservationId, data }: { reservationId: number; data: CreateReviewRequest }) =>
-      createReview(reservationId, data),
+    mutationFn: ({
+      reservationId,
+      data,
+    }: {
+      reservationId: number;
+      data: CreateReviewRequest;
+    }) => createReview(reservationId, data),
     onSuccess: () => {
       // 예약 리스트 캐시 무효화하여 reviewSubmitted 상태 업데이트
       queryClient.invalidateQueries({
         queryKey: RESERVATION_QUERY_KEYS.RESERVATIONS,
       });
+      toast.success('후기가 작성되었습니다.');
+    },
+    onError: (error) => {
+      toast.error(`후기 작성 실패: ${error.message}`);
     },
   });
 };

@@ -24,5 +24,6 @@ export interface DropdownProps<T extends string> {
   disableScroll?: boolean;
   buttonClassName?: string;
   listboxClassName?: string;
-  optionClassName?: string; 
+  optionClassName?: string;
+  truncateText?: boolean;
 }

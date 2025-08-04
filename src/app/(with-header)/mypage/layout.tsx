@@ -2,7 +2,6 @@
 
 import { ProfileNavigation } from './components';
 import useResponsiveRouting from '@/hooks/useResponsiveRouting';
-import { useMyProfile } from '@/hooks/useMyPageQueries';
 
 export default function MyPageLayout({
   children,
@@ -10,10 +9,9 @@ export default function MyPageLayout({
   children: React.ReactNode;
 }) {
   const { mounted } = useResponsiveRouting();
-  const { isLoading, error } = useMyProfile();
 
-  // mounted + API 로딩 상태 모두 체크
-  if (!mounted || isLoading) {
+  // mounted 상태만 체크
+  if (!mounted) {
     return (
       <div className='min-h-screen bg-gray-100'>
         <div className='mx-auto max-w-1200 px-20 py-24 lg:py-72'>
@@ -36,28 +34,15 @@ export default function MyPageLayout({
                 </div>
               </div>
             </div>
-            {/* 메인 스켈레톤 */}
-            <div className='flex-grow animate-pulse rounded bg-gray-200'></div>
+            {/* 메인 영역 */}
+            <div className='min-w-0 flex-grow'></div>
           </div>
         </div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className='flex min-h-screen items-center justify-center bg-gray-100'>
-        <div className='text-center'>
-          <h2 className='mb-2 text-xl font-bold text-red-500'>
-            로그인이 필요합니다
-          </h2>
-          <p className='text-gray-600'>다시 로그인해주세요.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // API 로딩 완료 + mounted 상태일 때만 실행
+  // mounted 상태일 때만 실행
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='mx-auto max-w-1200 px-20 py-24 lg:py-72'>
@@ -66,7 +51,7 @@ export default function MyPageLayout({
           <ProfileNavigation />
 
           {/* 우측 메인 콘텐츠 섹션 */}
-          <div className='flex-grow'>{children}</div>
+          <div className='min-w-0 flex-grow'>{children}</div>
         </div>
       </div>
     </div>

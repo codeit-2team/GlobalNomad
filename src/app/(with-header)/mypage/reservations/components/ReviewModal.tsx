@@ -6,6 +6,7 @@ import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import Rating from '@/components/Rating';
 import Close from '@/../public/assets/svg/close';
+import { toast } from 'sonner';
 
 interface ReviewModalProps {
   isOpen: boolean;
@@ -37,11 +38,11 @@ export default function ReviewModal({
 
   const handleSubmit = () => {
     if (rating === 0) {
-      alert('별점을 선택해주세요.');
+      toast.error('별점을 선택해주세요.');
       return;
     }
     if (content.trim() === '') {
-      alert('후기를 작성해주세요.');
+      toast.error('후기를 작성해주세요.');
       return;
     }
     onConfirm(rating, content);
@@ -55,8 +56,12 @@ export default function ReviewModal({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <Modal.Content className='!h-750 !w-480 !max-w-none !min-w-0 !rounded-xl !p-0'>
-        <div className='flex h-full w-full flex-col overflow-hidden rounded-xl bg-white shadow-lg'>
+      <Modal.Content
+        zIndex={9999}
+        backdropClassName='bg-black/50 max-sm:!items-start max-sm:!justify-start'
+        className='!m-0 !h-750 !w-480 !max-w-none !min-w-0 !rounded-xl !p-0 max-sm:!h-full max-sm:!max-h-full max-sm:!w-full max-sm:!rounded-none max-sm:!border-none'
+      >
+        <div className='flex h-full w-full flex-col overflow-hidden rounded-xl bg-white shadow-lg max-sm:rounded-none'>
           {/* 헤더 */}
           <div className='flex items-center justify-between px-24 pt-23 pb-41'>
             <h2 className='text-nomad text-xl font-bold'>후기 작성</h2>
@@ -89,13 +94,13 @@ export default function ReviewModal({
 
               {/* 체험 정보 */}
               <div className='flex flex-1 flex-col justify-center'>
-                <h3 className='text-nomad mb-8 line-clamp-1 text-xl font-bold'>
+                <h3 className='text-nomad mb-8 line-clamp-1 text-xl font-bold max-sm:text-lg'>
                   {activityTitle}
                 </h3>
-                <div className='mb-8 text-lg font-normal text-gray-600'>
+                <div className='mb-8 text-lg font-normal text-gray-600 max-sm:text-sm'>
                   {activityDate} · {activityTime} · {headCount}명
                 </div>
-                <div className='text-nomad text-3xl font-normal'>
+                <div className='text-nomad text-3xl font-normal max-sm:text-xl'>
                   ₩{totalPrice?.toLocaleString()}
                 </div>
               </div>

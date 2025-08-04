@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import { Reservation } from '@/types/reservationTypes';
 import { STATUS_LABELS, STATUS_COLORS } from '@/constants/reservationConstants';
@@ -23,6 +24,8 @@ export default function ReservationCard({
   onCancel,
   onReview,
 }: ReservationCardProps) {
+  const router = useRouter();
+
   const {
     id,
     activity,
@@ -36,12 +39,21 @@ export default function ReservationCard({
   } = reservation;
 
   const isCompleted = isExperienceCompleted(date, endTime);
-  const showCancelButton = status === 'pending';
-  const showReviewButton = isCompleted && !reviewSubmitted;
-  const showReviewCompleted = isCompleted && reviewSubmitted;
+
+  const showCancelButton = status === 'pending' && !isCompleted;
+  const showReviewButton = status === 'completed' && !reviewSubmitted;
+  const showReviewCompleted = status === 'completed' && reviewSubmitted;
+  const showExpiredStatus = status === 'pending' && isCompleted;
+
+  const handleCardClick = () => {
+    router.push(`/activities/${activity.id}`);
+  };
 
   return (
-    <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
+    <div
+      className='flex h-128 w-full max-w-792 cursor-pointer flex-row rounded-3xl border border-gray-300 bg-white transition-shadow hover:shadow-md sm:h-156 lg:h-204'
+      onClick={handleCardClick}
+    >
       {/* 이미지 영역 */}
       <div className='relative h-full w-128 flex-shrink-0 overflow-hidden rounded-l-3xl sm:w-156 lg:w-204'>
         <Image
@@ -93,7 +105,10 @@ export default function ReservationCard({
               <Button
                 variant='secondary'
                 className='h-32 w-80 rounded-md text-sm font-bold sm:h-40 sm:w-112 sm:text-lg lg:h-43 lg:w-144'
-                onClick={() => onCancel?.(id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCancel?.(id);
+                }}
               >
                 예약 취소
               </Button>
@@ -101,8 +116,11 @@ export default function ReservationCard({
             {showReviewButton && (
               <Button
                 variant='primary'
-                className='bg-nomad h-32 w-80 rounded-md text-sm font-bold sm:h-40 sm:w-112 sm:text-lg lg:h-43 lg:w-144'
-                onClick={() => onReview?.(id)}
+                className='h-32 w-80 rounded-md text-sm font-bold sm:h-40 sm:w-112 sm:text-lg lg:h-43 lg:w-144'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onReview?.(id);
+                }}
               >
                 후기 작성
               </Button>
@@ -110,6 +128,11 @@ export default function ReservationCard({
             {showReviewCompleted && (
               <div className='text-sm font-bold text-gray-500 sm:text-lg'>
                 후기 완료
+              </div>
+            )}
+            {showExpiredStatus && (
+              <div className='text-sm font-bold text-gray-500 sm:text-lg'>
+                예약 만료
               </div>
             )}
           </div>

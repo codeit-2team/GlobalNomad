@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   useReservedSchedules,
   useActivityReservations,
@@ -9,7 +9,7 @@ import {
 import { DashboardFilterOption } from '@/types/dashboardTypes';
 import { DASHBOARD_TAB_OPTIONS } from '@/constants/dashboardConstants';
 import {
-  createTimeSlotOptions,
+  createFilteredTimeSlotOptions,
   getScheduleIdFromTimeSlot,
   getSelectedTimeSlotValue,
 } from '@/utils/timeSlotUtils';
@@ -17,6 +17,7 @@ import Dropdown from '@/components/Dropdown';
 import ReservationActionButtons from './ReservationActionButtons';
 import dayjs from 'dayjs';
 import CloseIcon from '@assets/svg/close';
+import { toast } from 'sonner';
 
 interface Props {
   isOpen: boolean;
@@ -51,11 +52,25 @@ export default function ReservationInfoModal({
   // 예약 상태 업데이트
   const updateReservationMutation = useUpdateActivityReservationStatus();
 
-  const timeSlotOptions = createTimeSlotOptions(schedules);
+  const timeSlotOptions = createFilteredTimeSlotOptions(schedules, activeTab);
   const selectedTimeSlotValue = getSelectedTimeSlotValue(
     schedules,
     selectedScheduleId,
   );
+
+  // 탭 변경 시 현재 선택된 시간대가 유효한지 확인하고 초기화
+  useEffect(() => {
+    if (selectedScheduleId && schedules) {
+      const currentSchedule = schedules.find(
+        (schedule) => schedule.scheduleId === selectedScheduleId,
+      );
+
+      // 현재 선택된 시간대가 새 탭에서 유효하지 않으면 초기화
+      if (!currentSchedule || currentSchedule.count[activeTab] === 0) {
+        setSelectedScheduleId(null);
+      }
+    }
+  }, [activeTab, schedules, selectedScheduleId]);
 
   // 예약 승인/거절 처리
   const handleReservationAction = async (
@@ -69,7 +84,7 @@ export default function ReservationInfoModal({
         data: { status },
       });
     } catch {
-      alert('예약 처리에 실패했습니다.');
+      toast.error('예약 처리에 실패했습니다.');
     }
   };
 

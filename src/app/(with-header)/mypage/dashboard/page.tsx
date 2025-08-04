@@ -9,6 +9,7 @@ import { useActivityOptions } from '@/hooks/useActivityOptions';
 import EmptyDashboard from './components/EmptyDashboard';
 import ReservationDashboardCalendar from './components/ReservationDashboardCalendar';
 import ReservationInfoModal from './components/ReservationInfoModal';
+import CalendarSkeleton from './components/CalendarSkeleton';
 
 export default function MyDashboardPage() {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
@@ -19,7 +20,11 @@ export default function MyDashboardPage() {
 
   // 내 체험 리스트 조회
   const { data: activitiesData, isLoading, error } = useMyActivities();
-  const { activityOptions, uniqueTitles } = useActivityOptions(activitiesData);
+  const { activityOptions, uniqueTitles, handleActivityChange } =
+    useActivityOptions(activitiesData, (activityId) => {
+      setSelectedActivityId(activityId);
+      setSelectedDate('');
+    });
 
   // 페이지 로드 시 첫 번째 체험 자동 선택
   useEffect(() => {
@@ -32,18 +37,6 @@ export default function MyDashboardPage() {
       setSelectedActivityId(firstActivity.id);
     }
   }, [activitiesData, selectedActivityId]);
-
-  // 체험 선택 -> 제목으로 ID 찾기
-  const handleActivityChange = (selectedTitle: string) => {
-    const selectedOption = activityOptions.find(
-      (option) => option.label === selectedTitle,
-    );
-
-    if (selectedOption) {
-      setSelectedActivityId(parseInt(selectedOption.value));
-      setSelectedDate('');
-    }
-  };
 
   // 현재 선택된 체험의 제목 찾기
   const selectedActivityTitle =
@@ -76,7 +69,7 @@ export default function MyDashboardPage() {
         <div className='mb-48 h-56 w-full max-w-792 animate-pulse rounded-md bg-gray-200' />
 
         {/* 달력 스켈레톤 */}
-        <div className='rounded-24 h-600 w-full animate-pulse bg-gray-200' />
+        <CalendarSkeleton calendarWeeksLength={6} />
       </div>
     );
   }
@@ -129,7 +122,8 @@ export default function MyDashboardPage() {
             value={selectedActivityTitle}
             onChange={handleActivityChange}
             placeholder='체험을 선택하세요'
-            className='h-56'
+            className='h-56 min-w-0'
+            truncateText={true}
           />
         </div>
 

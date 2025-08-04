@@ -89,8 +89,35 @@ export default function MyActivitiesPage() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className='rounded-24 h-204 w-792 animate-pulse bg-gray-200'
-            />
+              className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'
+            >
+              {/* 이미지 영역 스켈레톤 */}
+              <div className='h-full w-128 flex-shrink-0 animate-pulse rounded-l-3xl bg-gray-200 sm:w-156 lg:w-204'></div>
+
+              {/* 콘텐츠 영역 스켈레톤 */}
+              <div className='flex w-0 flex-grow flex-col justify-start px-12 py-10 sm:px-16 sm:py-12 lg:px-24 lg:py-14'>
+                {/* 별점 및 리뷰 스켈레톤 */}
+                <div className='flex items-center gap-6'>
+                  <div className='flex items-center gap-2'>
+                    <div className='h-4 w-4 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-5'></div>
+                    <div className='h-4 w-8 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-10'></div>
+                    <div className='h-4 w-12 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-16'></div>
+                  </div>
+                </div>
+
+                {/* 제목 스켈레톤 */}
+                <div className='mt-2 h-4 w-40 animate-pulse rounded bg-gray-200 sm:mt-4 sm:h-5 sm:w-48 lg:mt-6 lg:h-6 lg:w-56'></div>
+
+                {/* 가격 + 더보기 버튼 영역 스켈레톤 */}
+                <div className='mt-auto flex items-center justify-between'>
+                  {/* 가격 스켈레톤 */}
+                  <div className='h-6 w-32 animate-pulse rounded bg-gray-200 sm:h-6 sm:w-36 lg:h-7 lg:w-40'></div>
+
+                  {/* 더보기 버튼 스켈레톤 */}
+                  <div className='h-40 w-40 animate-pulse rounded-full bg-gray-200'></div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -157,7 +184,34 @@ export default function MyActivitiesPage() {
 
             {/* 무한 스크롤 로딩 */}
             {isFetchingNextPage && (
-              <div className='rounded-24 h-204 w-792 animate-pulse bg-gray-200' />
+              <div className='flex h-128 w-full max-w-792 flex-row rounded-3xl border border-gray-300 bg-white sm:h-156 lg:h-204'>
+                {/* 이미지 영역 스켈레톤 */}
+                <div className='h-full w-128 flex-shrink-0 animate-pulse rounded-l-3xl bg-gray-200 sm:w-156 lg:w-204'></div>
+
+                {/* 콘텐츠 영역 스켈레톤 */}
+                <div className='flex w-0 flex-grow flex-col justify-start px-12 py-10 sm:px-16 sm:py-12 lg:px-24 lg:py-14'>
+                  {/* 별점 및 리뷰 스켈레톤 */}
+                  <div className='flex items-center gap-6'>
+                    <div className='flex items-center gap-2'>
+                      <div className='h-4 w-4 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-5'></div>
+                      <div className='h-4 w-8 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-10'></div>
+                      <div className='h-4 w-12 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-16'></div>
+                    </div>
+                  </div>
+
+                  {/* 제목 스켈레톤 */}
+                  <div className='mt-2 h-4 w-40 animate-pulse rounded bg-gray-200 sm:mt-4 sm:h-5 sm:w-48 lg:mt-6 lg:h-6 lg:w-56'></div>
+
+                  {/* 가격 + 더보기 버튼 영역 스켈레톤 */}
+                  <div className='mt-auto flex items-center justify-between'>
+                    {/* 가격 스켈레톤 */}
+                    <div className='h-6 w-32 animate-pulse rounded bg-gray-200 sm:h-6 sm:w-36 lg:h-7 lg:w-40'></div>
+
+                    {/* 더보기 버튼 스켈레톤 */}
+                    <div className='h-40 w-40 animate-pulse rounded-full bg-gray-200'></div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         )}
