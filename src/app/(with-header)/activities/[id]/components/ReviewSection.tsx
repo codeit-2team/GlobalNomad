@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { privateInstance } from '@/apis/privateInstance';
 import ReviewTitle from './ReviewTitle';
 import useUserStore from '@/stores/authStore';
+import cn from '@/lib/cn';
 
 import ReviewCardSkeleton from './Skeletons/ReviewCardSkeleton';
 
@@ -58,11 +59,7 @@ function ReviewSection({
         key={review.id}
         userName={review.user.nickname}
         avatarSrc={review.user.profileImageUrl}
-        date={new Date(review.createdAt).toLocaleDateString('ko-KR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })}
+        date={review.createdAt.slice(0, 10).replace(/-/g, '.')}
         reviewText={review.content}
       />
     ));
@@ -71,7 +68,7 @@ function ReviewSection({
   if (isLoading) {
     return (
       <div className='mt-10 flex flex-col space-y-8'>
-        <div className='relative min-h-350 flex-col'>
+        <div className='relative min-h-300 flex-col'>
           <ReviewTitle reviewCount={reviewCount} rating={rating} />
           {[...Array(3)].map((_, index) => (
             <ReviewCardSkeleton key={index} />
@@ -84,7 +81,7 @@ function ReviewSection({
   if (!reviewData || reviewData.reviews.length === 0) {
     return (
       <div className='mt-10 flex flex-col space-y-8'>
-        <div className='relative min-h-350'>
+        <div className='relative min-h-300'>
           <ReviewTitle reviewCount={reviewCount} rating={rating} />
 
           <div className='pointer-events-none absolute inset-0 z-10 flex h-full items-center justify-center select-none'>
@@ -107,8 +104,10 @@ function ReviewSection({
     <div className='mt-10 flex flex-col space-y-8'>
       <ReviewTitle reviewCount={reviewCount} rating={rating} />
 
-      <div className='pointer-events-none relative min-h-350 select-none'>
-        <div className={user ? '' : 'blur-sm'}>{ReviewComponent()}</div>
+      <div className='pointer-events-none relative min-h-300 select-none'>
+        <div className={cn(user ? '' : 'blur-sm', 'mt-10')}>
+          {ReviewComponent()}
+        </div>
 
         {!user && (
           <div className='pointer-events-none absolute inset-0 z-10 flex h-full items-center justify-center select-none'>
