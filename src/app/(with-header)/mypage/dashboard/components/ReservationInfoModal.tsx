@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   useReservedSchedules,
   useActivityReservations,
@@ -52,7 +51,6 @@ export default function ReservationInfoModal({
 
   // 예약 상태 업데이트
   const updateReservationMutation = useUpdateActivityReservationStatus();
-  const queryClient = useQueryClient();
 
   const timeSlotOptions = createFilteredTimeSlotOptions(schedules, activeTab);
   const selectedTimeSlotValue = getSelectedTimeSlotValue(

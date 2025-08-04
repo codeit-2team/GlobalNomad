@@ -45,14 +45,8 @@ export default function MyReservationsPage() {
   });
 
   // 예약 리스트 조회 (무한 스크롤)
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    error,
-  } = useMyReservations(filter || undefined);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useMyReservations(filter || undefined);
 
   // 예약 취소 뮤테이션
   const cancelReservationMutation = useCancelReservation();
@@ -191,24 +185,6 @@ export default function MyReservationsPage() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    );
-  }
-
-  // 에러 상태
-  if (error) {
-    return (
-      <div className='w-full max-w-none lg:max-w-792'>
-        <div className='mb-48 flex items-center justify-between'>
-          <h1 className='text-nomad text-3xl leading-42 font-bold'>
-            예약 내역
-          </h1>
-          <ReservationFilter value={filter} onChange={setFilter} />
-        </div>
-        <div className='text-center text-red-500'>
-          <p>예약 내역을 불러오는데 실패했습니다.</p>
-          <p className='mt-2 text-sm text-gray-600'>{error.message}</p>
         </div>
       </div>
     );
