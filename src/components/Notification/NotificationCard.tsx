@@ -14,6 +14,7 @@ interface NotificationCardProps {
   id: number;
   createdAt: string;
   onDelete: (id: number) => void;
+  onCardClick?: () => void;
 }
 
 const statusColorMap: Record<
@@ -52,6 +53,7 @@ export default function NotificationCard({
   createdAt,
   id,
   onDelete,
+  onCardClick,
 }: NotificationCardProps) {
   const { mutateAsync: deleteNotification } = useDeleteNotification();
   const router = useRouter();
@@ -73,6 +75,7 @@ export default function NotificationCard({
     try {
       await deleteNotification(id);
       onDelete(id);
+      onCardClick?.();
       router.push('/mypage/reservations');
     } catch {
       toast.error(
@@ -82,10 +85,7 @@ export default function NotificationCard({
   };
 
   return (
-    <div
-      className='w-full cursor-pointer rounded-[5px] border border-gray-400 bg-white px-12 py-16'
-      onClick={handleCardClick}
-    >
+    <div className='w-full rounded-[5px] border border-gray-400 bg-white px-12 py-16'>
       <div className='flex items-start justify-between'>
         {status && (
           <div
@@ -108,23 +108,25 @@ export default function NotificationCard({
         </button>
       </div>
 
-      <p className='text-md font-regular whitespace-pre-line text-black'>
-        {formattedContent.split(/(승인|거절)/).map((text, i) => {
-          const matchedStatus = statusKeywordMap[text];
-          return (
-            <span
-              key={i}
-              className={cn(
-                matchedStatus && statusColorMap[matchedStatus].text,
-              )}
-            >
-              {text}
-            </span>
-          );
-        })}
-      </p>
+      <div className='cursor-pointer' onClick={handleCardClick}>
+        <p className='text-md font-regular whitespace-pre-line text-black'>
+          {formattedContent.split(/(승인|거절)/).map((text, i) => {
+            const matchedStatus = statusKeywordMap[text];
+            return (
+              <span
+                key={i}
+                className={cn(
+                  matchedStatus && statusColorMap[matchedStatus].text,
+                )}
+              >
+                {text}
+              </span>
+            );
+          })}
+        </p>
 
-      <p className='mt-4 text-xs text-gray-600'>{relativeTime(createdAt)}</p>
+        <p className='mt-4 text-xs text-gray-600'>{relativeTime(createdAt)}</p>
+      </div>
     </div>
   );
 }
