@@ -33,7 +33,7 @@ export default function ReservationForm() {
   } = useCreateActivityForm();
 
   return (
-    <div className='bg-gray-white min-h-screen px-16 py-24 sm:px-6 md:py-0 lg:px-8'>
+    <div className='bg-gray-white min-h-screen px-0 py-24 sm:px-6 md:py-0 lg:px-8'>
       <div className='mx-auto max-w-1200 p-4 sm:px-20 lg:p-8'>
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='mb-8 flex items-center justify-between'>

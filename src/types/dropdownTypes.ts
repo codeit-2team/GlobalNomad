@@ -22,4 +22,7 @@ export interface DropdownProps<T extends string> {
   className?: ClassValue;
   disabled?: boolean;
   disableScroll?: boolean;
+  buttonClassName?: string;
+  listboxClassName?: string;
+  optionClassName?: string; 
 }

@@ -5,9 +5,9 @@ export default function Footer() {
     <footer className='bg-nomad w-full pt-32 pb-66 text-lg text-[#676767] md:px-111 md:pb-111'>
       <div className='mx-auto flex max-w-1200 flex-col items-center justify-between gap-4 md:flex-row'>
         {/* mobile 버전 */}
-        <div className='flex flex-row gap-12 md:hidden'>
+        <div className='flex flex-row gap-25 md:hidden'>
           {/* 좌측: 저작권 */}
-          <div className='text-center md:text-left'>©codeit - 2023</div>
+          <div className='text-center md:text-left'>@NoSleepNoBugs<br />2025</div>
 
           {/* 중앙: 내비게이션 */}
           <div className='flex justify-center gap-30'>

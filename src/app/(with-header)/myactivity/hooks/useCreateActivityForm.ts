@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { uploadImage } from '../utils/uploadImage';
 import { privateInstance } from '@/apis/privateInstance';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface DateSlot {
   date: string;
@@ -25,6 +26,7 @@ export const useCreateActivityForm = () => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -55,6 +57,8 @@ export const useCreateActivityForm = () => {
     },
     onSuccess: (data) => {
       toast.success('체험이 성공적으로 등록되었습니다!');
+      queryClient.invalidateQueries({ queryKey: ['experiences'] }); // 모든 체험 리스트 새로고침
+      queryClient.invalidateQueries({ queryKey: ['popularExperiences'] }); // 인기 체험 리스트도 새로고침
       router.push(`/activities/${data.id}`);
     },
     onError: (err) => {

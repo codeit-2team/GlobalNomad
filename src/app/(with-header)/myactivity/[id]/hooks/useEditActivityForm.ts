@@ -169,6 +169,8 @@ export const useEditActivityForm = () => {
     onSuccess: () => {
       toast.success('수정되었습니다!');
       queryClient.invalidateQueries({ queryKey: ['activity', id] });
+      queryClient.invalidateQueries({ queryKey: ['experiences'] });
+      queryClient.invalidateQueries({ queryKey: ['popularExperiences'] });
       router.push(`/activities/${id}`);
     },
     onError: (err: unknown) => {
