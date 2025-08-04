@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import cn from '@lib/cn';
 import useOutsideClick from '@hooks/useOutsideClick';
 import ChevronIcon from '@assets/svg/chevron';
-import CheckIcon from '@assets/svg/check';
 import { DropdownProps } from '@/types/dropdownTypes';
+// import CheckIcon from '@assets/svg/check';
 
 /**
  * 드롭다운 컴포넌트입니다.
@@ -34,6 +34,9 @@ export default function Dropdown<T extends string>({
   className,
   disabled = false,
   disableScroll = false,
+  buttonClassName,
+  listboxClassName,
+  optionClassName,
   truncateText = false,
 }: DropdownProps<T>) {
   // 내부 상태 관리
@@ -133,6 +136,7 @@ export default function Dropdown<T extends string>({
           'overflow-hidden',
           disabled && 'cursor-not-allowed bg-gray-100 opacity-50',
           isOpen && !disabled && 'border-green-300',
+          buttonClassName,
         )}
         aria-expanded={isOpen}
         aria-haspopup='listbox'
@@ -172,6 +176,7 @@ export default function Dropdown<T extends string>({
               className={cn(
                 'p-8',
                 disableScroll ? '' : 'max-h-240 overflow-auto',
+                listboxClassName,
               )}
             >
               {options.map((option, index) => {
@@ -191,12 +196,13 @@ export default function Dropdown<T extends string>({
                       isSelected
                         ? 'bg-nomad rounded text-white'
                         : 'hover:bg-gray-100',
+                      optionClassName,
                     )}
                     onClick={() => handleSelect(option)}
                     onMouseEnter={() => setFocusedIndex(index)}
                   >
                     {/* 아이콘 영역 */}
-                    <div className='flex w-24 justify-start'>
+                    {/* <div className='flex w-24 justify-start'>
                       {isSelected && (
                         <CheckIcon
                           size={20}
@@ -204,7 +210,7 @@ export default function Dropdown<T extends string>({
                           className='text-white'
                         />
                       )}
-                    </div>
+                    </div> */}
                     <span>{option}</span>
                   </li>
                 );

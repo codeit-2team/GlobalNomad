@@ -46,6 +46,7 @@ function Title({
     mutate(id as string);
     setIsPopupOpen(false);
   };
+  
 
   return (
     <>
@@ -55,14 +56,14 @@ function Title({
           <h1 className='mb-2 text-2xl font-bold text-black md:text-3xl'>
             {title}
           </h1>
-          <div className='flex items-center gap-10 text-sm text-gray-600'>
+          <div className='flex flex-nowrap items-center gap-30 text-sm text-gray-600'>
             <div className='flex items-center gap-1'>
               <Star />
-              <span className='font-medium'>
+              <p className='font-medium'>
                 {rating.toFixed(1)} ({reviewCount}명)
-              </span>
+              </p>
             </div>
-            <span>{address}</span>
+            <p>{address}</p>
           </div>
         </div>
 

@@ -63,6 +63,7 @@ export const useUpdateProfile = () => {
 
     if (mutation.isSuccess && mutation.data) {
       setUser(mutation.data);
+      setGlobalUser(mutation.data); // [추가] 헤더 상태(authStore)도 동기화
       setLoading(false);
       // 캐시 업데이트
       queryClient.setQueryData(QUERY_KEYS.PROFILE, mutation.data);

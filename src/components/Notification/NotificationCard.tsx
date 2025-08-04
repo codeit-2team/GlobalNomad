@@ -4,6 +4,8 @@ import { useDeleteNotification } from '@/hooks/useDeleteNotification';
 import cn from '@/lib/cn';
 import relativeTime from '@/utils/relativeTime';
 import IconClose from '@assets/svg/close';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type NotificationStatus = 'confirmed' | 'declined';
 
@@ -12,6 +14,7 @@ interface NotificationCardProps {
   id: number;
   createdAt: string;
   onDelete: (id: number) => void;
+  onCardClick?: () => void;
 }
 
 const statusColorMap: Record<
@@ -50,14 +53,16 @@ export default function NotificationCard({
   createdAt,
   id,
   onDelete,
+  onCardClick,
 }: NotificationCardProps) {
-  const { mutate: deleteNotification } = useDeleteNotification();
+  const { mutateAsync: deleteNotification } = useDeleteNotification();
+  const router = useRouter();
 
   const formattedContent = content.replace(/(\(\d{4}-\d{2}-\d{2})\s+/, '$1\n');
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await deleteNotification(id);
     onDelete(id);
-    deleteNotification(id);
   };
 
   const keywordMatch = Object.entries(statusKeywordMap).find(([k]) =>
@@ -65,6 +70,19 @@ export default function NotificationCard({
   );
 
   const status = keywordMatch?.[1];
+
+  const handleCardClick = async () => {
+    try {
+      await deleteNotification(id);
+      onDelete(id);
+      onCardClick?.();
+      router.push('/mypage/reservations');
+    } catch {
+      toast.error(
+        '알림 확인 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+      );
+    }
+  };
 
   return (
     <div className='w-full rounded-[5px] border border-gray-400 bg-white px-12 py-16'>
@@ -79,8 +97,8 @@ export default function NotificationCard({
         )}
         <button
           onClick={(e) => {
+            e.stopPropagation();
             setTimeout(() => {
-              e.stopPropagation();
               handleDelete();
             }, 0);
           }}
@@ -90,23 +108,25 @@ export default function NotificationCard({
         </button>
       </div>
 
-      <p className='text-md font-regular whitespace-pre-line text-black'>
-        {formattedContent.split(/(승인|거절)/).map((text, i) => {
-          const matchedStatus = statusKeywordMap[text];
-          return (
-            <span
-              key={i}
-              className={cn(
-                matchedStatus && statusColorMap[matchedStatus].text,
-              )}
-            >
-              {text}
-            </span>
-          );
-        })}
-      </p>
+      <div className='cursor-pointer' onClick={handleCardClick}>
+        <p className='text-md font-regular whitespace-pre-line text-black'>
+          {formattedContent.split(/(승인|거절)/).map((text, i) => {
+            const matchedStatus = statusKeywordMap[text];
+            return (
+              <span
+                key={i}
+                className={cn(
+                  matchedStatus && statusColorMap[matchedStatus].text,
+                )}
+              >
+                {text}
+              </span>
+            );
+          })}
+        </p>
 
-      <p className='mt-4 text-xs text-gray-600'>{relativeTime(createdAt)}</p>
+        <p className='mt-4 text-xs text-gray-600'>{relativeTime(createdAt)}</p>
+      </div>
     </div>
   );
 }

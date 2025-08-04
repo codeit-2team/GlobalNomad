@@ -21,7 +21,7 @@ export default function Header() {
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
 
-  const { data } = useNotifications({ size: 10 });
+  const { data } = useNotifications({ size: 10 }, isLoggedIn);
   const hasNotification = (data?.totalCount ?? 0) > 0;
 
   const handleLogoClick = () => {
@@ -75,7 +75,7 @@ export default function Header() {
         </Link>
 
         {/* 우측 메뉴 */}
-        <div className='text-md flex items-center gap-24 text-black'>
+        <div className='text-md flex items-center gap-8 md:gap-24 text-black'>
           {isLoggedIn ? (
             <>
               {/* 알림 아이콘 */}
@@ -94,7 +94,7 @@ export default function Header() {
 
               {isOpen && (
                 <NotificationDropdown
-                  className='md:right- fixed inset-0 md:absolute md:top-90 md:left-800'
+                  className='fixed inset-0 md:absolute md:top-90 md:left-auto md:right-20 lg:right-10 z-50'
                   onClose={() => setIsOpen(false)}
                 />
               )}

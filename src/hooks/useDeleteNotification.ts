@@ -1,5 +1,6 @@
 import { privateInstance } from '@/apis/privateInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 /**
  * 특정 알림을 삭제하는 비동기 함수입니다.
@@ -39,6 +40,10 @@ export const useDeleteNotification = () => {
     mutationFn: (NotificationId: number) => deleteNotification(NotificationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
+    },
+
+    onError: () => {
+      toast.error('알림 삭제를 실패했습니다.');
     },
   });
 };

@@ -3,30 +3,67 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { ImageGridProps } from '@/types/activityDetailType';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   const images = [mainImage, ...subImages];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const prevSlide = () => {
+    setDirection(-1);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const nextSlide = () => {
+    setDirection(1);
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -300 : 300,
+      opacity: 0,
+    }),
   };
 
   return (
     <>
       {/* 모바일 */}
       <div className='relative block aspect-square h-[300px] w-full overflow-hidden rounded-lg md:hidden'>
-        <Image
-          src={images[currentIndex]}
-          alt={`슬라이드 이미지 ${currentIndex + 1}`}
-          fill
-          className='object-cover hover:animate-pulse'
-        />
+        <AnimatePresence custom={direction} initial={false}>
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            variants={variants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            transition={{
+              x: { type: 'spring', stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 },
+            }}
+            className='absolute inset-0'
+          >
+            <Image
+              src={images[currentIndex]}
+              alt={` ${currentIndex + 1}`}
+              fill
+              className='rounded-lg object-cover'
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
+
         <button
           onClick={prevSlide}
           aria-label='이전 이미지'
@@ -34,6 +71,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
         >
           ‹
         </button>
+
         <button
           onClick={nextSlide}
           aria-label='다음 이미지'
@@ -41,6 +79,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
         >
           ›
         </button>
+
         <div className='absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1'>
           {images.map((_, i) => (
             <div
@@ -52,7 +91,8 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
           ))}
         </div>
       </div>
-      {/* PC 태블릿 */}
+
+      {/* PC/태블릿 */}
       <div className='hidden h-[500px] grid-cols-4 grid-rows-4 gap-6 md:grid'>
         <div className='relative col-span-2 row-span-4 hover:animate-pulse'>
           <Image
@@ -62,7 +102,6 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
             className='rounded-lg object-cover'
           />
         </div>
-
         {subImages.slice(0, 4).map((image, index) => (
           <div
             key={index}

@@ -68,7 +68,10 @@ export default function NotificationDropdown({
       )}
 
       {!isLoading && data && (
-        <NotificationCardList notification={data.notifications} />
+        <NotificationCardList
+          notification={data.notifications}
+          onCardClick={onClose}
+        />
       )}
     </div>
   );
