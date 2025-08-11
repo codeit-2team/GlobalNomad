@@ -23,6 +23,7 @@ export const useDeleteActivity = () => {
       });
       queryClient.invalidateQueries({ queryKey: ['popularExperiences'] });
       router.push(`/`);
+      toast.success('체험을 삭제했습니다!');
     },
     onError: (error: AxiosError) => {
       const responseData = error.response?.data as

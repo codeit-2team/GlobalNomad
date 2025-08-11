@@ -11,6 +11,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
+import { toast } from 'sonner';
 
 interface TitleProps {
   title: string;
@@ -45,8 +46,8 @@ function Title({
     if (!id) return;
     mutate(id as string);
     setIsPopupOpen(false);
+    toast.success('체험이 삭제되었습니다!');
   };
-  
 
   return (
     <>

@@ -209,9 +209,16 @@ export const useEditActivityForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validationMessage = validateSchedules(dates);
-    if (validationMessage) {
-      toast.error(validationMessage);
+    if (
+      !title ||
+      !category ||
+      !description ||
+      !address ||
+      !price ||
+      !mainImage ||
+      dates.length === 0
+    ) {
+      toast.error('소개이미지를 제외한 모든값은 필수값입니다!');
       return;
     }
     try {
