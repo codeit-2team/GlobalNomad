@@ -73,7 +73,7 @@ export default function CalendarBody({
                 !isToday && !isSelected && !isSameMonth
                   ? 'hover:bg-gray-50'
                   : ''
-              } ${isHighlighted && !isSelected ? 'bg-yellow-200' : ''} `}
+              } ${isHighlighted && !isSelected ? 'bg-yellow-300' : ''} ${!isHighlighted ? 'opacity-50' : ''}`}
               aria-label={`${day.format('YYYY년 MM월 DD일')} ${
                 isToday ? '오늘' : ''
               } ${isSelected ? '선택됨' : ''}`}
