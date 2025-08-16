@@ -1,10 +1,5 @@
 import type React from 'react';
-
-interface FormSectionProps {
-  title: string;
-  children: React.ReactNode;
-  description?: string;
-}
+import { FormSectionProps } from '@/types/addEditExperienceType';
 
 export function FormSection({
   title,

@@ -8,12 +8,7 @@ import axios from 'axios';
 import { uploadImage } from '../utils/uploadImage';
 import { privateInstance } from '@/apis/privateInstance';
 import { useQueryClient } from '@tanstack/react-query';
-
-export interface DateSlot {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { DateSlot } from '@/types/addEditExperienceType';
 
 export const useCreateActivityForm = () => {
   const [dates, setDates] = useState<DateSlot[]>([

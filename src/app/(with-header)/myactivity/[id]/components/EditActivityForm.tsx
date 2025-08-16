@@ -6,11 +6,7 @@ import { ScheduleSelectForm } from '../../components/ScheduleSelectForm';
 import { ImageSection } from '../../components/ImageSection';
 import { useEditActivityForm } from '../hooks/useEditActivityForm';
 import EditActivityFormSkeleton from '../../loading';
-
-interface SubImageType {
-  id?: number;
-  url: string | File;
-}
+import { SubImageType } from '@/types/addEditExperienceType';
 
 export default function EditActivityForm() {
   const {

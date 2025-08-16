@@ -4,19 +4,7 @@ import Input from '@/components/Input';
 import AddressInput from './AddressInput';
 import CategoryInput from './CategoryInput';
 import Textarea from '@/components/Textarea';
-
-interface InfoSectionProps {
-  title?: string;
-  category?: string;
-  price?: string;
-  description?: string;
-  address?: string;
-  onTitleChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
-  onPriceChange: (value: string) => void;
-  onDescriptionChange: (value: string) => void;
-  onAddressChange: (value: string) => void;
-}
+import { InfoSectionProps } from '@/types/addEditExperienceType';
 
 export function InfoSection({
   title = '',

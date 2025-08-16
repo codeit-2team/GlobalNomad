@@ -12,15 +12,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
 import { toast } from 'sonner';
-
-interface TitleProps {
-  title: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  address: string;
-  isOwner: boolean;
-}
+import { TitleProps } from '@/types/activityDetailType';
 
 function Title({
   title,

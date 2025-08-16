@@ -9,12 +9,7 @@ import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 import { notFound } from 'next/navigation';
-import { validateSchedules } from '../../utils/dateValidatoin';
-
-interface SubImageType {
-  id?: number;
-  url: string | File;
-}
+import { SubImageType } from '@/types/addEditExperienceType';
 
 export const useEditActivityForm = () => {
   const { id } = useParams() as { id: string };

@@ -2,11 +2,8 @@
 
 import Star from '@assets/svg/star';
 import { useState, useEffect } from 'react';
+import { ReviewTitleProps } from '@/types/activityDetailType';
 
-interface ReviewTitleProps {
-  reviewCount: number;
-  rating: number;
-}
 export default function ReviewTitle({
   reviewCount = 0,
   rating = 0,

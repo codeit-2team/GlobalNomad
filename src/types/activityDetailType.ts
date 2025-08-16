@@ -86,3 +86,36 @@ export interface ActivityDetailEdit {
   }[];
   schedules: Schedule[];
 }
+
+
+
+export interface TitleProps {
+  title: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
+  address: string;
+  isOwner: boolean;
+}
+
+export interface ReviewTitleProps {
+  reviewCount: number;
+  rating: number;
+}
+
+
+export interface ReviewSectionProps {
+  activityId: string;
+  reviewCount: number;
+  rating: number;
+}
+
+export interface ReviewProps {
+  id: string;
+  user: {
+    nickname: string;
+    profileImageUrl: string;
+  };
+  createdAt: string;
+  content: string;
+}

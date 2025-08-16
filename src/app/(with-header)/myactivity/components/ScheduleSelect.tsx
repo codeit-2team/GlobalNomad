@@ -2,19 +2,7 @@
 
 import Input from '@/components/Input';
 import IconClose from '@assets/svg/close';
-
-interface ScheduleSelectProps {
-  index: number;
-  isRemovable: boolean;
-  onAddDate: () => void;
-  onRemove: (index: number) => void;
-  onDateChange: (index: number, value: string) => void;
-  onStartTimeChange: (index: number, value: string) => void;
-  onEndTimeChange: (index: number, value: string) => void;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { ScheduleSelectProps } from '@/types/addEditExperienceType';
 
 export function ScheduleSelect({
   index,

@@ -5,8 +5,7 @@ import React, { useState } from 'react';
 import { ImageGridProps } from '@/types/activityDetailType';
 import { AnimatePresence, motion } from 'framer-motion';
 import Modal from '@/components/Modal';
-
-const DEFAULT_IMAGE = '/assets/img/default-bg.png';
+import { DEFAULT_BG } from '@/constants/AvatarConstants';
 
 function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   const [image, setImage] = useState([mainImage, ...subImages]);
@@ -21,9 +20,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
   };
 
   const handleImageError = (index: number) => {
-    setImage((prev) =>
-      prev.map((src, i) => (i === index ? DEFAULT_IMAGE : src)),
-    );
+    setImage((prev) => prev.map((src, i) => (i === index ? DEFAULT_BG : src)));
   };
 
   const prevSlide = () => {

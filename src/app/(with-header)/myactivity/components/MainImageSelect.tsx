@@ -2,12 +2,7 @@
 
 import { ImageUpload } from './ImageUpload';
 import { ImagePreview } from './ImagePreview';
-
-interface MainImageSelectProps {
-  mainImage: File | string | null;
-  onImageSelect: (file: File) => void;
-  onImageRemove: () => void;
-}
+import { MainImageSelectProps } from '@/types/addEditExperienceType';
 
 export function MainImageSelect({
   mainImage,

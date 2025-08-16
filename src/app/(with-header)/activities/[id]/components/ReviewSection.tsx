@@ -9,24 +9,9 @@ import { privateInstance } from '@/apis/privateInstance';
 import ReviewTitle from './ReviewTitle';
 import useUserStore from '@/stores/authStore';
 import cn from '@/lib/cn';
-
 import ReviewCardSkeleton from './Skeletons/ReviewCardSkeleton';
-
-interface ReviewSectionProps {
-  activityId: string;
-  reviewCount: number;
-  rating: number;
-}
-
-interface ReviewProps {
-  id: string;
-  user: {
-    nickname: string;
-    profileImageUrl: string;
-  };
-  createdAt: string;
-  content: string;
-}
+import { ReviewSectionProps } from '@/types/activityDetailType';
+import { ReviewProps } from '@/types/activityDetailType';
 
 function ReviewSection({
   activityId,

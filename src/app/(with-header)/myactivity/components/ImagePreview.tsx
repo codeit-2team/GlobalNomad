@@ -1,14 +1,8 @@
 'use client';
 
 import IconClose from '@assets/svg/close';
-import { useState,useEffect } from 'react';
-
-interface ImagePreviewProps {
-  image: File | string;
-  onRemove: () => void;
-  alt: string;
-  className?: string;
-}
+import { useState, useEffect } from 'react';
+import { ImagePreviewProps } from '@/types/addEditExperienceType';
 
 export function ImagePreview({
   image,
@@ -43,10 +37,14 @@ export function ImagePreview({
       <button
         type='button'
         onClick={onRemove}
-        className='absolute -top-12 -right-12 w-24 h-24 rounded-full text-white transition-colors bg-[rgba(27,27,27,0.8)]'
+        className='absolute -top-12 -right-12 h-24 w-24 rounded-full bg-[rgba(27,27,27,0.8)] text-white transition-colors'
         aria-label='이미지 삭제'
       >
-        <IconClose className='h-12 w-12 m-auto' fill='currentColor'  alt='삭제 아이콘' />
+        <IconClose
+          className='m-auto h-12 w-12'
+          fill='currentColor'
+          alt='삭제 아이콘'
+        />
       </button>
     </div>
   );

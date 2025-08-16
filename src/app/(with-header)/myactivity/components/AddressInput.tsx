@@ -5,20 +5,8 @@ import DaumPostcode from 'react-daum-postcode';
 import { useState } from 'react';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-
-interface AddressInputProps {
-  onAddressChange: (address: string) => void;
-  address: string;
-}
-
-interface PostcodeData {
-  address: string;
-  addressType: 'R' | 'J';
-  bname: string;
-  buildingName: string;
-  zonecode: string;
-  userSelectedType: string;
-}
+import { AddressInputProps } from '@/types/addEditExperienceType';
+import { PostcodeData } from '@/types/addEditExperienceType';
 
 export default function AddressInput({
   onAddressChange,
