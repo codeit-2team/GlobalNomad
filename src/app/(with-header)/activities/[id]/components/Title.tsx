@@ -38,7 +38,6 @@ function Title({
     if (!id) return;
     mutate(Number(id));
     setIsPopupOpen(false);
-    toast.success('체험이 삭제되었습니다!');
   };
 
   return (
