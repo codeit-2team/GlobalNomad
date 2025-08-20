@@ -11,7 +11,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
-import { toast } from 'sonner';
 import { TitleProps } from '@/types/activityDetailType';
 
 function Title({

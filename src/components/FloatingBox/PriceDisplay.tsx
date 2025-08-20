@@ -8,7 +8,7 @@ export default function PriceDisplay({ price }: { price: number }) {
         </p>
 
         <div className='flex items-center gap-2'>
-          <div className='h-25 w-25 rounded-md bg-yellow-300' />
+          <div className='h-25 w-25 rounded-full bg-yellow-300' />
           <span className='text-base font-bold text-black'>
             : 예약 가능 일자
           </span>

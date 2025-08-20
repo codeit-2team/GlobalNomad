@@ -2,6 +2,7 @@
 
 import type dayjs from 'dayjs';
 import { CalendarBodyProps } from '@/types/datePickerTypes';
+import cn from '@/lib/cn';
 
 export default function CalendarBody({
   viewDate,
@@ -51,36 +52,43 @@ export default function CalendarBody({
             <button
               key={i}
               onClick={() => onSelectDate(day)}
-              className={`relative flex h-30 w-30 items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${
-                !isSameMonth
-                  ? 'text-gray-300 hover:text-gray-400'
-                  : isWeekend
-                    ? 'text-red-600'
-                    : 'text-gray-700'
-              } ${
-                isToday && !isSelected
-                  ? 'bg-blue-100 font-bold text-blue-700 ring-2 ring-blue-200'
-                  : ''
-              } ${
-                isSelected
-                  ? 'scale-105 transform bg-blue-600 font-bold text-white shadow-lg'
-                  : ''
-              } ${
-                !isToday && !isSelected && isSameMonth
-                  ? 'hover:scale-105 hover:bg-gray-100'
-                  : ''
-              } ${
-                !isToday && !isSelected && !isSameMonth
-                  ? 'hover:bg-gray-50'
-                  : ''
-              } ${isHighlighted && !isSelected ? 'bg-yellow-300' : ''} ${!isHighlighted ? 'opacity-50' : ''}`}
+              className={cn(
+                'relative flex h-30 w-30 items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 ease-in-out focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none',
+                'hover:scale-105 hover:shadow-md',
+                !isSameMonth && 'text-gray-400 hover:text-gray-300',
+                isSameMonth && isWeekend && 'text-red-500',
+                isSameMonth && !isWeekend && 'text-gray-900',
+                // 오늘
+                isToday &&
+                  !isSelected &&
+                  'bg-blue-100 font-bold text-blue-700 ring-2 ring-blue-300',
+                // 선택된 날짜
+                isSelected &&
+                  'scale-105 transform bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-lg',
+                // 선택된날짜가 일정이존재하는 날일경우
+                isSelected &&
+                  isHighlighted &&
+                  'text-white ring-2 ring-yellow-400',
+
+                !isToday &&
+                  !isSelected &&
+                  isSameMonth &&
+                  'hover:bg-gray-100 active:scale-95',
+                !isToday && !isSelected && !isSameMonth && 'hover:bg-gray-50',
+
+                isHighlighted &&
+                  !isSelected &&
+                  'bg-yellow-300 font-bold text-black',
+                !isHighlighted && 'opacity-90',
+              )}
               aria-label={`${day.format('YYYY년 MM월 DD일')} ${
                 isToday ? '오늘' : ''
               } ${isSelected ? '선택됨' : ''}`}
             >
               {day.format('D')}
+
               {isToday && !isSelected && (
-                <div className='absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-blue-600'></div>
+                <div className='absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-blue-600' />
               )}
             </button>
           );
