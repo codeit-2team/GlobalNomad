@@ -36,7 +36,7 @@ function Title({
 
   const handleDeleteConfirm = () => {
     if (!id) return;
-    mutate(id as string);
+    mutate(Number(id));
     setIsPopupOpen(false);
     toast.success('체험이 삭제되었습니다!');
   };

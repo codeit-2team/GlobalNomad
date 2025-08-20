@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-const deleteActivity = async (id: string) => {
+const deleteActivity = async (id: number) => {
   const response = await privateInstance.delete(`/deleteActivity/${id}`);
   return response.data;
 };
@@ -23,7 +23,7 @@ export const useDeleteActivity = () => {
       });
       queryClient.invalidateQueries({ queryKey: ['popularExperiences'] });
       router.push(`/`);
-      toast.success('체험을 삭제했습니다!');
+      toast.success('체험이 삭제되었습니다!');
     },
     onError: (error: AxiosError) => {
       const responseData = error.response?.data as

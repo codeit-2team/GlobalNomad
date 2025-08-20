@@ -138,7 +138,7 @@ export default function ActivityDetailForm() {
           <LocationMap address={activityData.address} />
 
           <ReviewSection
-            activityId={id as string}
+            activityId={Number(id)}
             reviewCount={activityData.reviewCount}
             rating={activityData.rating}
           />

@@ -12,7 +12,7 @@ import { notFound } from 'next/navigation';
 import { SubImageType } from '@/types/addEditExperienceType';
 
 export const useEditActivityForm = () => {
-  const { id } = useParams() as { id: string };
+  const { id } = useParams();
   const router = useRouter();
   const queryClient = useQueryClient();
 

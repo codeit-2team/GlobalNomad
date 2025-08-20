@@ -87,8 +87,6 @@ export interface ActivityDetailEdit {
   schedules: Schedule[];
 }
 
-
-
 export interface TitleProps {
   title: string;
   category: string;
@@ -103,9 +101,8 @@ export interface ReviewTitleProps {
   rating: number;
 }
 
-
 export interface ReviewSectionProps {
-  activityId: string;
+  activityId: number;
   reviewCount: number;
   rating: number;
 }
