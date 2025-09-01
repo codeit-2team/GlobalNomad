@@ -29,3 +29,14 @@ export function validateSchedules(schedules: Schedule[]) {
 
   return null;
 }
+
+export function isPastDate(dateStr: string) {
+  const selected = new Date(dateStr);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return selected < today;
+}
+
+export function isInvalidTimeRange(start: string, end: string) {
+  return start >= end;
+}

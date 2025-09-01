@@ -1,11 +1,6 @@
 import { ImagePreview } from './ImagePreview';
 import { ImageUpload } from './ImageUpload';
-
-interface SubImageSelectProps {
-  subImage: (string | File)[];
-  onImagesAdd: (files: File[]) => void;
-  onImageRemove: (index: number) => void;
-}
+import { SubImageSelectProps } from '@/types/addEditExperienceType';
 
 export function SubImageSelect({
   subImage,

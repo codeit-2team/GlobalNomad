@@ -11,15 +11,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
-
-interface TitleProps {
-  title: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  address: string;
-  isOwner: boolean;
-}
+import { TitleProps } from '@/types/activityDetailType';
 
 function Title({
   title,
@@ -43,10 +35,9 @@ function Title({
 
   const handleDeleteConfirm = () => {
     if (!id) return;
-    mutate(id as string);
+    mutate(Number(id));
     setIsPopupOpen(false);
   };
-  
 
   return (
     <>

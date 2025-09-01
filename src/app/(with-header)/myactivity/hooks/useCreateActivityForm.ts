@@ -8,12 +8,7 @@ import axios from 'axios';
 import { uploadImage } from '../utils/uploadImage';
 import { privateInstance } from '@/apis/privateInstance';
 import { useQueryClient } from '@tanstack/react-query';
-
-export interface DateSlot {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { DateSlot } from '@/types/addEditExperienceType';
 
 export const useCreateActivityForm = () => {
   const [dates, setDates] = useState<DateSlot[]>([
@@ -132,9 +127,10 @@ export const useCreateActivityForm = () => {
       !description ||
       !address ||
       !price ||
+      !mainImage ||
       dates.length === 0
     ) {
-      toast.error('모든 필드를 입력해주세요.');
+      toast.error('소개이미지를 제외한 모든값은 필수값입니다!');
       return;
     }
     mutation.mutate();

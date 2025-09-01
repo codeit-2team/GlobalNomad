@@ -9,12 +9,7 @@ import TotalPriceDisplay from './TotalPriceDisplay';
 import BookingModal from '@/ui/BookingModal';
 import DatePicker from '../DatePicker/DatePicker';
 import { SchedulesProps } from '@/types/activityDetailType';
-import { privateInstance } from '@/apis/privateInstance';
-import { useParams } from 'next/navigation';
-import { AxiosError } from 'axios';
-import useUserStore from '@/stores/authStore';
-import { toast } from 'sonner';
-import { useState } from 'react';
+import { useBooking } from '@/hooks/useBooking';
 
 export default function BookingInterface({
   schedules,
@@ -27,62 +22,16 @@ export default function BookingInterface({
   isOwner: boolean;
   price: number;
 }) {
-  const [onBooking, setOnBooking] = useState(false);
-  const { user } = useUserStore();
   const setIsOpen = useBookingStore((state) => state.setIsOpen);
+
   const {
+    onBooking,
+    handleBooking,
+    isBookable,
+    buttonText,
     selectedDate,
     selectedTime,
-    participants,
-    selectedTimeId,
-    setToInitial,
-  } = useBookingStore();
-
-  const { id } = useParams();
-
-  const handleBooking = async () => {
-    setOnBooking(true);
-    try {
-      await privateInstance.post(`/activities/${id}/reservation`, {
-        selectedTimeId,
-        participants,
-      });
-
-      toast.success('예약되었습니다!');
-      setToInitial();
-    } catch (err) {
-      const error = err as AxiosError;
-      const responseData = error.response?.data as
-        | { error?: string; message?: string }
-        | undefined;
-
-      console.error('전체 에러:', error);
-
-      toast.error(
-        responseData?.error ||
-          responseData?.message ||
-          error.message ||
-          '예약에 실패했습니다.',
-      );
-    } finally {
-      setOnBooking(false);
-    }
-  };
-
-  const isLoggedIn = !!user;
-  const isBookable =
-    !!selectedDate &&
-    !!selectedTime &&
-    !!selectedTimeId &&
-    !!participants &&
-    !isOwner &&
-    isLoggedIn;
-
-  const buttonText = !isLoggedIn
-    ? '로그인이 필요한 기능입니다'
-    : isOwner
-      ? '본인이 등록한 체험입니다'
-      : '예약하기';
+  } = useBooking(isOwner);
 
   return (
     <div className='w-full max-w-sm'>

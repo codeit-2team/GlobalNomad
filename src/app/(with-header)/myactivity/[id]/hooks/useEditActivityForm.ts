@@ -9,15 +9,10 @@ import { ActivityDetailEdit, Schedule } from '@/types/activityDetailType';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 import { notFound } from 'next/navigation';
-import { validateSchedules } from '../../utils/dateValidatoin';
-
-interface SubImageType {
-  id?: number;
-  url: string | File;
-}
+import { SubImageType } from '@/types/addEditExperienceType';
 
 export const useEditActivityForm = () => {
-  const { id } = useParams() as { id: string };
+  const { id } = useParams();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -209,9 +204,16 @@ export const useEditActivityForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validationMessage = validateSchedules(dates);
-    if (validationMessage) {
-      toast.error(validationMessage);
+    if (
+      !title ||
+      !category ||
+      !description ||
+      !address ||
+      !price ||
+      !mainImage ||
+      dates.length === 0
+    ) {
+      toast.error('소개이미지를 제외한 모든값은 필수값입니다!');
       return;
     }
     try {

@@ -2,29 +2,9 @@
 
 import { toast } from 'sonner';
 import { ScheduleSelect } from './ScheduleSelect';
-import { Schedule } from '@/types/activityDetailType';
-
-interface ScheduleSelectFormProps {
-  dates: Schedule[];
-  onAddDate: () => void;
-  onRemoveDate: (index: number) => void;
-  onDateChange: (
-    index: number,
-    field: keyof Omit<Schedule, 'id'>,
-    value: string,
-  ) => void;
-}
-
-function isPastDate(dateStr: string) {
-  const selected = new Date(dateStr);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return selected < today;
-}
-
-function isInvalidTimeRange(start: string, end: string) {
-  return start >= end;
-}
+import { ScheduleSelectFormProps } from '@/types/addEditExperienceType';
+import { isPastDate } from '../utils/dateValidatoin';
+import { isInvalidTimeRange } from '../utils/dateValidatoin';
 
 export function ScheduleSelectForm({
   dates,

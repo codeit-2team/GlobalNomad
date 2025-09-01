@@ -1,13 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-
-interface BookingButtonProps {
-  onClick: () => void;
-  children: React.ReactNode;
-  disabled?: boolean;
-  onBooking?: boolean;
-  className?: string;
-}
+import { BookingButtonProps } from '@/types/bookingInterfaceType';
 
 export default function BookingButton({
   onClick,

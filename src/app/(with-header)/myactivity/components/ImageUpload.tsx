@@ -1,13 +1,7 @@
 'use client';
 
 import type React from 'react';
-
-interface ImageUploadProps {
-  onImageSelect: (file: File) => void;
-  multiple?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-}
+import { ImageUploadProps } from '@/types/addEditExperienceType';
 
 export function ImageUpload({
   onImageSelect,

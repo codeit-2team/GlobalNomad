@@ -5,3 +5,6 @@ export const AVATAR_SIZE = {
 };
 
 export const DEFAULT_IMG = '/assets/svg/profile-default.svg';
+
+
+export const DEFAULT_BG = '/assets/img/default-bg.png';

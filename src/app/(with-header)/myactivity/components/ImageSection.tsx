@@ -2,22 +2,14 @@
 
 import { MainImageSelect } from './MainImageSelect';
 import { SubImageSelect } from './SubImageSelect';
-
-interface ImagesSectionProps {
-  mainImage: string | File | null;
-  subImage: (string | File)[];
-  onMainImageSelect: (file: File) => void;
-  onMainImageRemove: () => void;
-  onSubImageAdd: (files: File[]) => void;
-  onSubImageRemove: (index: number) => void;
-}
+import { ImagesSectionProps } from '@/types/addEditExperienceType';
 
 export function ImageSection({
   mainImage,
   subImage,
   onMainImageSelect,
   onMainImageRemove,
-  onSubImageAdd, 
+  onSubImageAdd,
   onSubImageRemove,
 }: ImagesSectionProps) {
   return (
