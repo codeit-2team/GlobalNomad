@@ -11,4 +11,5 @@ export interface CalendarBodyProps {
 export interface CalendarHeaderProps {
   viewDate: dayjs.Dayjs;
   onMonthChange: (direction: 'add' | 'subtract') => void;
+  isPrevDisabled?: boolean;
 }
