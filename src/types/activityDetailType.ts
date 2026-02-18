@@ -11,14 +11,7 @@ export interface ReviewCardProps {
   isBlured?: boolean;
 }
 
-export interface TitleProps {
-  title: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  address: string;
-  isDropDown?: boolean;
-}
+
 
 export interface ActivitySchedule {
   id: number;
@@ -93,7 +86,7 @@ export interface TitleProps {
   rating: number;
   reviewCount: number;
   address: string;
-  isOwner: boolean;
+  userId: number;
 }
 
 export interface ReviewTitleProps {

@@ -67,9 +67,9 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
               src={image[currentIndex]}
               alt={`${currentIndex + 1}`}
               fill
+              sizes='100vw'
               className='rounded-lg object-cover'
               priority
-              unoptimized
               onError={() => handleImageError(currentIndex)}
             />
           </motion.div>
@@ -113,6 +113,8 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
             src={image[0]}
             alt='메인이미지'
             fill
+            sizes='50vw'
+            priority
             className='rounded-lg object-cover'
             onError={() => handleImageError(0)}
           />
@@ -127,6 +129,7 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
               src={image}
               alt={`서브이미지 ${index + 1}`}
               fill
+              sizes='25vw'
               className='rounded-lg object-cover'
               onError={() => handleImageError(index + 1)}
             />
@@ -145,6 +148,8 @@ function ImageGrid({ mainImage, subImages }: ImageGridProps) {
                   src={selectedImage}
                   alt='확대 이미지'
                   fill
+                  sizes='(max-width: 1200px) 100vw, 1200px'
+                  quality={85}
                   className='rounded-lg object-cover p-18'
                 />
               )}

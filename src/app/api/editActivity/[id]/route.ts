@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
 import axios, { AxiosError } from 'axios';
 
 const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
@@ -36,6 +37,7 @@ export async function PATCH(
       },
     );
 
+    revalidateTag(`activity-${id}`);
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: unknown) {
     console.error('체험 수정 에러:', error);
