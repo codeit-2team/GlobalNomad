@@ -36,6 +36,23 @@ export const useCreateActivityForm = () => {
         throw new Error('유효한 가격을 입력해주세요.');
       }
 
+      let bannerImageUrl = '';
+      if (typeof mainImage === 'string') {
+        bannerImageUrl = mainImage;
+      } else if (mainImage instanceof File) {
+        bannerImageUrl = await uploadImage(mainImage);
+      }
+
+      const subImageUrls: string[] = [];
+      for (const img of subImage) {
+        if (img instanceof File) {
+          const url = await uploadImage(img);
+          subImageUrls.push(url);
+        } else if (typeof img === 'string') {
+          subImageUrls.push(img);
+        }
+      }
+
       const payload = {
         title,
         category,
@@ -43,8 +60,8 @@ export const useCreateActivityForm = () => {
         address,
         price: parsedPrice,
         schedules: dates,
-        bannerImageUrl: mainImage,
-        subImageUrls: subImage,
+        bannerImageUrl,
+        subImageUrls,
       };
 
       const res = await privateInstance.post('/addActivity', payload);
@@ -89,30 +106,18 @@ export const useCreateActivityForm = () => {
     );
   };
 
-  const handleMainImageSelect = async (file: File) => {
-    try {
-      const url = await uploadImage(file);
-      setMainImage(url);
-    } catch {
-      toast.error('메인 이미지 업로드에 실패했습니다.');
-    }
+  const handleMainImageSelect = (file: File) => {
+    setMainImage(file);
   };
 
   const handleMainImageRemove = () => {
     setMainImage(null);
   };
 
-  const handleSubImagesAdd = async (newFiles: File[]) => {
+  const handleSubImagesAdd = (newFiles: File[]) => {
     const remaining = 4 - subImage.length;
-    const filesToUpload = newFiles.slice(0, remaining);
-    try {
-      const uploadedUrls = await Promise.all(
-        filesToUpload.map((file) => uploadImage(file)),
-      );
-      setSubImage((prev) => [...prev, ...uploadedUrls]);
-    } catch {
-      toast.error('서브 이미지 업로드 중 문제가 발생했습니다.');
-    }
+    const filesToAdd = newFiles.slice(0, remaining);
+    setSubImage((prev) => [...prev, ...filesToAdd]);
   };
 
   const handleSubImageRemove = (index: number) => {
