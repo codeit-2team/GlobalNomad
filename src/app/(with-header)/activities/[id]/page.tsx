@@ -27,8 +27,8 @@ export default async function ActivityDetailPage({
     }
 
     activityData = await res.json();
-  } catch (error: any) {
-    if (error?.digest === 'NEXT_NOT_FOUND') throw error;
+  } catch (error) {
+    if (error instanceof Error && 'digest' in error) throw error;
     throw new Error('활동 상세 데이터 조회 실패');
   }
 
