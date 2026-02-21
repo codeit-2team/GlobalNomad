@@ -2,9 +2,11 @@
 
 import { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import useUserStore from '@/stores/authStore';
 import BookingInterface from '@/components/FloatingBox/BookingInterface';
 import { privateInstance } from '@/apis/privateInstance';
+import { GroupedSchedule } from '@/types/activityDetailType';
 import { padMonth } from '../utils/MonthFormatChange';
 
 export default function BookingSection({
@@ -33,23 +35,23 @@ export default function BookingSection({
       const nextYear = month === 12 ? year + 1 : year;
 
     
-      const currentResponse = await privateInstance.get(
+      const currentResponse = await privateInstance.get<GroupedSchedule[]>(
         `/activities/${activityId}/available-schedule?year=${year}&month=${padMonth(month)}`,
       );
 
      
       const sideResults = await Promise.allSettled([
-        privateInstance.get(
+        privateInstance.get<GroupedSchedule[]>(
           `/activities/${activityId}/available-schedule?year=${prevYear}&month=${padMonth(prevMonth)}`,
         ),
-        privateInstance.get(
+        privateInstance.get<GroupedSchedule[]>(
           `/activities/${activityId}/available-schedule?year=${nextYear}&month=${padMonth(nextMonth)}`,
         ),
       ]);
 
       const sideData = sideResults
         .filter(
-          (r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled',
+          (r): r is PromiseFulfilledResult<AxiosResponse<GroupedSchedule[]>> => r.status === 'fulfilled',
         )
         .flatMap((r) => r.value.data);
 
