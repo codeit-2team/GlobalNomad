@@ -64,7 +64,12 @@ export default function DatePicker({
     console.log('뷰데이트', viewDate.format('YYYY-MM-DD'));
   }, [availableDates, viewDate]);
 
+  const isPrevDisabled =
+    viewDate.year() === today.year() && viewDate.month() === today.month();
+
   const changeMonth = (direction: 'add' | 'subtract') => {
+    if (direction === 'subtract' && isPrevDisabled) return;
+
     setViewDate((prev) => {
       const newDate =
         direction === 'add' ? prev.add(1, 'month') : prev.subtract(1, 'month');
@@ -83,7 +88,7 @@ export default function DatePicker({
 
   return (
     <div className='max-h-[746px] w-full max-w-md rounded-2xl bg-white p-6'>
-      <CalendarHeader viewDate={viewDate} onMonthChange={changeMonth} />
+      <CalendarHeader viewDate={viewDate} onMonthChange={changeMonth} isPrevDisabled={isPrevDisabled} />
       <CalendarBody
         viewDate={viewDate}
         today={today}

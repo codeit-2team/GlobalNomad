@@ -1,0 +1,72 @@
+import ReviewCardSkeleton from './components/Skeletons/ReviewCardSkeleton';
+import SkeletonBookingInterface from './components/Skeletons/BookingInterfaceSkeleton';
+
+export default function Loading() {
+  return (
+    <div className='mx-auto max-w-1200 animate-pulse p-4 sm:px-20 lg:p-8'>
+      {/* 타이틀 */}
+      <div className='mb-6 flex items-start justify-between'>
+        <div className='flex w-full flex-col gap-10'>
+          <div className='h-16 w-24 rounded bg-gray-300' />
+          <div className='h-42 w-3/4 rounded bg-gray-300' />
+          <div className='flex gap-10'>
+            <div className='h-20 w-50 rounded bg-gray-300' />
+            <div className='h-20 w-170 rounded bg-gray-300' />
+          </div>
+        </div>
+      </div>
+
+      {/* 이미지그리드 */}
+      <div className='relative block aspect-square h-[300px] w-full overflow-hidden rounded-lg bg-gray-300 md:hidden' />
+      <div className='hidden h-[500px] grid-cols-4 grid-rows-4 gap-6 md:grid'>
+        <div className='col-span-2 row-span-4 rounded-lg bg-gray-300' />
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className='col-span-1 row-span-2 rounded-lg bg-gray-300'
+          />
+        ))}
+      </div>
+
+      {/* 설명/예약인터페이스/장소 */}
+      <div className='mt-86 grid gap-10 grid-cols-1 md:grid-cols-3'>
+        {/* 설명 */}
+        <div className='md:col-span-2'>
+          <div className='mb-10 h-34 w-90 rounded bg-gray-300' />
+          <div className='mb-4 h-180 w-full rounded bg-gray-300' />
+        </div>
+
+        {/* 예약인터페이스 */}
+        <div className='md:row-span-2'>
+          <SkeletonBookingInterface />
+        </div>
+
+        {/* 체험 장소/리뷰 */}
+        <div className='md:col-span-2 space-y-8'>
+          {/* 장소 */}
+          <div className='mb-40'>
+            <div className='mb-10 h-34 w-90 rounded bg-gray-300' />
+            <div className='h-[480px] w-full rounded-lg bg-gray-400 shadow-md' />
+            <div className='mt-8 flex items-center space-x-3'>
+              <div className='h-6 w-6 rounded-full bg-gray-300' />
+              <div className='h-20 w-1/2 rounded bg-gray-300' />
+            </div>
+          </div>
+
+          {/* 리뷰 */}
+          <div>
+            <div className='mt-10 flex flex-col space-y-8'>
+              <div className='mb-10 h-34 w-50 rounded bg-gray-300' />
+              <div className='mb-5 h-50 w-120 rounded bg-gray-300' />
+              <div className='relative min-h-450 flex-col gap-30'>
+                {[...Array(3)].map((_, index) => (
+                  <ReviewCardSkeleton key={index} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

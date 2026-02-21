@@ -12,6 +12,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteActivity } from '../hooks/useDeleteActivity';
 import Popup from '@/components/Popup';
 import { TitleProps } from '@/types/activityDetailType';
+import useUserStore from '@/stores/authStore';
 
 function Title({
   title,
@@ -19,9 +20,14 @@ function Title({
   rating,
   reviewCount,
   address,
-  isOwner,
+  userId,
 }: TitleProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const currentUserId = useUserStore((state) =>
+    state.user ? state.user.id : null,
+  );
+  const isOwner = currentUserId != null && userId != null && currentUserId === userId;
 
   const { id } = useParams();
   const router = useRouter();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
 import axios from 'axios';
 
 const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_SERVER_URL;
@@ -38,6 +39,9 @@ export async function POST(
       },
     );
 
+    if (response.data?.activityId) {
+      revalidateTag(`activity-${response.data.activityId}`);
+    }
     return NextResponse.json(response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
